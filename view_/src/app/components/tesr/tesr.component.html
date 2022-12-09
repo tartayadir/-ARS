@@ -1,0 +1,28 @@
+<div class="container mt-5">
+
+  <h3 class="mb-5">Angular Image Crop Example</h3>
+
+  <div class="col-md-12">
+    <input type="file" (change)="onFileChange($event)" />
+  </div>
+
+  <div class="col-md-8">
+    <image-cropper
+      [imageChangedEvent]="imgChangeEvt"
+      [maintainAspectRatio]="true"
+      [aspectRatio]="4 / 3"
+      [resizeToWidth]="256"
+      format="png"
+      (imageCropped)="cropImg($event)"
+      (imageLoaded)="imgLoad()"
+      (cropperReady)="initCropper()"
+      (loadImageFailed)="imgFailed()">
+    </image-cropper>
+  </div>
+
+  <div class="col-md-4">
+    <h6>Image Preview</h6>
+    <img [src]="cropImgPreview" />
+  </div>
+
+</div>

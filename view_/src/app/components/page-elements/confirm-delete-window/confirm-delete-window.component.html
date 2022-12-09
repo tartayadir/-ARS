@@ -1,0 +1,12 @@
+<ng-template #confirmDeleteCarModal let-modal >
+  <div class="modal-header" style="background: #dad2bc">
+    <h4 class="modal-title text-danger" id="modal-basic-title">Incorrect car info</h4>
+  </div>
+  <div class="modal-body" style="background: #dad2bc">
+    You entered incorrect information about car. Please, check your entered date and try again.
+  </div>
+  <div class="modal-footer" style="background: #dad2bc">
+    <app-delete-car-button></app-delete-car-button>
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+  </div>
+</ng-template>

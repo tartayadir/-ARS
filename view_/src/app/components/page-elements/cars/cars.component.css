@@ -1,0 +1,45 @@
+figure,
+figcaption {
+  margin: 0;
+  padding: 0;
+}
+
+figure {
+  display: inline-block;
+  position: relative;
+}
+
+figure img {
+  display: block;
+}
+
+figure figcaption {
+  position: absolute;
+  left: 27%;
+  top: 31%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+@media (hover: hover) {
+  .card-button{
+    display: none;
+  }
+
+  .card:hover .card-button{
+    display: inline-block;
+  }
+}
+
+@media (hover: none) {
+  .card-button{
+    display: inline-block;
+  }
+
+  .card:hover .card-button{
+    display: inline-block;
+  }
+}

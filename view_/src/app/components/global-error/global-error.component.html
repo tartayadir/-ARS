@@ -1,0 +1,25 @@
+<div *ngIf="(errorService.error$ | async)! as error">
+
+  <div id="errorModalWindow">
+    <ng-container *ngIf="!modalIsOpen">
+      {{open(errorModal)}}
+      {{openModal()}}
+    </ng-container>
+  </div>
+
+  <ng-template #errorModal let-modal>
+    <div id="errorModal">
+      <div class="modal-header" style="background: #dad2bc">
+        <h4 class="modal-title text-danger" id="modal-error-title">Error</h4>
+      </div>
+      <div class="text-center" id="modal-error-body" style="background: #dad2bc">
+        {{error}}
+      </div>
+      <div class="modal-footer" style="background: #dad2bc">
+        <button type="button" class="btn btn-outline-dark" id="errorOkButton"
+                (click)="[modal.close('Save click'), errorService.clear(), closeModal()]">
+          Ok</button>
+      </div>
+    </div>
+  </ng-template>
+</div>

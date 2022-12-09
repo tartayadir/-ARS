@@ -1,0 +1,441 @@
+<div class="container mx-auto w-75 h-75 my-5 card" style="background: #252323; color: #f5f1ed">
+
+  <div class="card-header" style="background: #252323">
+    <h2 class="card-title my-2">Edit {{car.brand!.toString() | titlecase}} {{car.model | titlecase}}</h2>
+  </div>
+
+  <div class="card-body" style="background: #252323;  color: #f5f1ed">
+
+    <ng-container *ngIf="imageIsUploaded && imageTypeIsValid">
+      <div class="form-group">
+        <br>
+        <div class="text-center w-50 mx-auto col-lg-12">
+          <img [src]="imageUrl" alt="9" class="card-img-top my-1">
+        </div>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="!(imageIsUploaded && imageTypeIsValid)">
+      <div class="form-group">
+        <div class="text-center w-50 mx-auto col-lg-12">
+          <img [src]="car!.image" alt="9" class="card-img-top my-1">
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="form-group my-2">
+      <label><h6>Picture change</h6></label>
+      <br>
+      <button type="button" class="btn button-outline my-2" style="background: #a1cca5" id="change-image-button"
+              (click)="openModalWindow(editImage)">
+        <img src="assets/icons/edit-image.png">
+        <span>Change image</span>
+      </button>
+      <div id="image-input-error-massage">
+        <ng-container *ngIf="!imageTypeIsValid && !(trySubmitted && !imageIsUploaded)">
+          <span class="text-danger">Car image have invalid file type.</span>
+        </ng-container>
+      </div>
+    </div>
+    <br>
+
+    <div class="row mb-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
+
+      <div class="col d-inline-flex">
+        <div class="form-outline">
+          <label><h6>Model</h6></label>
+          <input type="text" class="form-control" name="model" [(ngModel)]="car.model" #model="ngModel" id="model-input"
+                 [ngClass]="{'border border-3 border-danger' : model.invalid && (model.touched || model.dirty) ||
+                 trySubmitted && model.errors?.['required'] || car.model!.length > 40}" cdkTrapFocus cdkTrapFocusAutoCapture
+                 style="background: #f5f1ed;" required maxlength="41" minlength="2" pattern="{{regexStringModel}}">
+
+          <div id="model-input-error-massage">
+            <ng-container *ngIf="model.invalid && (model.touched || model.dirty) || car.model!.length > 40
+                                                       || trySubmitted && model.errors?.['required']">
+              <ng-container *ngIf="model.errors?.['required'] || trySubmitted && model.errors?.['required'] ">
+                <span class="text-danger">Model is required.</span>
+              </ng-container>
+              <ng-container *ngIf="model.errors?.['minlength']">
+                <span class="text-danger">Model must be greater than 2.</span>
+              </ng-container>
+              <ng-container *ngIf="model.errors?.['pattern'] && !model.errors?.['minlength']">
+              <span class="text-danger">Model must not contain anything other than letters, also contains only numbers
+                or start with number.</span>
+              </ng-container>
+              <ng-container *ngIf="car.model!.length > 40 && !model.errors?.['pattern']">
+                <span class="text-danger">Model must be less than 40.</span>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="col d-inline-flex">
+        <div class="form-outline ">
+          <label><h6>Brand</h6></label>
+          <select class="form-select" name="brand" id="brand-input" [(ngModel)]="car.brand">
+            <option value="AUDI">Audi</option>
+            <option value="ACURA">Acura</option>
+            <option value="ALFA">Alfa</option>
+            <option value="ASTON_MARTIN">Aston Martin</option>
+            <option value="BENTLEY">Bentley</option>
+            <option value="BYD">BYD</option>
+            <option value="BMW">BMW</option>
+            <option value="BRILLIANCE">{{ "BRILLIANCE" | titlecase}}</option>
+            <option value="BUICK">{{ "BUICK" | titlecase}}</option>
+            <option value="BUGATTI">{{ "BUGATTI" | titlecase}}</option>
+            <option value="CADILLAC">{{ "CADILLAC" | titlecase}}</option>
+            <option value="CHANGAN">{{ "CHANGAN" | titlecase}}</option>
+            <option value="CHEVROLET">{{ "CHEVROLET" | titlecase}}</option>
+            <option value="CHERY">{{ "CHERY" | titlecase}}</option>
+            <option value="CHRYSLER">{{ "CHRYSLER" | titlecase}}</option>
+            <option value="CITROEN">{{ "CITROEN" | titlecase}}</option>
+            <option value="DAEWOO">{{ "DAEWOO" | titlecase}}</option>
+            <option value="DACIA">{{ "DACIA" | titlecase}}</option>
+            <option value="DAIHATSU">{{ "DAIHATSU" | titlecase}}</option>
+            <option value="DODGE">{{ "DODGE" | titlecase}}</option>
+            <option value="FAW">FAW</option>
+            <option value="FERRARI">{{ "FERRARI" | titlecase}}</option>
+            <option value="FIAT">{{ "FIAT" | titlecase}}</option>
+            <option value="FORD">{{ "FORD" | titlecase}}</option>
+            <option value="GEELY">{{ "GEELY" | titlecase}}</option>
+            <option value="GMC">GMC</option>
+            <option value="GREAT_WALL">Great wall</option>
+            <option value="HONDA">{{ "HONDA" | titlecase}}</option>
+            <option value="HUMMER">{{ "HUMMER" | titlecase}}</option>
+            <option value="HYUNDAI">{{ "HYUNDAI" | titlecase}}</option>
+            <option value="INFINITI">{{ "INFINITI" | titlecase}}</option>
+            <option value="JEEP">JEEP</option>
+            <option value="KIA">KIA</option>
+            <option value="LAMBORGHINI">{{ "LAMBORGHINI" | titlecase}}</option>
+            <option value="LAND_ROVER">LAND ROVER</option>
+            <option value="LANCIA">{{ "LANCIA" | titlecase}}</option>
+            <option value="LEXUS">{{ "LEXUS" | titlecase}}</option>
+            <option value="LIFAN">{{ "LIFAN" | titlecase}}</option>
+            <option value="LINCOLN">{{ "LINCOLN" | titlecase}}</option>
+            <option value="LOTUS">{{ "LOTUS" | titlecase}}</option>
+            <option value="MARUSSIA">{{ "MARUSSIA" | titlecase}}</option>
+            <option value="MAYBACH">{{ "MAYBACH" | titlecase}}</option>
+            <option value="MAZDA">{{ "MAZDA" | titlecase}}</option>
+            <option value="MERCEDES">{{ "MERCEDES" | titlecase}}</option>
+            <option value="MASERATI">{{ "MASERATI" | titlecase}}</option>
+            <option value="MINI">{{ "MINI" | titlecase}}</option>
+            <option value="MCLAREN">{{ "MCLAREN" | titlecase}}</option>
+            <option value="MITSUBISHI">{{ "MITSUBISHI" | titlecase}}</option>
+            <option value="NISSAN">{{ "NISSAN" | titlecase}}</option>
+            <option value="OPEL">{{ "OPEL" | titlecase}}</option>
+            <option value="PEUGEOT">{{ "PEUGEOT" | titlecase}}</option>
+            <option value="PORSCHE">{{ "PORSCHE" | titlecase}}</option>
+            <option value="RENAULT">{{ "RENAULT" | titlecase}}</option>
+            <option value="SAAB">{{ "SAAB" | titlecase}}</option>
+            <option value="SEAT">{{ "SEAT" | titlecase}}</option>
+            <option value="SKODA">{{ "SKODA" | titlecase}}</option>
+            <option value="SUZUKI">{{ "SUZUKI" | titlecase}}</option>
+            <option value="TOYOTA">{{ "TOYOTA" | titlecase}}</option>
+            <option value="PONTIAC">{{ "PONTIAC" | titlecase}}</option>
+            <option value="ROLLS_ROYCE">{{ "ROLLS ROYCE" | titlecase}}</option>
+            <option value="SMART">{{ "SMART" | titlecase}}</option>
+            <option value="SSANGYONG">{{ "SSANGYONG" | titlecase}}</option>
+            <option value="TESLA">{{ "TESLA" | titlecase}}</option>
+            <option value="VOLVO">{{ "VOLVO" | titlecase}}</option>
+            <option value="DATSUN">{{ "DATSUN" | titlecase}}</option>
+            <option value="VOLKSWAGEN">{{ "VOLKSWAGEN" | titlecase}}</option>
+            <option value="TAGAZ">{{ "TAGAZ" | titlecase}}</option>
+            <option value="HAVAL_ROVER">{{ "HAVAL ROVER" | titlecase}}</option>
+            <option value="GENESIS">{{ "GENESIS" | titlecase}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col d-inline-flex">
+        <div class="form-outline">
+          <label><h6>Car body type</h6></label>
+          <select class="form-select" name="carBodyTypes" id="car-body-type-input" [(ngModel)]="car.carBodyTypes">
+            <option value="SEDAN">Sedan</option>
+            <option value="COUPE">Coupe</option>
+            <option value="SPORTS_CAR">Sports car</option>
+            <option value="STATION_WAGON">Station wagon</option>
+            <option value="HATCHBACK">Hatchback</option>
+            <option value="CONVERTIBLE">Convertible</option>
+            <option value="MINIVAN">Minivan</option>
+            <option value="PICKUP">Pickup</option>
+            <option value="SUV">SUV</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row mb-4 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
+      <div class="col">
+        <div class="form-outline mb-4">
+          <label><h6>Transmission box type</h6></label>
+          <div class="form-check"  id="transmission-box-input">
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+                   checked value="MECHANICAL" id="MECHANICAL">
+            <label class="form-check-label" >
+              Mechanical
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+                   value="AUTOMATIC" id="AUTOMATIC">
+            <label class="form-check-label" >
+              Automatic
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+                   value="ROBOTIC" id="ROBOTIC">
+            <label class="form-check-label" >
+              Robotic
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+                   value="VARIATIONAL" id="VARIATIONAL">
+            <label class="form-check-label" >
+              Variational
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-outline">
+          <label><h6>Production year</h6></label>
+          <input type="number" class="form-control" name="year" id="year-input" [(ngModel)]="car.year" #year="ngModel"
+                 [ngClass]="{'border border-3 border-danger' : year.invalid && (year.touched || year.dirty) ||
+                  trySubmitted && year.errors?.['required'] || car.year! > concurredYear}"
+                 style="background: #f5f1ed;width: 80px;" required max="{{concurredYear + 1}}" min="1920" pattern="^[0-9]*$">
+
+          <div id="year-input-error-massage">
+
+            <ng-container *ngIf="year.invalid && (year.touched || year.dirty) || car.year! > concurredYear ||
+           trySubmitted && year.errors?.['required']">
+
+              <ng-container *ngIf="year.errors?.['required'] || trySubmitted && year.errors?.['required']">
+                <span class="text-danger">Produce year is required.</span>
+              </ng-container>
+              <ng-container *ngIf="year.errors?.['min']">
+                <span class="text-danger">Produce year must be greater than 1920.</span>
+              </ng-container>
+              <ng-container *ngIf="year.errors?.['pattern'] && !year.errors?.['min']">
+                <span class="text-danger">Produce year must be positive and not fractional number.</span>
+              </ng-container>
+              <ng-container *ngIf="car.year! > concurredYear && !year.errors?.['pattern']">
+                <span class="text-danger">Produce year must be less than {{concurredYear + 1}}.</span>
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="form-outline">
+          <label><h6>Engine capacity</h6></label>
+
+          <div class="input-group rounded">
+
+            <div class="d-inline-flex" style="height: 38px;">
+              <input type="number" step="0.1" class="form-control" name="engineCapacity"
+
+                     style="width: 75px; background: #f5f1ed;" required min="0.0" max="15.1"
+                     id="engine-capacity-input" [(ngModel)]="car.engineCapacity" #engineCapacity="ngModel"
+                     [ngClass]="{'border border-3 border-danger' :
+                 engineCapacity.invalid && (engineCapacity.touched || engineCapacity.dirty) || car.engineCapacity! > 15.0
+                 || trySubmitted && engineCapacity.errors?.['required']}">
+
+              <span class="input-group-text" [ngClass]="{'border border-3 border-danger' :
+                 engineCapacity.invalid && (engineCapacity.touched || engineCapacity.dirty) || car.engineCapacity! > 15.0
+                 || trySubmitted && engineCapacity.errors?.['required']}"
+                    style="background: #f5f1ed;">liters</span>
+            </div>
+          </div>
+
+          <div id="engine-capacity-input-error-massage">
+            <ng-container *ngIf="car.engineCapacity! > 15.0 || engineCapacity.invalid &&
+           (engineCapacity.touched || engineCapacity.dirty) || trySubmitted && engineCapacity.errors?.['required']">
+
+              <ng-container *ngIf="engineCapacity.errors?.['required'] || trySubmitted && engineCapacity.errors?.['required']">
+                <span class="text-danger ">Engine capacity is required.</span>
+              </ng-container>
+              <ng-container *ngIf="engineCapacity.errors?.['min']">
+                <span class="text-danger">Engine capacity must be positive number or 0.</span>
+              </ng-container>
+              <ng-container *ngIf="car.engineCapacity! > 15.0">
+                <span class="text-danger ">Engine capacity must be less than 15,0.</span>
+              </ng-container>
+            </ng-container>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label><h6>Short description</h6></label>
+      <textarea class="form-control" rows="6" name="shortDescription" id="short-description-input"
+                [(ngModel)]="car.shortDescription" #shortDescription="ngModel"
+                [ngClass]="{'border border-3 border-danger' :
+                shortDescription.invalid && (shortDescription.touched || shortDescription.dirty)
+                 || car.shortDescription!.length > 1000}"
+                maxlength="1001" style="background: #f5f1ed;"
+                pattern="{{regexStringDescriptions}}"></textarea>
+
+      <div id="short-description-input-error-massage">
+        <ng-container *ngIf="shortDescription.invalid && (shortDescription.touched || shortDescription.dirty) ||
+      car.shortDescription!.length > 1000 ">
+
+          <ng-container *ngIf="car.shortDescription!.length! > 1000">
+            <span class="text-danger">Short description must be less than 1000.</span>
+          </ng-container>
+          <ng-container *ngIf="shortDescription.errors?.['pattern'] &&
+           ( !shortDescription.errors?.['maxlength'])">
+          <span class="text-danger">The short description should not contain anything
+            but a word, numbers and punctuation marks, also cannot start with number or punctuation mark.</span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-outline mb-4">
+      <label><h6>Full description</h6></label>
+      <textarea class="form-control" rows="6" name="fullDescription" id="full-description-input"
+                [(ngModel)]="car.fullDescription" #fullDescription="ngModel"
+                [ngClass]="{'border border-3 border-danger' : fullDescription.invalid &&
+                (fullDescription.touched || fullDescription.dirty) || car.fullDescription!.length! > 5000}"
+                maxlength="5001" style="background: #f5f1ed;"
+                pattern="{{regexStringDescriptions}}"></textarea>
+
+      <div id="full-description-input-error-massage">
+        <ng-container *ngIf="fullDescription.invalid && (fullDescription.touched || fullDescription.dirty)
+       || car.fullDescription!.length! > 5000">
+
+          <ng-container *ngIf="car.fullDescription!.length! > 5000">
+            <span class="text-danger">Full description must be less than 5000.</span>
+          </ng-container>
+          <ng-container *ngIf="fullDescription.errors?.['pattern'] && ( !fullDescription.errors?.['maxlength'])">
+          <span class="text-danger">The full description should not contain anything
+            but a word, numbers and punctuation marks, also cannot start with number or punctuation mark.</span>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-outline mb-4">
+
+      <label><h6>Additional options</h6></label>
+
+      <mat-form-field style="background: #f5f1ed; color: #252323; width: 100%;" appearance="fill" class="rounded">
+        <mat-chip-list #optionList aria-label="Car selection" >
+          <mat-chip *ngFor="let option of options; let i = index" (removed)="remove(option)" >
+            <div id ="option-{{i}}">{{option.name}}</div>
+            <button matChipRemove id="option-{{i}}-remove-button">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input placeholder="New option..."
+                 maxlength="21"
+                 id="additional-options-input"
+                 [matChipInputFor]="optionList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="addOnBlur"
+                 (matChipInputTokenEnd)="add($event)"
+          >
+        </mat-chip-list>
+      </mat-form-field>
+
+    </div>
+
+    <ng-template #errorCarInfoModal let-modal >
+      <div class="modal-header" id="error-car-info-header" style="background: #dad2bc">
+        <h4 class="modal-title text-danger">Incorrect car info</h4>
+      </div>
+      <div class="text-center" id="error-car-info-body"  style="background: #dad2bc">
+        You entered incorrect information about car. Please, check your entered date and try again.
+      </div>
+      <div class="modal-footer" style="background: #dad2bc">
+        <button type="button" class="btn btn-outline-dark close" id="error-car-info-ok-button"
+                (click)="modal.close('Save click')" aria-label="Close">
+          <span aria-hidden="true">&times; Close</span>
+        </button>
+      </div>
+    </ng-template>
+
+    <ng-template #editImage let-modal0 data-backdrop="static">
+      <div class="modal-header" style="background: #dad2bc">
+        <h4 class="modal-title" id="modal-edit-image-title">Upload image</h4>
+      </div>
+      <div class="modal-body" style="background: #dad2bc">
+
+        <ng-container *ngIf="!imageIsUploaded || !tryChangeImage">
+          <input class="form-control" style="background: #dad2bc;" type="file" accept="image/png, image/gif, image/jpeg" id="image-input"
+                 (change)="onFileSelected($event)">
+        </ng-container>
+
+        <ng-container *ngIf="imageTypeIsValid && imageIsUploaded && tryChangeImage">
+          <div class="col-md-8">
+            <image-cropper
+              [imageChangedEvent]="imgChangeEvt"
+              [maintainAspectRatio]="true"
+              [aspectRatio]="4 / 3"
+              [resizeToWidth]="768"
+              [resizeToHeight]="576"
+              format="png"
+              (imageCropped)="cropImg($event)"
+              (imageLoaded)="imgLoad()"
+              (cropperReady)="initCropper()"
+              (loadImageFailed)="imgFailed()">
+            </image-cropper>
+          </div>
+
+        </ng-container>
+
+      </div>
+      <div class="modal-footer" style="background: #dad2bc">
+        <div class="d-flex bd-highlight mb-3">
+          <div class="container">
+            <ng-container *ngIf="!(imageIsUploaded && tryChangeImage && imageTypeIsValid)">
+              <button type="button" class="btn btn-outline-secondary" style="background: #c0b7b1"
+                      id="image-modal-come-back-button" (click)="modal0.close('Save click')">
+                <img src="assets/icons/cross.png">
+              </button>
+            </ng-container>
+          </div>
+          <ng-container *ngIf="imageIsUploaded && tryChangeImage && imageTypeIsValid">
+            <button type="button" class="btn btn-outline-secondary" style="background: #c0b7b1" id="apply-image-upload-button"
+                    (click)="[modal0.close('Save click'), changeImageIsFalse()]">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z"/>
+                <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+              </svg>
+            </button>
+          </ng-container>
+        </div>
+      </div>
+    </ng-template>
+
+  </div>
+
+  <div class="card-footer d-flex justify-content-end">
+
+    <div>
+      <div class="nav nav-pills nav-justified">
+        <div>
+          <app-come-back-button></app-come-back-button>
+        </div>
+        <div>
+          <div class="container my-2">
+            <button type="submit" (click)="updateCar(errorCarInfoModal)" class="btn " style="background: #a1cca5" id="submit-car-button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check2"
+                   viewBox="0 0 16 16">
+                <path
+                  d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+              </svg>
+              <span>Submit</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

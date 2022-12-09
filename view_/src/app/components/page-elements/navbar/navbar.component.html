@@ -1,0 +1,56 @@
+<nav class="navbar navbar-expand-lg " style="background: #252323">
+  <div class="container-fluid">
+
+    <div class="navbar-header" id="logo-header">
+      <a class="navbar-brand" href="/car-catalog">
+      <span>
+        <img src="assets/img.png" alt="Logo" id="logo-image" width="100" height="63" class="d-inline-block align-middle mr-2">
+      </span>
+        <span class="fs-2 fw-bolder" h="271" id="logo-name" style="color: #f5f1ed">Car Catalog</span>
+      </a>
+    </div>
+
+    <span>
+      <button class="navbar-toggler" type="button" (click)="basicNavbar.toggle()" style="background: #c0b7b1"
+              data-mdb-toggle="collapse"
+              data-mdb-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    </span>
+
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent"
+         mdbCollapse #basicNavbar="mdbCollapse">
+
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+
+        <ng-container *ngIf="loginService.isAuthenticated()">
+          <li>
+            <div class="container my-2" id="user-icon">
+              <div class="navbar-brand d-inline-flex">
+                <img src=" assets/icons/user.png" alt="Avatar Logo" class="rounded-pill">
+                <span style="color: #f5f1ed"> &nbsp;Admin_1</span>
+              </div>
+            </div>
+          </li>
+
+          <li class="nav-item me-3 me-lg-0" >
+            <ng-container *ngIf="!isAddCarPage">
+              <app-add-car-button></app-add-car-button>
+            </ng-container>
+          </li>
+          <li class="nav-item me-3 me-lg-0">
+            <app-logout-button></app-logout-button>
+          </li>
+        </ng-container>
+        <ng-container *ngIf="!loginService.isAuthenticated() && !isLoginPage">
+          <li class="nav-item me-3 me-lg-0">
+            <app-login-button></app-login-button>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+</nav>

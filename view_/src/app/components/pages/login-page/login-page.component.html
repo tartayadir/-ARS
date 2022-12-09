@@ -1,0 +1,113 @@
+<form class="needs-validation">
+  <section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card text-white" style="border-radius: 1rem; background: #252323" >
+            <div class="card-body p-5 text-center">
+
+              <div class="mb-md-5 mt-md-4 pb-5" id="login-form">
+
+                <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
+
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label">Username</label>
+                  <input type="text" class="form-control form-control-lg" cdkTrapFocus cdkTrapFocusAutoCapture
+                         style="background: #f5f1ed" name="username"
+                         id="usernameInputField" minlength="2" maxlength="31" pattern='^[a-zA-z0-9_]+' required
+                         [(ngModel)]="loginInfo.username" #username="ngModel" >
+
+                  <div  id="usernameErrorMassage">
+                    <ng-container *ngIf="username.invalid && (username.touched || username.dirty) ||
+                      username.errors?.['required'] && trySubmitted">
+                      <ng-container *ngIf="username.errors?.['required'] ||
+                      username.errors?.['required'] && trySubmitted" class="invalid-feedback">
+                        <span class="text-danger">Username is required.</span>
+                      </ng-container>
+                      <ng-container *ngIf="username.errors?.['minlength']" class="invalid-feedback">
+                        <span class="text-danger">Username must be greater than 2.</span>
+                      </ng-container>
+                      <ng-container *ngIf="username.errors?.['pattern'] && !username.errors?.['minlength']"
+                                    class="invalid-feedback">
+                      <span class="text-danger">Username must not contain anything other than digits,
+                        letters and underlining.</span>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="loginInfo!.username!.length > 30 &&
+                    !(username.invalid && (username.touched || username.dirty))"
+                                  class="invalid-feedback">
+                      <span class="text-danger">Username must be less than 30.</span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="form-outline form-white mb-4">
+                  <label class="form-label" >Password</label>
+                  <input type="password" class="form-control form-control-lg" style="background: #f5f1ed" name="password"
+                         minlength="8" maxlength="102" pattern='^[a-zA-z0-9_]+' required
+                         id="passwordInputField" #password="ngModel" [(ngModel)]="loginInfo.password">
+
+                  <div id="passwordErrorMassage">
+                    <ng-container *ngIf="password.invalid && (password.touched || password.dirty) ||
+                       password.errors?.['required'] && trySubmitted">
+                      <ng-container *ngIf="password.errors?.['required'] ||
+                       password.errors?.['required'] && trySubmitted" class="invalid-feedback">
+                        <span class="text-danger">Password is required.</span>
+                      </ng-container>
+                      <ng-container *ngIf="password.errors?.['minlength']" class="invalid-feedback">
+                        <span class="text-danger">Password must be greater than 8.</span>
+                      </ng-container>
+                      <ng-container *ngIf="password.errors?.['pattern'] && !password.errors?.['minlength']"
+                                    class="invalid-feedback">
+                      <span class="text-danger">Password must not contain anything other than digits,
+                        letters and underlining.</span>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="loginInfo!.password!.length > 100 &&
+                    !(password.invalid && (password.touched || password.dirty))" class="invalid-feedback">
+                      <span class="text-danger">Password must be less than 100.</span>
+                    </ng-container>
+                  </div>
+                </div>
+
+                <div class="container d-flex justify-content-center ">
+                  <div class="nav pull-right my-2 d-flex">
+                    <app-come-back-button></app-come-back-button>
+                    <div class="my-2">
+                      <button class="btn" style="background: #a1cca5" id="sendLoginDataButton" (click)="login(errorUserInfoModal)"
+                              (mouseover)="mouseIsOver = false" (mouseleave)="mouseIsOver=true">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-door-open" viewBox="0 0 16 16">
+                          <path d="M8.5 10c-.276 0-.5-.448-.5-1s.224-1 .5-1 .5.448.5 1-.224 1-.5 1z"/>
+                          <path d="M10.828.122A.5.5 0 0 1 11 .5V1h.5A1.5 1.5 0 0 1 13 2.5V15h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V1.5a.5.5 0 0 1 .43-.495l7-1a.5.5 0 0 1 .398.117zM11.5 2H11v13h1V2.5a.5.5 0 0 0-.5-.5zM4 1.934V15h6V1.077l-6 .857z"/>
+                        </svg>
+                        <span>Sign in</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <ng-template #errorUserInfoModal let-modal>
+                  <div id="errorUserInfoModal">
+                    <div class="modal-header" id="modal-header" style="background: #dad2bc">
+                      <h4 class="modal-title text-danger" id="modal-basic-title">Incorrect user info</h4>
+                    </div>
+                    <div class="modal-body" div="modal-body" style="background: #dad2bc">
+                      You entered incorrect username or password. Please, check your entered date and try again.
+                    </div>
+                    <div class="modal-footer" style="background: #dad2bc">
+                      <button type="button" id="okButton"
+                              class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+                    </div>
+                  </div>
+                </ng-template>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+

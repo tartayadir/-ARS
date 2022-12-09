@@ -1,0 +1,75 @@
+<div class="container my-4">
+  <div class="card border-secondary text-dark my-4 " style="background: #f5f1ed">
+
+    <div class="card-header">
+      <h2 class="card-title text-center" id="car-brand-model"><b>{{car?.brand!.toString() | titlecase}}
+      </b><b>{{car!.model}}</b></h2>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-7 my-4">
+        <div class = "text-center mx-2 card-header">
+          <img cacheimg  [src]="car.image" alt="9" class="card-img-top my-1">
+        </div>
+      </div>
+      <div class="col-sm-5 my-4">
+        <div class="mx-2">
+          <h3 class="card-title mx-2">Characteristics</h3>
+          <ul class=" list-group-flush text-dark" style="background: #f5f1ed">
+            <li class="list-group-item text-dark" id="car-body-type" style="background: #f5f1ed"><b>Body type : </b>{{car.carBodyTypes | titlecase}}</li>
+            <li class="list-group-item text-dark" id="car-transmission-type" style="background: #f5f1ed"><b>Transmission type : </b>{{car.transmissionBoxTypes | titlecase}}</li>
+            <li class="list-group-item text-dark" id="car-engine-capacity" style="background: #f5f1ed">
+              <ng-container *ngIf="car?.engineCapacity! == 0">
+                <b>Engine : </b> Electric engine
+              </ng-container>
+              <ng-container *ngIf="car?.engineCapacity! > 0">
+                <b>Engine capacity : </b>{{car.engineCapacity | number: '1.1'}} liter inline
+              </ng-container>
+            </li>
+            <li class="list-group-item text-dark" id="car-produce-year" style="background: #f5f1ed"><b>Production year : </b>{{car!.year}}</li>
+            <ng-container *ngIf="car.additionalOptions.length > 0">
+              <li class="list-group-item text-dark" id="car-year" style="background: #f5f1ed">
+                <b>Additional options :</b>
+                <ng-container *ngFor="let option of car.additionalOptions">
+            <span id="car-option-{{option}}" class="text-dark" style="background: #f5f1ed; border: none">
+               {{option}}</span>,
+                </ng-container>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <ng-container *ngIf="hasDescription()">
+      <div class="card-body mx-2">
+        <h3 class="card-title">Overview</h3>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-dark" id="car-full-description"
+              style="background: #f5f1ed;white-space: pre-line">{{car!.fullDescription}}</li>
+        </ul>
+      </div>
+    </ng-container>
+
+    <div class = "card-footer justify-content-end">
+
+      <div>
+        <div class="nav nav-pills nav-justified d-flex bd-highlight mb-3">
+          <div class="me-auto p-2 bd-highlight">
+            <app-come-back-button></app-come-back-button>
+          </div>
+          <div class="p-2 bd-highlight my-2">
+            <app-edit-car-button [carId]=car!.id
+                                 [carBrand]="car.brand" [carModel]="car.model"></app-edit-car-button>
+          </div>
+          <div class="p-2 bd-highlight my-2">
+            <app-confirm-delete-car-button [carId]=car!.id [imageFileName]="car!.imageFileName"
+                                           [brand]="car!.brand" [model]="car!.model">
+            </app-confirm-delete-car-button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

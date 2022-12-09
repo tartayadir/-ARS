@@ -1,0 +1,21 @@
+<div class="card border-secondary text-dark bg-light h-100 my2">
+  <div class="text-center mx-auto card-header my-2">
+    <a [routerLink]="['details', car.id]">
+      <img [src]="car.image" alt="9" class="card-img-top img-responsive my-2 ">
+    </a>
+  </div>
+  <div class="card-body d-flex flex-column">
+    <h5 class="card-title text-center"><b>{{car.brand}}</b>&nbsp;<b>{{car.model | uppercase}}</b></h5>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item text-dark bg-light">{{car!.shortDescription}}</li>
+    </ul>
+  </div>
+  <div class="card-footer">
+    <div class="container d-flex ">
+      <div class="nav pull-right my-2">
+        <app-edit-car-button [carId]=car!.id></app-edit-car-button>
+        <app-delete-car-button [carId]=car!.id></app-delete-car-button>
+      </div>
+    </div>
+  </div>
+</div>
