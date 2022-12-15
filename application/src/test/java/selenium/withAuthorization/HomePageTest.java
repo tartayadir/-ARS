@@ -370,6 +370,11 @@ public class HomePageTest {
     private static void addCar(){
 
         driver.get(homePageURL);
+
+        threadSleep1Seconds();
+        threadSleep1Seconds();
+        threadSleep1Seconds();
+
         wait.until(visibilityOfElementLocated(xpath("//*[@id=\"addCarButton\"]"))).click();
 
         Select brandSelect = new Select(driver.findElement(xpath("//*[@id=\"brand-input\"]")));
@@ -433,8 +438,11 @@ public class HomePageTest {
 
         wait.until(visibilityOfElementLocated(xpath("//*[@id=\"sendLoginDataButton\"]"))).click();
         threadSleep1Seconds();
+        threadSleep1Seconds();
+        threadSleep1Seconds();
         driver.get(getHomePageURL());
-        wait.until(visibilityOfElementLocated(xpath("//*[@id=\"logout-button\"]")));
+
+        threadSleep1Seconds();threadSleep1Seconds();
     }
 
     private static void logout() {

@@ -91,31 +91,6 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.jasypt</groupId>-->
-<!--            <artifactId>jasypt</artifactId>-->
-<!--            <version>1.9.3</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>com.github.ulisesbocchio</groupId>-->
-<!--            <artifactId>jasypt-spring-boot-starter</artifactId>-->
-<!--            <version>3.0.4</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>io.swagger</groupId>-->
-<!--            <artifactId>swagger-jersey-jaxrs</artifactId>-->
-<!--            <version>1.5.12</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springdoc</groupId>-->
-<!--            <artifactId>springdoc-openapi-ui</artifactId>-->
-<!--            <version>1.6.4</version>-->
-<!--        </dependency>-->
-
-
     </dependencies>
 
     <build>
@@ -137,11 +112,6 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>com.github.ulisesbocchio</groupId>-->
-<!--                <artifactId>jasypt-maven-plugin</artifactId>-->
-<!--                <version>3.0.3</version>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 

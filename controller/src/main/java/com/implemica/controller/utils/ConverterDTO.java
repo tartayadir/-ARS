@@ -32,7 +32,7 @@ public class ConverterDTO {
         carDTO.setShortDescription(car.getShortDescription());
         carDTO.setFullDescription(car.getFullDescription());
         carDTO.setAdditionalOptions(car.getAdditionalOptions());
-        carDTO.setImageFileName(car.getImageFileName());
+        carDTO.setImageFileId(car.getImageFileName());
 
         return carDTO;
     }
@@ -52,7 +52,7 @@ public class ConverterDTO {
         String fullDescription = carDTO.getFullDescription();
         car.setFullDescription(fullDescription == null ? "" : fullDescription);
         car.setAdditionalOptions(carDTO.getAdditionalOptions());
-        car.setImageFileName(carDTO.getImageFileName());
+        car.setImageFileName(carDTO.getImageFileId());
 
         return car;
     }

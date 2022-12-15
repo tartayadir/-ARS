@@ -95,7 +95,7 @@ public class CarDTO implements Serializable {
     @ApiModelProperty(name = "Car image file name", position = 11, example = "default-car-image")
     @NotEmpty(message = "Image file name is required and cannot be empty or null.")
     @Size(min = 10, max = 150, message = "Image file name must be greater than 10 and less then 150.")
-    private String imageFileName;
+    private String imageFileId;
 
     public void setEngineCapacity(double engineCapacity) {
         this.engineCapacity = engineCapacity;

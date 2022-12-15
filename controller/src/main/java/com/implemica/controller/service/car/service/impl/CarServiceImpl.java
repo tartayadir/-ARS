@@ -24,6 +24,11 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public Car findById(Long id) throws NoSuchCarException {
+
+        if (id == null){
+            throw new IllegalArgumentException("Id cannot be null");
+        }
+
         return carRepository.findById(id).orElseThrow(
                 () -> new NoSuchCarException(format("Cannot find car with id %d", id)));
     }

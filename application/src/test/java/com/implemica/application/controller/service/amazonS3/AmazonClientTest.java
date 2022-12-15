@@ -22,8 +22,8 @@ import org.springframework.web.multipart.MultipartFile;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.http.MediaType.IMAGE_PNG;
-import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.http.MediaType.IMAGE_JPEG;
 
 @Slf4j
 @SpringBootTest(classes = SpringBootTest.class)
@@ -68,12 +68,26 @@ class AmazonClientTest {
     void uploadFileTos3bucket() {
 
         String fileName = "testFile";
-        MultipartFile multipartFile = new MockMultipartFile(
-                "imageFile", fileName + expansion,
-                String.valueOf(IMAGE_PNG),
+        MultipartFile file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
                 "123".getBytes());
 
-        uploadAndCheckFile(multipartFile, fileName);
+        uploadAndCheckFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        uploadAndCheckFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        uploadAndCheckFile(file, fileName);
     }
 
     @Test
@@ -86,18 +100,39 @@ class AmazonClientTest {
                 "123".getBytes());
 
         uploadAndCheckInvalidFile(multipartFile, fileName);
+
+        multipartFile = new MockMultipartFile(
+                "imageFile", fileName + ".exe",
+                TEXT_HTML_VALUE,
+                "123".getBytes());
+
+        uploadAndCheckInvalidFile(multipartFile, fileName);
     }
 
     @Test
     void deleteFileFromS3Bucket() {
 
         String fileName = "testFile";
-        MultipartFile multipartFile = new MockMultipartFile(
-                "imageFile", fileName + expansion,
-                String.valueOf(IMAGE_PNG),
+        MultipartFile file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
                 "123".getBytes());
 
-        deleteAndCheckFileFromS3Bucket(multipartFile, fileName);
+        checkDeleteFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName);
     }
 
     private static void uploadAndCheckFile(MultipartFile multipartFile, String fileName) {
@@ -124,7 +159,7 @@ class AmazonClientTest {
                 hasMessageContaining("Invalid image type.");
     }
 
-    private static void deleteAndCheckFileFromS3Bucket(MultipartFile multipartFile, String fileName) {
+    private static void checkDeleteFile(MultipartFile multipartFile, String fileName) {
 
         try {
 

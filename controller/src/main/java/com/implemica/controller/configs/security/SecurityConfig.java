@@ -70,22 +70,20 @@ public class SecurityConfig {
         http.csrf().disable();
         http.cors().configurationSource(request -> configuration);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers(POST, "/api/login").permitAll();
+        http.authorizeRequests().antMatchers(POST, "/authorization/login").permitAll();
 
         http.authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll();
 
-        http.authorizeRequests().antMatchers(POST, "/image/upload/**").hasAnyAuthority("ADMIN_ROLE");
-        http.authorizeRequests().antMatchers(DELETE, "/image/delete/**").hasAnyAuthority("ADMIN_ROLE");
-        http.authorizeRequests().antMatchers(GET, "/car-catalog/all-cars").permitAll();
-        http.authorizeRequests().antMatchers(GET, "/car-catalog/details/**").permitAll();
-        http.authorizeRequests().antMatchers(POST, "/car-catalog/add").hasAnyAuthority("ADMIN_ROLE");
-        http.authorizeRequests().antMatchers(PUT, "/car-catalog/update/**").hasAnyAuthority("ADMIN_ROLE");
-        http.authorizeRequests().antMatchers(DELETE, "/car-catalog/remove/**").hasAnyAuthority("ADMIN_ROLE");
+        http.authorizeRequests().antMatchers(POST, "/image/**").hasAnyAuthority("ADMIN_ROLE");
+        http.authorizeRequests().antMatchers(DELETE, "/image/**").hasAnyAuthority("ADMIN_ROLE");
+        http.authorizeRequests().antMatchers(GET, "/car-catalog").permitAll();
+        http.authorizeRequests().antMatchers(GET, "/car-catalog/**").permitAll();
+        http.authorizeRequests().antMatchers(POST, "/car-catalog").hasAnyAuthority("ADMIN_ROLE");
+        http.authorizeRequests().antMatchers(PUT, "/car-catalog/**").hasAnyAuthority("ADMIN_ROLE");
         http.authorizeRequests().antMatchers(DELETE, "/car-catalog/**").hasAnyAuthority("ADMIN_ROLE");
 
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
-//        http.authenticationManager(authManager(http));
 
         return http.build();
     }

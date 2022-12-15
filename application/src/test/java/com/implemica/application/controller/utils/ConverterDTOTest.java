@@ -58,7 +58,7 @@ class ConverterDTOTest {
                 shortDescription("Short description 2").
                 fullDescription("Full description 2").
                 additionalOptions(List.of("Option 4", "Option 5", "option 6")).
-                imageFileName("Image file 2").
+                imageFileId("Image file 2").
                 build();
     }
 
@@ -147,7 +147,7 @@ class ConverterDTOTest {
         assertEquals(carAdditionalOptions, carDtoAdditionalOptions);
 
         String carImageNameFile = car.getImageFileName();
-        String carDtoImageNameFile = carDTO.getImageFileName();
+        String carDtoImageNameFile = carDTO.getImageFileId();
         assertEquals(carImageNameFile, carDtoImageNameFile);
     }
 

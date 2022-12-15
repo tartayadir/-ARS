@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/authorization")
 @RequiredArgsConstructor
 @Slf4j
 @Api(tags = {"Authorization API"}, description = "Api section for Authorization service")

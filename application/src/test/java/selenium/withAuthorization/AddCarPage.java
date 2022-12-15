@@ -251,6 +251,7 @@ public class AddCarPage {
         String exceptedErrorValidationMassage = "Model is required.";
 
         pageNavigation.clickOnElement(submitCarButton);
+
         checkAndCloseModalCarInfo();
         checkRequiredValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
     }
@@ -262,6 +263,7 @@ public class AddCarPage {
         checkErrorValidationMassage("", modelInputErrorMassage);
 
         fillFieldsAddForm(car, image);
+
         modelInput.sendKeys(chord(CONTROL, "a", DELETE));
         checkRequiredValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
     }
@@ -274,13 +276,16 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField("s", modelInput);
+        sendPutTextKeyInInputField(modelInput, "s");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField("f", modelInput);
+        sendPutTextKeyInInputField(modelInput, "f");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField("t", modelInput);
+        sendPutTextKeyInInputField(modelInput, "t");
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, "y");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
     }
 
@@ -292,13 +297,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomString(41), modelInput);
+        sendPutTextKeyInInputField(modelInput, "XfCfnMoLnRgJSUftcdbdkJdDLqYhXKKnAujHcxNDG");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(85), modelInput);
+        sendPutTextKeyInInputField(modelInput, "fwzGmTPmqiCKzewfEWzGPmZCuosNZOeERhhJafrcyWEPplrUjLybCFVMUEXPIpafMHiZBqfrpnubHuijRkJYC");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(51), modelInput);
+        sendPutTextKeyInInputField(modelInput, "rrXlYiBpsqPhYlOMDFiOdYeCFMVSRVWeOESlbQNWrpcFUZhZCni");
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomString(41));
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomString(85));
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomString(51));
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
     }
 
@@ -311,13 +325,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(21), modelInput);
+        sendPutTextKeyInInputField(modelInput, "^&iesrTAz^bmNeMtN](yD");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(12), modelInput);
+        sendPutTextKeyInInputField(modelInput, "#k^AW*QVGnN");
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(37), modelInput);
+        sendPutTextKeyInInputField(modelInput, "z#Rff##(AV)uz)AqY(TJ#PKOWq^[Oet(PAv");
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomStringWithSpecialChars(21));
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomStringWithSpecialChars(12));
+        checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
+
+        sendPutTextKeyInInputField(modelInput, generateRandomStringWithSpecialChars(37));
         checkFieldValidation(exceptedErrorValidationMassage, modelInputErrorMassage);
     }
 
@@ -328,6 +351,7 @@ public class AddCarPage {
         checkErrorValidationMassage("", yearInput);
 
         fillFieldsAddForm(car, image);
+
         yearInput.sendKeys(chord(CONTROL, "a", DELETE));
         checkRequiredValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
     }
@@ -340,13 +364,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField("0", yearInput);
+        sendPutTextKeyInInputField(yearInput, "0");
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
 
-        sendPutTextKeyInInputField("1919", yearInput);
+        sendPutTextKeyInInputField(yearInput, "1919");
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
 
-        sendPutTextKeyInInputField("1567", yearInput);
+        sendPutTextKeyInInputField(yearInput, "1567");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "1111");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "928");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "1291");
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
     }
 
@@ -359,13 +392,43 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(Integer.toString(year), yearInput);
+        sendPutTextKeyInInputField(yearInput, Integer.toString(year));
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
 
-        sendPutTextKeyInInputField("3442", yearInput);
+        sendPutTextKeyInInputField(yearInput, "3442");
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
 
-        sendPutTextKeyInInputField("2344", yearInput);
+        sendPutTextKeyInInputField(yearInput, "2344");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "3928");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+    }
+
+    @Test
+    void productionYearValidationDoubleNumber() {
+
+        String exceptedErrorValidationMassage = "Produce year must be positive and not fractional number.";
+        checkErrorValidationMassage("", yearInputErrorMassage);
+
+        fillFieldsAddForm(car, image);
+
+        sendPutTextKeyInInputField(yearInput, "2012.2");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "1980.123");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "2020.3");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "2021.4555");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "2004.2");
+        checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
+
+        sendPutTextKeyInInputField(yearInput, "2000.53");
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
     }
 
@@ -376,6 +439,7 @@ public class AddCarPage {
         checkErrorValidationMassage("", engineCapacityInput);
 
         fillFieldsAddForm(car, image);
+
         engineCapacityInput.sendKeys(chord(CONTROL, "a", DELETE));
         checkRequiredValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
     }
@@ -388,13 +452,13 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField("-0.1", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "-0.1");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
 
-        sendPutTextKeyInInputField("-50", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "-50");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
 
-        sendPutTextKeyInInputField("-0.2", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "-0.2");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
     }
 
@@ -406,13 +470,13 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField("15,1", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "15,1");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
 
-        sendPutTextKeyInInputField("345,32", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "345,32");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
 
-        sendPutTextKeyInInputField("33,333", engineCapacityInput);
+        sendPutTextKeyInInputField(engineCapacityInput, "33,333");
         checkFieldValidation(exceptedErrorValidationMassage, engineCapacityInputErrorMassage);
     }
 
@@ -424,13 +488,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomString(1001), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "oOgcYySOQkexghvjCixQyzTywvuZvfoxtApWwHLdqWNYqsUciDqCfRIeJgwapZVlXquQKoxvJVOpygnsQaxZfRZMTOWxqZKUjAAbZgKPBrahrowonquCSyWHqxOBBhpEWVVeMHgckaAIdxnZQpzCUrvYyZpycRFRjnLwxLTzisNitEGSwzSPOvZGlSjhGUtyiDiNJBQORDXYVflylsxLknTKSZWnTnPFdUSsRMJMKIeVJexkJLYsnpFPHtZnKfuRukLHHXlTMeiiwWTrTOBWynYBPJceKSCdDiQzPbTBOWZhxhAwwuwqTrnhmIicEBzpsSbAWjaaEWneSlzeGZwBWyDTuQdksOcETBjTQVEfOmdNroAJdoBxpcLfZPCVhNfONdXqDZyLKIupXOLcqrnwHSVBsuikTugfsBLjzWhMaoziCIcTEEsqiHHRQEtyEYjgadLVSUdvHJoIyERjsYrubNRjZBvFmCLGZTbhYioamKXgtRLdVMpTfjjiTmaSSICkrpUKziHZTZYjHKrCeDbGBHryYyqhpsCvcsZjkPwNBHIomVEaYKTCEzwJQYQnjCKURKGIeQAloeHMBuOLYUgUWevHIyFQqVstEAgnOJahGZzUwMfBFdXMVMwgyWauvacTooDIEANBRWAeXgvaHSNLQfCyIusFwSSEMjYsvxCffjDedmBRIGaHeVSrAFOSHHBFvuGxjzPKtdSDwUBcZViSSGUBJBNxNUnUwnBhiLQSSQioKoQHQRNdJSSXswPaUohTCrmWAIoYOnDjaeIRTtoDHyvoXAuoNKUvSTndFdbWTipxecNeAEUtsLDGsvKrIYvCGgLnHhwKQPgPqSlaWvwbfJNKFiJUolYexgsPjVsWDbOxRnWWYaOgXNEVlziQjUQxpvZazMatXzmqVdwhajOTpAJgEYZVkZRIpsgoRYmpSTtEbqbTILrAKEOKtVKzHJYcZXdnQeRdqpBBlBBnEpByqjduYxmYDepmApmqAoVvh");
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(1023), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "BdxRJStcybUScdkgkiqlzhkoviVoDXvQDFouQQEeMCTMVzUxiMbgcwnCKQReVTNsSWzdJhaYbuSoglQxnhSJceTqZgZxCCAarpClUZbkQrMlHUDMOFOYvfEkNSJqfgorkvCxWmWDdgRItSNNfeWaclrgDdtVEUvbOxSmufJDqzYKymWyLNdleEtQinGGFvqAxXKRJUkqqMHXuoLaGrQmLNMBoJRfUyhSLzzzIqVnvRGCkXtqJZkYAnXRSJdbgPGYoOYpHTCiCXXFeiAxbEelypxVQzEXWmIZtqeANyctIoCGmiaAPIFLuzchvMsyxfzpVPbqTpzUuaNSGzkfNngwzqqQOhgqrnnZBDdZFdxlGaKVXIpRyGdTdqVplYOtHPapeKpanCiktZAMTdmLwjuADwVJCznDhSqKEptrkRCSMkbtTrsipTGGlGgxQDKCmzGwjhjsvJEGfJqXzIBYDaOFpYBKYlkIPIFQwmOkEmIwsbNiihahcjvvpmnoKCUBeGaMoMcREMhgPoAvmmfzoIhBQIvKbWEwxPgybLWKMgxKQefFZxiFDFlKmjXCZnvWtARzGZckdbcgmIZUUeOgGXJuhCmwzyfzhJIGyjWGbwtmfWmFCqXHiwoQKWprUcVoAGvKQEBQYiHkyWzKtrpZjRVFqaQxoabnhFqIURrvHAaZodaBXaOqDAgiKwUnwzSNoIQlSdgwyvDQwpGpsGkWlQXMcYilPlJWpNoPvdpqfmJaeVbovzeYDFzusTybGxObcRXOLbZeghtcvLdVFjzpOYTPPYjVgVptzdjhPDhrLrWHLVmoZxpcXhZiTpQRtnqvsOlTxEVTaTMXgbgRdwpGbhQZMtAgvvjGSegMzuHTRKPNUqNIptTmIpTjjQnQCVGIWEUkJtmSMHFCqjnFjDgHNaTBxSrGHesTnnkGHazRcAllDXTesAuuXxYvxiKGqvzKbOFDhlQgRKkNmvTsttHOsBHUvSAKDenlRIKykrtnepHdmnNjtKwxUPcZvCAszcRAuKB");
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(1005), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "ZpBIwRIHHxhocgwfoJAZqaZjdcspIskhtzcAufVEHAdgQxiqcZYGphEMaXcETiHQCzEdzrkVyLgjkeMTDUyUhAadpEsLnXonGWFtiMdxRWnAKebdNUVJnjQfKuTRdxxLHtVXHfqsWNZIEPzwtLuDRdmQSbIWkVPpFrYPejgTOFSaNtSifrOLmdhKecNiGwfRQNIVBhFhUKeoIXtahUKrpkQsOHLFcypfVVTMHyVGmFWJWSEquROKxLnWkRbzWgGPLiuxVQTCVFArUOQQRYTwdHvQmpZHshObmuygvLwEcPBhXoKjFvtNmFDDVGeNMJYjMJvZwrgRdXNZQMsYeRUScCEcLcHQClwhhQVIiwJDVLrvhcWRetNzbgGKTSvZxhoIkoFrSdJguDFchKJxAiJMeJBHAZpmhwxpjTaXiWhryIUXuvNIijVGdKtirIWFxFmphaJZDwzsHxZaGjIqOtoFyhYIznQKcbMBeoMdRNqTGjxDyXOuUKDyaGFxcTRhGbtbjNmARectFnJTiYOEidgvihryFtDbcOIzpGUmVgPOSGnZAqzFjnxEhimkhTTtdGuQYBTKwFDhZeioyfsEavYalXhXsQrNYXwcvuuUeBIzfHwzeHLDoZhXSnyFaYfAXNYHfcbDjthSyzzYzXQLSFJdjTcmMpzFvqGWqlcVEDgQLOhuuFQykNXuRuyKXXNCCjXuQGzmIRrqdcsLLOLuaJgormQWiNRYDHtCauuCmiBkUDzvBNqdlPZNObaOvnSxGdCHooqfkVwjdqzydJMhVIqhyjfHQlEPHztUMjJQvhSXUuHrfJmBoLpIKlYVeCvsJfTJvJBlpcaMaUswYHgzwwMsyoVZayyzOKeerMXbWcOCnyNTkYvvnZUuMzqaQBdYnZUPRotDUizSlEducMcHhEUfmQChykzmRJNlPSxEIrZFsygLybKRnAZUcdJbMPilkxiMZoDPgyoLEDArYebZABUimAKNZTOhcXSlplTdtSyMsUgYw");
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomString(1001));
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomString(1023));
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomString(1005));
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
     }
 
@@ -443,13 +516,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(21), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "-O+xy{/xUp)MZ_?l}q-ds");
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(132), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "PCGZc)t+XyZaYDbXsqjZDrnqEtg)(mBBYS{x)w}jtz*qWOaql))]/{EEosxbiViD{K-/{&Jh)N%)zoHV_PNJvoawmAwOt%DV/rcrxqbD_LtL-ZuGmFmIDG/CU%vsejHht");
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(577), shortDescriptionInput);
+        sendPutTextKeyInInputField(shortDescriptionInput, "eBbG_d*xuUzektpZb(vxk*t)/CJl((ixjNZVMIHW/Gzf_bhUa&Km)u)-/XYaLE{%ahP)h(ZyuBd/qc_IX]FETqg]}ws]{/{cGLg]%pDPl_/EXOZlI/pEZBUxqxUhHjg+Z-KhMSjDprfuyFSk&tuZ}&j/QsGzuoBQcQY/Msq/ROXC-m(OdUtn-VV{ONh-kNhE+rl/od/hgbUeu/%MLqrabvCsn/*/AWLFPjjwUw*_nFWBEgD(tWeqlkGGagyaYRy*gtB_sLzd%XY(r-vfE()du/e}ph/i+}?Af{HdxX)IDDOqo{fi//EgCiWIrshgj+E]-uHqW)vnGia{))Z((s/aPCuxn{EU)k/WqkxM/Sx/xAPnZ{b)y)n)t?BjX)%xxD_znTatH/Tlcj}Jumsa+bTnYLZxFyUNTVpCyTbyORexUiNWZ%{tICg+A/OX/MdRM&G)dMsC+&WRg)ooQqxq&-zUnZedsnjYCipbPTwgQfwFuL%ZfZAss-y/YaMh-/s/sKy/R(SntI(MRk/(-w/oY)ZFIa{/pvHFnM&I-PhJf/");
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomStringWithSpecialChars(21));
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomStringWithSpecialChars(132));
+        checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(shortDescriptionInput, generateRandomStringWithSpecialChars(577));
         checkFieldValidation(exceptedErrorValidationMassage, shortDescriptionInputErrorMassage);
     }
 
@@ -461,13 +543,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomString(5001), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "cfHDQlXotpdvVhlgzcdoGjGTtnPXQXfErqAUxIqBrfWZCibEJbymKqcxziovVFTfcxPYzideSIvDmHuyVlPdRDEjYHAteJGsOThtpptUvsjmsImsiTZpmkkHZOnbxrpKLGhHhTrIQQfTiBkyaVBzSfFvHXmiTVmbGGrbsOFJbFrzIaDfojydNFHtaxYHjyjTKOJyiHhZxbKeFWDMyUsuQNCcTuQMNWszLZwbtbGaslwIPcJjJNWmXUItLfOObPHoPEKeIMswYgKKtOOwgUAephLTYYlAlXBQmqWyrDReDJkdpscwzczbYqJGIcnIXxGlkmekAtRCCkXKSdrbrTdzNGWZaURzlKUuqlrSunexLSnVreqfFmGoggSxedMVSFfbYfZDUjsrosfftcCPBLutjetvEzEjIepCqjtNQXuUFenZkEvXBnKPrcWmJaXlpMzTmWLmrmckSAYBNFDHABtixhLTlRnZrojTRAwNuMbGPbtQciTEuNKcvAZjJGsNgrpugjNKUBDSedOOFUJcErnBNRltmCtkkJBuHoFxkLqvsPuybengIBeGqptypHbOPhNpvDUxxMEZhhvdhEFqmcrdSrELedllGLJIvBLYMgyMyjmIsOFCZywLRxiuIqnWgKvmFKicXeuNcwsTspQTUBLHQIgatVsOpCjjJwxDpoHvoTxFOAtxKVbqSNXsNxtPOnLLBmlLHIawNgkWMUqkbbMZyGGYlssQKfHDrUOdudlltuQJXiwHxbxgQewpilsAlVqMQOxQFYxNgRBmBmYXetsrCDbzLWuoCKjXpNPeChBfKBGPEVYLLLKSzciNMcXGWoEOQLyMfhWjhzBfUbtCSrHsIoyWQRiJcBPouOFCdnQdBGFypPykIWXVyaVaaCrRiNfcYDaGwBPkgYOqGlrUstcDwfRzqGZRoDggkIkHWDMdIjXjnpkkQYtBdVhMMBxIdojRTOZbzvbJaIQLyoEXePJSWDyfNJonBtOkEvgvZEZTLazmGtKTdEDsSIZfWmPSvQTyzbhagXCuwMBwxIrilQuHWYiSGPBenTTnutUMIXnWFXsAFXhTrsXeOheSDWcYxiHQIBgoumMuIIwtKQnkssKhwZXvAnOdmKcvKKSCznqviseBQXwDTgkmqalFxEJEcWDqSkPkybaeAzROshrMVNncbrWhOkNtAXWlZYYWnxwPpwMnmBnrShPopgTVcPETHvQWyLYNFZdqxCSMnYlEfKWGZgsFRnKcAQmadZDSIwpyZjjuOzbKqEUCAfuMynIvddtDOXewDiYsYjKIisWSEBhlVkFwNDrfmHIfqZidFkIFWoUtpjCoBSxvJqEJBJuAGXaaHmunTYYfZYVBOBgEtFPKjDvLcZqOFguVtAVlNRBlLwNLzZNVBSpKuHetnSXvqPzcgQZumiwNTzolIEavbKVupNUCDhtIUDqZRPmIhXBPVbSLimTSSxTzzcEMsIjPJLUtkvSZkIKNCnyKWycAlfPbJKFGBQQRMtaSkRiclBEkzwXfZyKKPvOFJsdQoYlQhldxzoYMkexzpClefcvvPVIAbFZsZncxFvLTpoqJODNEbWSUvjJcLIExWFSihIsfIDmHJPXOwKbMophopkwjTmVoLpSMDNsYstgOccjITkigrpykFRLJBUimfSPcFCKwOFiBmRYGnAahQiBNRzppqJBpxVYEZpTJOWfxVgULesvesPbeHCSsJkGguqtPriWPIZMmNnjmubxudYbGMJeWJZSScCTTtPjoTRkcViEJbsRlcqwsAUktsGBRiSFQMGGYxDPqYsZoIVBYVThCbbfLmwSpPegdQsrkmuQkMlvJElrjrJmplPYlJJSAQQuBfWEOgUSXNnuWJgHCxKpDiUoiSmMeTvJVYTdbNFVfeunYfhjNFvAeUJGSkyJIzRjXlhFuNKHQJgOEhLeihTnBftrHJbrSdSThrtXfvWsriiTLwWWLldGfODLsxHrHSgbmLAXQeCHVzACuOQUOzkuPpUoZcoTgxWmvoblwMYvOEcooloRmaxVYKHQuOkkcfnghQLBTvpwVammOJZGhIUvENLlnEJUNohgZLgpOvLbKJIwgZdjNmPJOIoVWhcyZbvSgALdlPJdzkcHHNtTNcdkqBhNnyovZIFBbzKPzjDgmbMTMptwfQuhwjooafQXLLEZxcWztfzMdSDhxvdvrKSushqGrKUOUMxtYwEqKSKVDBfOkUnAKZBGYWQbHgbVPEnllLrVyhPQcpNOSfGzqeysByjNJdIRnvwLNalCZlLmfBLbEWcNMiHbdEUMKWcXsYkCaHkegMwMwMTGsEdQWvrEvfLNQFbTtWjZpzjMWQQvXjKIDWHXhNCpTeMAuRUggxJvXRZaYHmQGnaDqLOCMNxDpgBGBslMfrZnPZdWnriEVnGAAtfXNpZnDtOLtFHYddyQjKKyRQReuFkUqnNxqxlcWrmYhAaWLAIPEwpoNoidtKCIvoHQMHqgskLGUJUuEInglULGuSQycSEQQZVTFHhOermTdIbfzrhEFcNcQGfWebeiRlKmPsuQgMpdmHVTkralnMGOXxOBDNEftMkOgWVTWIXyClIIaqxxuXqhoYRNncOsaEEwLoMwrDUUXyKvAVLsleGFEdcZpaxSUJjhwcoonUJXNHEoLBVmfhVAqfpxLLVXeLcncJMClEEBVFhAbDpWAKNdOJulCIKxcQfDNAQnmIITWogpJUCmVdDFXAXpkzXGhsVYVtdsRiDkjimstzROUUIWsRFRhzmvtEkEuVmizJYgVrcJYftRLvTiffLxxsqYGvmbHiBGrzNHnynfWKyOsTreLLLmpuoLWzUYHyyuebKXyKoBAcUIhxSpAbgyhpsEREmuDkKrRyCPVvwWOsaOUzzuTMddcExSyqidTSovTatpHnNAoUUdOekbLPdRvOukPsfbpUoQmefXJhdGlcpgbyQkqLLcXBqBebauEgpryWVMqvyrOhSBDiIDbbIxFGWuFelWRofclliDmzRWCxXivtnVpqYZAGJiItNAbVmYnuveHhWMgBRDjpxUHzNcDXFqHmOSMIuhXlMmFlpgvveOGTwuivszELqQMVljeSMLNpeVMeUIZOFfFSiSKOPfOPbLSdtChzNTqNCGcMRkWTzuNylFATLYTJCXFSdILDTmJkxTxExemyhOtnTxSuJZJjJAVDaYJbxjTklsFhacStdABuCATuUcYLEhkFeeJpxTWQOzKvlJJTbiKMeVcBAAIqXzWoZcMPsttQMHUmDZVTaWZTdvEhgMCkoRSFzWFluQccuyvjjudExIeghMzEdsxiWCxSDJWtAgmQmtBNfOqNmnEEcHNUVNkfARRLHsEomeBLozMIEDqbSBTjxJyukJLdbOXdStuxeQWDFpXeLmvHvEzPntznNqgiEqZSsvBjdOSBbYzkZMNxEsHfxROaZtzLzSDLFyoKYDuwngXAowBNkOpHlyYlsTytJRZmJeFtzxmuYttQeaZFwqYFCKiLPqGcSvthRVMHWvdGfJXKrTOTpEAVKMRiTSrWRGPkAvSZTzHIkHiRhbehAnpKeFTyXjWkJAKcrrMvLjbYoUzFExRbVISkJkPXSppkJOkdVwzQMkvEUOvEYAzTMjAFucsrSTZqUwCsknxePQCEQvXNpZAQxoOhMYiGzpTQUhyEmQCYkvsHKkShDqakQvseWqpiXQaSYcEAPgYeaHrGefMLZhQuzwansEEMXEoaYRurZNMbLAaEMPKUOcPRwqINdWGalTahVkELNoyfVHtAOAvAglvUNNaogEMTDmqstqnPKRoeltFeALCTmMffWFHRfYqKRIWfLxdMpYDZaihbLtPsSzGhsTbuUHArEcqPXxXfdAaTFVUHonCdqGbVnsPRPIxMkcZTVvwxBSBeONirBwPiWFlSTdgIliaBLJWWHoQCOtMuyRAeUsjNKwZVKvLDzuuTwmsMoukBPUycdnskmQAIYIzVeQKKDumHofZtPSptTXCiCDtsyzEUxZSVBrULwWmfUXTpUgOOEhSNdSNYblJQTSPqzjPuVtGchZpLasjZMoCRxfMpnRHTMHqMdLZFWzhrCIGSWCztCnwuPtrWISJAKvRdkuXEvuwcPoZnaVdggFAgxnUdhIUTCVKZXCbTIAYklfsCZJVvvCryFhRsHUapYLmlOHjiTmEetyRDeBuvzvHTbbIyVrbngeYVyKmCbCSaebAYrcpULiHHyMcIwbjtRkDuOWftxgInoEQvczLsuSHnSEnVBssUcYWXtgHqNkwrDoNwnmvCHqNtYgDPGdffnrUklBbNnGKjkismdNgMamWYpnwhMeiLghoXNKLULKZgHMwAPoBWaKlPYAebfPhrzihHIUZuARdZeqvxlstrGPcJnuEjpkxLOWRsCEwsKRpyTbEaBStwNrBvlTJLHTjenJskKskMlTaGXFnxRhumvlXqJGiWBDevBucGrTIgVATocoZADvcfsDlIWjDYtiXwcrkxOlExFroXGJOutiDNehqLiJcihIyRthXcSxHddKosCijwNzCxffNliJQvdFDkWaigOfcboOGdtZyHZEmqWrrwLrFQiaHONfmZmPsOycacmGeMuQWJgnBrBBMRDINuNnSGlmGrLypFwFZRwRAUpBZhNLSHEWhHJHmJdpmcOjXZpPKmloePiZxjHsbtAxHZbWfaGmGCghYpgqHlxyrVbaYPrUyzLPVWxHWLMYNyvsATZKpAqdKQKoXQkFyOadijLXDMoynYUGwQlwDDnMVuFmeCxijvlhDGIVpZAgMcyYzvTMYvhvCURaBAdQoiXCjWZEactOxjjjsKpPwEMvUHPBBIPTgKPXDbMLPliNFGmlRkgciayqbBcEyQXQJQEZwyFIUnAzxajgUSXldithxmWeavnaTFKyldILvWnvGdAXUZMmCVNCjDKujOspVlfQgkWTxAcfEMLVsHJgNZHzmvuHoXcgBIuNICstGhcRHBaOfHpPKdgQkVkRYUKAjfWozGAcnFhDggphDMytTSeQBPZoLD");
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(5023), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "awPRPzwLYNZWSToclBoCHEjVtqYtLfibaUPzvrFJOoGWhrgmxNJbteNdrGweTEBIqgkUrKnOrzFiHIststRmPINZcpDctITaWUoCTnbMFKpjeeyDniFwnMqTTXTckkchpqUpYmJJRcwhJgzmiQIwgoQciaWuuzMOWwQcgOdINrOstmmskSqtfdheXjoDQWzPAfNVHiZdDafHKdZWUhzMTxeKkjeOwRatGDRMRZObRLLTlwVVMhmsiLzRaXNqCtnEScBFRIvxizUoXJmOpfmElKArkWjSIXOZprSSNzuQsAHctWRkTbugLUJhPgdMnRYRgtYWiSHIkYQjiyhHhuWMkOdwrtwLLyKNvJNDXMKeBttRpdyEZsZRErwuEoDGPQuUCjjkjxbeoyGobQfyyxFOoAegCqThdmePwpyXezqDaGcjAcFQYVYacBcbbmdDxaydPmuCYOSBJthKWTIitIsTcvKvHnffOCtEdheHmpbQjNlDiUFILLHnmxllnSCbklmglYDyiWJpUnRRsnFCwVWUYcYvcVqWVjHlKjxNnquVIrkJJmDvWgYijyRUCeYAXIpTbNajQJQukKFueHJbkQrvbCJnhvxrKvsGXLZXLGGuQVVuHFPcjYGrNjKwpBIdLeGnGJwwMJPTdmXjLbBubJRzuQAoqoBCfsfCjrcAkebQYMKTjEFukdCbTUcJyAohvyKtYoXzJsfdNNqLfYrmwOyQZZpYeHnxseNSAegplXofsjaWIqPNzXXhYLESDZCnvcmMvrBLLGAEpBLBlJKRMoBpQAuEQUhdxnWRyIgBPleZAYFUwjCdKTotPSyCObLysaDPmGSiRApNDCaNZhEYsLmflGXRNYEBgkKIqdGcoKHjGrBYNeOjRESpRhNdmlMwzQrYMukYZLDUMbUxWylUFSxSmDGweCHJsNsnsZUtJWQADGWJrbSJprGhGfXxkMagHBtQVEhmFymbZMBKZqajpGpYsxZjUemIRoTJJPhIeQcMnADahzwFSZknIgqIjHRCIkDUgjBEKwkYvaYCfsHhyOvVHwthBOBDjoDnOOfVPgaoGoidGCBGXdvAwFnAYMFvFlIWdwYcAzMmWNVCqWnUWQVRUpcAFSVztmQNvQndYzhWhvQjUtQQPmOZxauSJExAaCmLjVhDPNsKKfCpBpoXOEOBJMKlGetawdedRpVcurhWNZyBrydRJaJhAluqBaPKKYEYQWMsldyiHUggOruXFNeUEZGcAFjpwXvStCheCAKrwUmHHtdsucnRzdcowiBdpSBxdHEMthlmrXNmspPCjLbEfRpNJuIrCZbHdUmCwvseYEqbNIUMJoyKLZuafTiwTkUaFPEhDUkZYcpbwRKMRZnWqLtTcWzmEfkneIMDgxVUxXHtkKkXVjURjGNdXDpzqueLntcxcVYlLUmrYjkignnhDFbtgHHbNOggFwjhVTLCwtFHxZBuidatovfSrvQcrcpCsIuoaFYlJuewKHHXSzgayHeYjvWVxNYpXgNLCApXqRONCcbNyHmdBbFePfsSlaUeSJpFVlPXhuEGRmXxHcFATPOhAafPtZEdetXjVuwlFzdrHgCdgHRkNAEOSgSHLWOCBkXgOSdrrjVXOGpdaSNeRIpbxfzAdHFqNCcKkSvREKszakyhIeOpRJmqefrXTzIuVLEJazPooYeRjzYhnpzrtZBBKBfhFLtjDBXawFXQkmMdlABWtihHWXiOcVQyWPuuVBGNKifWJxaRmwhTKCeReXBpIpyEYUKJGUPOHRrfMdpUQfUJRMRdrYRdvdyKuCKzMgpIaYjCATeKDIgtSaqTpAvYsJqgNqddQWGZxkNCtyuWGVgKkGoCkmOmrpXVlkdHJsShAwEAerxAeSstBXsaiAdSDZRsCFQIXXVAsUMjDeWMqWFRutRHoGRUYMzyEQhWflRLtIpcLFtgbKdLaVSFSpUjYzBXCYqkqHQOHLIkOYffMsEqqAvrjPbCuwHbGuigHzfeHhRvoDTYIfKvOaDRDkCDhpIoZISBzHdnYVFrPBtuwWTbwAaBIKchcaHMquwHILrLWPlCZcqWcoxMkWcqPqsHAfHpgzzCvhmtNSKpfmMDuNIrwsALQsXmyLScXeQSLAklabPpIXFoDEHCEELMtqncQxnrazpanPysJgFlzFhwJvoKPkOUrEnxIZBVDosBCaYENlNyXdKZxzyePoHuCXJvDhlXBiXgmvGvRApwniHihFFpHfgxaLmEHwenMCXMLHHgQxQgsZKaVoWRWeYpjCActzqlLdqvoyDujZsjrkkDATfXtgmUszJZwjbYtoGdrjGKHiHshgPvNjAPQXaNdQUVBuaVlbpfcBEcJPbDfWesLPJIuvpNXtIgwLWnLiWDDVGlwGPKudTYCnLQBcxPQdCrutAjfoIVGhptZkCiPCmwRrtPxUmELWyoQLHnuGSNlbauWEQlDwriZrZPfbVSjdGIfCXjBxECAAuAvJsiMqpZGlHQpApzuPmiPOksymwtVZbvyoQNNzivrXIgjXeUYtRyoMEGjfFzqrBLiIaeWODnXFVwXdLjjFvanWWErZyPZKeQAWPbEmFYheHIgxWUMROJHAiKOeIUmFAbOQAKROBeGgIHDxxyeGQhXMYzJfhqXYKEPYCWLozmPCpvkUbpsHSzzNqsOmOBCamOMWjtHiZYFHNSunyeMHSIAMwNNXKfQqGBGNKdkwnxCqPCwxUgUAPNReIzFBcJkcdHDeRSkKYOtHqgSvHEbduWyElSxOXuJGPjkCVpWIkHZIklXXixUHhTOdytowqNoXnhqWRBhjkJxRRZUBzKJBibAuackTtQsNsZoBGJrGKZeoqGQiNzUEgjPHHcEydSmXMunNapoLNQJAutGbNloIoXAooZmaekNXJzpUyhAjkQiJsnTbiHEPkmZDaCsMKNlbgOkeJdFEVcVEWHSWitBqCydrrvlHvAuNJtJiACwHRDfsSdijTVZLxXlnpHhVtjgmJjJhewVOSOXUXChsIPzqtXyHAyNzcOXaIHYXACCXvOXxupVNtXkyBiKMTVPVcFpcjzwWljQUWHovuNakGCWRmcyuqxIrBfulfABANOftxXNAEpaWzogTdozJcLghRtrOZrNHEiltJZALvffPqRfnbdRAGaTJTnsyqVjcknhKBbwKaYPHyFDZcAztsWUJbqtgUfhhzunUiLvsNlzRHjqZruAkKeonIzwewdjZxqKQMzSmLwYvHIbvVnqFWYYUmwnTvctTVzCcLjDLOWCtYwCShvIVLuzNZpiMtvqmWbEqsjrvYrlYswXNNBMIGlBjnsjjSULVNSEbVDigywfmddikGamkoyxXGQOTTTxfjXbRExHhsinEYbOMqgqDVRDmDfADrplZaeVwHlJeQquBXXRBxEUXqkNcwVotrihKefSlPxreSOwdxOrSdZuOdTDPoZvscolnYBWwsmrmZuDyqTyIjZgWsMweTqRqkmHdMlrtflrKXSFUbMKVqiJFTWwlHwtkHOpRyRLZJGxPSBmKkJDXPJAHSwimlsqzWROpKPdKdaORXvZpTxjcwXMWvktUmBAXgGkIMYUeQYNxvJPKfFAWtrLkzfpGmqPcifvauBvYXbzGIcykAVqrZzPEgkpfKyKrARWZUJzCOCdPmlRgkhKMArnXUlaslTflUGLHlKRBJEJNAIyhbVGwFrJVSOnuPWdGyVOVVTLznFFrKWOaPNKUdvAmITTTnhdKosKvobUlLOQzRMdEDypyOZPtVUXaSyOvfaDNkWeIfCqMpaLEMEuOVeRwuavCGNTbJCHVvvaEyAKyrQDvwXjGmNncxVaUXIAdFsrpeddrHZbGYwftcftFScRdOcQQeJfeCWbwUmUcsPFOiqSbYuNuGKfGqQVaKYpxtHyzKoZnaNFlnVpAhZDZgmytXTUOozQHgVfdGyIBxSzuSxKspaoqQulvzCpaVzShZNBzecrTxGMqKTwIUwzADvTqyJkIgGzluuJcvXRwsGpgaEbpMBAviuyCYJGSehxApLMETPWQMNsvyjBbaVbFqsdGRbbGHrKpmYklWpxjUvEXUPdAGQYbTIbiFKCeanUIUqmxAldarbkioHVfLyfkHapqKMSgYkcuUtLOHyAWYQYRCXREhBZutfXmtvCWiPHRQegixpOVSqPjzeyEGUdwYCueILEMFRNGzovelkQxFGIXJjhxHHjGmpEvQEDOkTqTbOqxYTIWaRjTMPGwJHWyDLRzxKyoEeZxcpnZITAmIJDvSLKDVeZuVMDZoCfrPyZgxFMOXCGiIHHsBtiSYMtbxOIVlPkibJYOSJHsnMlzxFXvkyTyHhhxHXBuxPxzQwpTlSoMGAwXVPjBSDLEplzyWsrwPKGijlPErMNOAZGtObFrdNPvPgcWGlbvTuauehvItEArsinomOUWQTNunFoQQtLsgvcnzoDBehSvwNuGVdIYtLFPswuHLFJuHWgvKeaEihmBKeOiPCnHQZogPCAOvXXmwcMsSaiIsWyCDvEZazSRMwLGvZaSWqvRWlmiQjxfcdbdlocQFdIhDIaBAMvJJYhYSiFIgdGHYiVmGGKxeVkzPvTtYLcqaTDhxzYmBuAlygBuoFtbBAPLyuXDnbhnURbfZnAJFbawnCASLGFtrhgGXofGeqLhVJIymqCewzHpVLhOYVWDqkrfosvflJvXAMkedwPbQbcpGLmTJlALxVWwsTQwCwgluOPCfJIfMuWjpLfJObautkJPcRQfncZyvxdBuzwrkCZWuugriawwRpikjbntVhIyFZeahxtPhkdmRMNzXicNFlmlklYDzzssiIxuiiENzAqKJccGTlmOONSetpoqLVtKtENrUhLYXreajKhrCwPmhzQHrGlbkYINfdGdKHXoMTUtvVCqmVrRPqZcQYxeDzTTgEMeMNGQGVvIWpEdAhCivOgJmTFwELlzsFjuzgIZmeIltTWyAhYvbVbpNNQwHjuWZyfXlYyHZRtWtpqxJQNLAfGBDaRSQbPIoQPURmHEZXNbFtRBlSRZejCjIKwLBeJEhFWlNgbst");
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomString(5005), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "AHgOFKAIloyKUfNZtSwWeMTGYanLubbRgNBiiqIeNvSQNpbotXBYIbHCVneNnMryCNbSOyyYHnwhgomXoyWwsxfIdtQgmpXBVTejRLrIemSljwokoiIZrKAgWzOdhBxJhSZdxnnHcUMMSSrCrhoosGZypFbkloWfHcvQfvhGLeSwMQezxhTjHvMxfvsJhTSCZBBwrgkfBQDaARuSekaDOyJKPtUHHcwsCKShTyxnPLYPdXbFrMLdmtPmAuKaUIJsUcNOFvcaLpqOybtDXWxlmedlGOfPUTLWkLGsQLrZINJuDQFtMDKppfrUDDTwcRtpJLTzOgOsnXppQyTQoziABuwXZMfkKklSozxYxowVMYwfMcnflSiYngWBWyvLMVbNJFOdoWWjmNoRHxIAvsMfNqMKJYXFrPNNDFXzCnYQQgSGuRDzCPGzLrZUfNJpeVCtAFgwIKyZyAgoyunSYLHRtpfOGPExQuxeQaWdpNpnQHZPTWWizdtFQgHUeNQpXsDBACCjVpLBwEJZqbudqJwERCiSTAFWVbpjTrngrkFHyXvqPjNQIEPnqalvKVTvFzIvhHfESbzlqnwAyxUSFQSsIxXUuwyKOXDvcFlqyXtVIvUBGItkMRJwMpYajcfJHcDJqDhiLdslVPLJMPwXDFtaKcCoaqYrOKaGHluVuXDMCkfewfjCxMYiCgtmZtgcTGOFzLDYomARGRYexrfpJKgGJyDJNkkljAGqSTcfNsyKedUpDBjThUpnFTrgXDixgRPMeTUtyGdVAjblicobIgccqYBHBvtJexMtATlmIzyBgnyjkpFHvRimQeYuXRbliWhLSHZaAVqunbHGwOFAKHrGATqXsJMStabRReKnIHsWzMfTrWSYqxYfcIAmtFKiBUlrkkSDfDsZyzzdjJTOIeykRojFvsjPiDiuctsGzkJQqfQgHgonGXSrkufCBqAGgcXBgGSyTmJLFiemwbqZdGRgqCOMYGJKTKeqmBudiUUijdDLlDzHBtdnETFNfEwuSDQRgkUJYjtBEpOgAEmNpKQOTbPVJlJqpmwxWytqJzayRDzooAjPKberAmluFlAmGPPUMhPAGEYnqihdxfvTUVeTOUoNMSePnxfhGAjjRZZcLQFbnBJQlGcQkBpNefUNbepoKthHQBfDTXdBzpqVOyWOEGuGUZfrSisQgOhIguNZrFSUSpILKyOghQVkodtjOlZeaaJjqpIvPViqfHpfCftvIbpSADcTJmtXNCoAQuDRCJQuLoHJMFIJewdJvCNWOREYNhnONzYTsJMVHHrLylovxHuucaJVncIsUvWjRnSgjumqKBejFnapAFWOwVFAezysWESRHmXqsZvMdFcCZouNzaJnPOEJBPrQjGQAmYEyXMfEqYYslLUymAfIVJEPDYprzRZgVxtfWmaiouehRFGIPFVbPMYCIMLfZDqqJVUPGOIGIyXRrSKGkQOauwZHLnXJTfQwqwCoBURkfJwzoRGGGiLupPnKcHNmLKIIMGCAeMUPqKTnIOWsJdnmWJSaQJspzITPAhUBGwfJNYJFUOMRJXlVWsoKuqcBgDUathTQxyaiYMSlfZoNkprMgImPkZkSXjvzgznXZquOVCbMTHNwHJITdpOEsyxmPjYIxlaHwOfipaclXFtNQvKUmVDDtLhXyMirPUMCPlqeJIGXqZuvlQpJjjipRnzkNnKvTXnjLrEDCEWIeESyUTVuXqvJfoemtbBmKfougVNBiBxoSmiXDqXtNCTIPffljPmfEenitUDxhokZfCuRmhTQuFfZXTeSVSHLvuicuiwhQaPGnhsckDLDFaOMVLhSQeSvBFGSkpHMSXxdUxzaGcRcojZLrYocbWRtkweyGuePmVajKwVpijFPGRAuxiXdyXmehScbOVSCahDlUNCnAjYtXqaqVezLUbzzhWchpqaxlwrNLlwFxYakcqCUXKuzvkjItUqVlTKoegquaHWyhEJqhUViHBSiSeLJNJhnCWVhrRAWCfiMMHVYuaEibYmeRhdIkZWCOwbOIIrbcXaDAUrBHLgyUyTVDYJxJsnjtcgDDCFypzOLJVAZNbpvSbtyeSbHMloIqfVYJOZMwMMEXdLmjUeZfqCuJhOQYYpfspCVHzqSjdnNNbFZIJUEbGudoSgtvEQmmtvBqQktEOaTFtSgpiTgQrkqKqVmuqMKfGdPSoGxXXBtgOmUTfEtAwKgtROdiYfAfOIBcCZuOuLfjqdZgvwNVzYrRhhxLgdRljVbmxnGkgkjepQQdYxCyRYwjfSRiWdaEikcMOgtbSlJovhIxyQuAwQwbshxNTeTazsYehGdTAvxorOpkHOYMPYzywiNKysMgbSJTievJlxvnuduUgVtruurLnPXjkTotpqmuJYxAkqIBkNxHawGSxwMnzDIBwdaqhBZpKkJsqKZMMkoPqAZClmtEZsMyyAhtwMOJNlAZRvLpeTVocuKCwRiCHUfdicrQPVdyYycceiCbUhgPHJGVEqIHmmSwlZLuEVdjHzZztCKSWStyEgoNFdtaHLxpXmKSPesJZSRzHroXYDkQHSuIeSFylvnfnTEtxWPnYUEIAAjgKEsIywJAAtoxcYOXmNdmrnYsMgkbpFeSUOqRKDhYpbCIdwlzZacPqHkijrpBOtQxocrGGPvpkWzlwTIAkUhCjmgAdpAqoxiwlcBIIacuAUHiDVlPJEPPyclpYiIshFGgFlpBtDcpzSbavCgDVnhrUJvIvDzkZTzPMWOgEZULscrtfAmKkUQiKzzPfRSfVhEXKaUmWvYzABuHvoWrmnfioxKGTjEQjbFiRQvFPThYEhsIoaLJTQHHanTxxjvDYXiQPAXCsjcdVnHkChfphdOOZkvjFnVmIWJdZSxcDTxTGPkMcWuxBQprqLsREBmlxgqFgDUgiigJuOtxziSkiERTmHqYSCzbRbHeumHSfgvWoboDtEQNUxjneENtrwZGJCgRDvafdFNFBydvYicnwZmFPjzXncZyvWbKmoDTNweCShrfzXyWmfQqUdECAPGlcBgxYlZxduPzQFachgqxlYkPAPqrTuEgGxakEbmwSJtvPHqLvuCKFCccVPesvLwffQWeEKdbKjVnTSSjWojtYLmgPiqicNVoXywkHOPJCezaPDhrXMiAdNuzkszolnUNQiwJyqGDljsytctcduRmnBkikrqntxJqpJaugsSZukWtIZBJJfjlErnxsOaDYmANCMsqhzUCsGisuuwKUPfjGfeOivFJWUJIZMTEIQTaQUzWUBwaciwgrSWxFxVlNbTHCgYTfHmeeAxFkXhgokhOOOBcVdhNaLlmnuLGQuRogUfsPkGBSAeDkadXgjFFGhGEVASlvcMdeaTTNDKLmIUMWzRUGLKimQKcClFVRRHytVgtWUvojeDRBnSLRTsSAQVGaxAegSwrinHhWLeRJTVsGuybLvJkjPtyWCovaLKpRDtnvZMdomLuMGvIvkGNeppmPwVYGVhrnjItMhCQybZuhwucmNwOZyylXVGdjlmFDueMGqUvkadpAHrOQQHlOOoSEthOrldRmFixTxSeCxyKXLeRkxgfJPyqYpSwyeHqxWdfjNjTwSmjzdEMftSOZBmTzDGFetKmsMRLxIVtKYeEBcTGDpthmWNvJPWAUueZcAUVMHzYanshAEKOiICwTceVTRWDltrzVhGJLOOwgIGBxJcBbCtfCEzdFXWCAENRIihhGljzuVPlgkfxzuWGvmzZzHWZmJDraRkqAJjEDaskncShyqQpviJXlvjesQGJBywmRThRhZOAYdiJsMgdQJtzUmtWdZXMnEAHiQsRJvrUcpfnkuBKgutYZbRWExGUQBELJIlUkQcCkDTUGxYDrynmKBaoFPsMlcauMeOjQTPmVzWABsXIjllPUUyvyFImvEqgOVPOrJBgqAVgkgtufMmARzqpJLCGdLNFUdwNGDvRlFmyJKbNbTCwCERzHnyBVhtDOxFKhOuYszzyDoUqDtbiDbTNSTUFzKnlyFuLXUBWXgsvyeDMrQVlhTmCsQvWkbLzSwlxkCWLdbsEmVmnqwphpYNZrkPImQzQmPVozbUdYgMZdjOnOhGygXbpTjiLPsGMnkNaIUJEQoxOmTXNfCmZiVFpOwJVcjxQfZfswosyqwstxHiIYpUwHQEiHkDWiNJvlhbAFXMftwFUMPcfTzmiYDhNfcocZZNdHTvRkiiIlYYOyZzeQJpxkBWkDWZcfHIewhFxtlPoKkhOXHVuCjfYhVSzLIbtXIzHjBoeldwKldSKnGulGcKukQPKEIsZruRbVePqVYgwNeXIGkvzVgCFFTNJZZZGoamlJeHMPuAPwKHsyIYFvzYSXviXILYyJRwVtaVjEgSRNdxZSJFpCwoqTBOMZRpkyTuhkMJBWaCZgNYPuXbqjSPqjEwKPjalpNHPuYUKQHQytIHyAYJbgCMpBioHSRBrclmEIcjGjLUCCqREgikZxUKrbaBBdamCmRPLQRBdpquiVQOBnUrQGrfCDiyUCjYkKiUozPlZVlayxeOFMFPlXRQpIEvmOJdEivydRThdWoTnZKdDIcJSDejGcedzSRIAwzDJxCRhbfrcdnSMOXDdsRfjejdAMVpwvGMGMzRgKbZDHdktczjpyCLPNigadIVHgeQHVUmcxxlMjMACYdWHznAlTTffHAxaMVyWmIJnLYdJwZrAxEpTcvkuogsFnlKAyRqOKBrFIhYdNeucJzHhXtcNHGJtDZzBHFyOuoPHuvoobjmfdYxhiDBUbASdHNCmWYEmQHjMCNotHvcNeEAvEtDSdXMpHRfqErpfxkcdBEPcvLQvUsFaLYiZNappGZUyZjGQHuxgUdkynOuxuFpiiOaitRVFOkYuieZpCAWOJHMADHyYwjHnyGgpMTRHqaAiZRsUATzJBpXNUnTVyxbunKwUEErHjnqdjKYIiUHeKClKxoYXAQQeGaCFWTwwgUKypGJkNmoiCjtDYFTOTWqBnigNUsTLbAzMdVaXjYggFfhiibAPqsmQ");
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomString(5001));
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomString(5023));
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomString(5005));
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
     }
 
@@ -480,13 +571,22 @@ public class AddCarPage {
 
         fillFieldsAddForm(car, image);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(21), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "csoCpvwdpNsd}qn@rbIcL");
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(132), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "d^tQPommnNDqzoUK#mwklMDOb$wyoIxgD&H%((in+cFqZIJV&pR(uYUEHSQrlEKAdVcBPHD&iD@oBAHwXpf+AZILHQcZJxuWTZDkC_Ai*bfUrSCiiVfAvuyIn)YNb^SkrJt(");
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
 
-        sendPutTextKeyInInputField(generateRandomStringWithSpecialChars(577), fullDescriptionInput);
+        sendPutTextKeyInInputField(fullDescriptionInput, "_x$r)K_nycpPAUQucqT%dqMhoqA}C&km#RDvPkr$jI+gLuUSiW(AVBpmSyiKtfDaTBg@&MssIrYYA+qH(noA_+_p}ODYXiNZT$nvJKtVUEpTeKfSOqGc(ob)iG*C+kFGKNluXwhuXt}J_lJ+#FOl^bSLAKVAMqdow&Xmg)#SmfEeIOT}laJmCE)_Ns+YaKw)*JmSWgU%DiUn_VyASC}}l@uAdl_&aqgSVlfLS@yk+D%*J*MDcQIDg(iFcd%FxuJ(hHNBC#(@ccAWXXh@SRYujflRuE&(FmYycn+Fjz^MyECAosaJwIVOIAmotzGhztIBuH%w#v&GQ)IMylWZoBnjHaAkfic&(OzkeoVs*vtfRRHnGF#kIx+VLgiOzr+otmMOjhlxzzxZT(iS^PsD}xv@SLpWb^%*rysLe@uch^+ukfQPbJ%)IOJ))E+##CFkf_oPG+CAg_Lf*LG}uKv&U^M#iVJkdxsYlVNTpXA@EHf$z$^J^tGrkHhOoqy@JX}b%C&o+}K$UfwySJdT$WGrKeDm(Yz@srAKgWyis}m^E*#_%}DJTn@%oT_aq(@%^^VjDhTrP");
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomStringWithSpecialChars(21));
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomStringWithSpecialChars(132));
+        checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
+
+        sendPutTextKeyInInputField(fullDescriptionInput, generateRandomStringWithSpecialChars(577));
         checkFieldValidation(exceptedErrorValidationMassage, fullDescriptionInputErrorMassage);
     }
 
@@ -503,14 +603,12 @@ public class AddCarPage {
 
         changeImageFileAddForm(image);
         checkErrorValidationMassage("", imageInputErrorMassage);
-
     }
 
     @Test
     void addValidCar(){
 
         addAndCheckCar(car, image);
-
     }
 
     private static void addAndCheckCar(Car addCar, File imageFile) {
@@ -570,7 +668,7 @@ public class AddCarPage {
         Select brandSelect = new Select(brandInput);
         Select carBodyTypeSelect = new Select(carBodyTypeInput);
 
-        sendPutTextKeyInInputField(addedCar.getModel(), modelInput);
+        sendPutTextKeyInInputField(modelInput, addedCar.getModel());
         brandSelect.selectByValue(addedCar.getBrand().getStringValue());
         carBodyTypeSelect.selectByValue(addedCar.getCarBodyTypes().getStringValue());
 
@@ -578,10 +676,10 @@ public class AddCarPage {
                 addedCar.getTransmissionBoxTypes().getStringValue())));
         pageNavigation.clickOnElement(transmissionBoxTypeInput);
 
-        sendPutTextKeyInInputField(Short.toString(addedCar.getYear()), yearInput);
-        sendPutTextKeyInInputField(Double.toString(addedCar.getEngineCapacity()), engineCapacityInput);
-        sendPutTextKeyInInputField(addedCar.getShortDescription(), shortDescriptionInput);
-        sendPutTextKeyInInputField(addedCar.getFullDescription(), fullDescriptionInput);
+        sendPutTextKeyInInputField(yearInput, Short.toString(addedCar.getYear()));
+        sendPutTextKeyInInputField(engineCapacityInput, Double.toString(addedCar.getEngineCapacity()));
+        sendPutTextKeyInInputField(shortDescriptionInput, addedCar.getShortDescription());
+        sendPutTextKeyInInputField(fullDescriptionInput, addedCar.getFullDescription());
 
         WebElement addOptionsInput = driver.findElement(xpath("//*[@id=\"additional-options-input\"]"));
         addedCar.getAdditionalOptions().forEach(op -> {
@@ -616,7 +714,7 @@ public class AddCarPage {
         pageNavigation.clickOnElement(applyImageUploadButton);
     }
 
-    private static void sendPutTextKeyInInputField(String key, WebElement input){
+    private static void sendPutTextKeyInInputField(WebElement input, String key){
 
         pageNavigation.moveToElement(input);
         input.sendKeys(chord(CONTROL, "a", DELETE));

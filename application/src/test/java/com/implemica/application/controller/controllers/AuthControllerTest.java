@@ -1,5 +1,6 @@
 package com.implemica.application.controller.controllers;
 
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -29,7 +30,7 @@ public class AuthControllerTest {
     @Test
     public void authorizationSuccessful() throws Exception {
 
-        MvcResult mvcResult = mockMvc.perform(post("/api/login").
+        MvcResult mvcResult = mockMvc.perform(post("/authorization/login").
                         param("username", getUsername()).
                         param("password", getPassword())).
                 andExpect(status().isOk()).
@@ -37,6 +38,62 @@ public class AuthControllerTest {
 
         String token = mvcResult.getResponse().getContentAsString().split("\"")[3];
         assertTrue(tokenIsValid(token));
+    }
+
+    @SneakyThrows
+    @Test
+    void checkVariationUsername() {
+
+        String password = getPassword();
+
+        tryAuthorizeIncorrectLoginData("admin_1", password);
+        tryAuthorizeIncorrectLoginData("ADMIN_1", password);
+        tryAuthorizeIncorrectLoginData("_1admin", password);
+        tryAuthorizeIncorrectLoginData("amin_1d", password);
+        tryAuthorizeIncorrectLoginData("AdMiN_1", password);
+        tryAuthorizeIncorrectLoginData("Admin1", password);
+        tryAuthorizeIncorrectLoginData("Amin_1", password);
+        tryAuthorizeIncorrectLoginData("dmin_1", password);
+        tryAuthorizeIncorrectLoginData("Adin_1", password);
+        tryAuthorizeIncorrectLoginData("Admn_1", password);
+        tryAuthorizeIncorrectLoginData("Admi_1", password);
+        tryAuthorizeIncorrectLoginData("Admin1", password);
+        tryAuthorizeIncorrectLoginData("Admin_", password);
+        tryAuthorizeIncorrectLoginData("aDmin_1", password);
+        tryAuthorizeIncorrectLoginData("AdMin_1", password);
+        tryAuthorizeIncorrectLoginData("AdmIn_1", password);
+        tryAuthorizeIncorrectLoginData("AdmiN_1", password);
+        tryAuthorizeIncorrectLoginData("Admin11", password);
+    }
+
+    @SneakyThrows
+    @Test
+    void checkVariationPassword() {
+
+        String username = getUsername();
+
+        tryAuthorizeIncorrectLoginData(username, "dmin_pass");
+        tryAuthorizeIncorrectLoginData(username, "Amin_pass");
+        tryAuthorizeIncorrectLoginData(username, "Adin_pass");
+        tryAuthorizeIncorrectLoginData(username, "Admn_pass");
+        tryAuthorizeIncorrectLoginData(username, "Admi_pass");
+        tryAuthorizeIncorrectLoginData(username, "Adminpass");
+        tryAuthorizeIncorrectLoginData(username, "Admin_ass");
+        tryAuthorizeIncorrectLoginData(username, "Admin_pss");
+        tryAuthorizeIncorrectLoginData(username, "Admin_pas");
+        tryAuthorizeIncorrectLoginData(username, "admin_pass");
+        tryAuthorizeIncorrectLoginData(username, "ADMIN_PASS");
+        tryAuthorizeIncorrectLoginData(username, "ADmin_pass");
+        tryAuthorizeIncorrectLoginData(username, "AdMin_pass");
+        tryAuthorizeIncorrectLoginData(username, "AdmIn_pass");
+        tryAuthorizeIncorrectLoginData(username, "AdmiN_pass");
+        tryAuthorizeIncorrectLoginData(username, "Admin_Pass");
+        tryAuthorizeIncorrectLoginData(username, "Admin_pAss");
+        tryAuthorizeIncorrectLoginData(username, "Admin_paSs");
+        tryAuthorizeIncorrectLoginData(username, "Admin_pAsS");
+        tryAuthorizeIncorrectLoginData(username, "_passAdmin");
+        tryAuthorizeIncorrectLoginData(username, "Aminpass_");
+        tryAuthorizeIncorrectLoginData(username, "passAmin_");
     }
 
     @Test
@@ -48,17 +105,50 @@ public class AuthControllerTest {
         tryAuthorizeInvalidLoginData(null, generateRandomString(989));
         tryAuthorizeInvalidLoginData(null, generateRandomString(66));
 
+        tryAuthorizeInvalidLoginData(null, "priig984utt98y98t35r");
+        tryAuthorizeInvalidLoginData(null, "9t87495th42yhro24h2fjwf");
+        tryAuthorizeInvalidLoginData(null, "987365kjhfyruy373");
+        tryAuthorizeInvalidLoginData(null, "t9u834yty3487ty8ht8734yutwl84ju887uh3");
+        tryAuthorizeInvalidLoginData(null, "34t34trgf43t35y4h434658uhrg43t5643ty");
+        tryAuthorizeInvalidLoginData(null, "3t4frfgscsgegreg");
+        tryAuthorizeInvalidLoginData(null, "98ty83444");
+
         tryAuthorizeInvalidLoginData(generateRandomString(23), null);
         tryAuthorizeInvalidLoginData(generateRandomString(544), null);
         tryAuthorizeInvalidLoginData(generateRandomString(2), null);
         tryAuthorizeInvalidLoginData(generateRandomString(989), null);
         tryAuthorizeInvalidLoginData(generateRandomString(66), null);
 
+        tryAuthorizeInvalidLoginData("98t4y3htytrf", null);
+        tryAuthorizeInvalidLoginData("f4tttgefdd", null);
+        tryAuthorizeInvalidLoginData("erg4t45thgdd", null);
+        tryAuthorizeInvalidLoginData("g4g45grsf34tfe", null);
+        tryAuthorizeInvalidLoginData("45g4h5h_34t34t", null);
+        tryAuthorizeInvalidLoginData("8734y87y3t", null);
+        tryAuthorizeInvalidLoginData("g53tg34", null);
+        tryAuthorizeInvalidLoginData("444444234", null);
+        tryAuthorizeInvalidLoginData("497368642433", null);
+
         tryAuthorizeInvalidLoginData(null, null);
     }
 
     @Test
     public void authorization_incorrect_login_date() throws Exception {
+
+        tryAuthorizeIncorrectLoginData(getUsername(), getUsername());
+        tryAuthorizeIncorrectLoginData(getPassword(), getPassword());
+        tryAuthorizeIncorrectLoginData(getPassword(), getUsername());
+
+        tryAuthorizeIncorrectLoginData("tormentedtotal", "password");
+        tryAuthorizeIncorrectLoginData("cubfeminine", "123456789");
+        tryAuthorizeIncorrectLoginData("wefferbv", "111111111");
+        tryAuthorizeIncorrectLoginData("thrd2533", "1234567890");
+        tryAuthorizeIncorrectLoginData("user_1", "D1lakisss");
+        tryAuthorizeIncorrectLoginData("admin", "5y4yeg354hge");
+        tryAuthorizeIncorrectLoginData("brtgg333", "ret43tge");
+        tryAuthorizeIncorrectLoginData("bfb43", "h5ge45hgevdv4");
+        tryAuthorizeIncorrectLoginData("gtg4r", "3456423256");
+        tryAuthorizeIncorrectLoginData("bgbgbr44", "464hgt5y455");
 
         tryAuthorizeIncorrectLoginData(generateRandomString(1), generateRandomString(89));
         tryAuthorizeIncorrectLoginData(generateRandomString(24), generateRandomString(51));
@@ -86,7 +176,7 @@ public class AuthControllerTest {
 
     private static void tryAuthorizeIncorrectLoginData(String username, String password) throws Exception {
 
-        mockMvc.perform(post("/api/login").
+        mockMvc.perform(post("/authorization/login").
                         param("username", username).
                         param("password", password)).
                 andExpect(status().isUnauthorized()).
@@ -95,7 +185,7 @@ public class AuthControllerTest {
 
     private static void tryAuthorizeInvalidLoginData(String username, String password) throws Exception {
 
-        mockMvc.perform(post("/api/login").
+        mockMvc.perform(post("/authorization/login").
                         param("username", username).
                         param("password", password)).
                 andExpect(status().isBadRequest()).

@@ -6,6 +6,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.controllers.ImageController;
 import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +42,9 @@ public class ImageControllerTest {
 
     private static final String expansion = ".jpeg";
 
-    @Autowired
-    private AmazonClient amazonClient;
+    private static AmazonClient amazonClient;
 
-    @Autowired
-    private AmazonS3 s3client;
+    private static AmazonS3 s3client;
 
     @Value("${aws.s3.bucket.name}")
     private String bucketName;
@@ -80,63 +79,136 @@ public class ImageControllerTest {
     }
 
     @Test
-    void uploadFile() throws Exception {
+    void uploadFile() {
 
-        mockMvc.perform(multipart("/image/upload/{imageName}", fileName).
-                file(file).header(AUTHORIZATION, token)).
-                andExpect(status().isCreated()).
-                andReturn();
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
 
-        mockMvc.perform(multipart("/image/upload/{imageName}", fileName).
-                        file(file)).
-                andExpect(status().isForbidden()).
-                andReturn();
+        checkUploadFile(file, fileName, bucketName);
 
-        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
 
-        assertEquals(fileName, s3Object.getKey());
+        checkUploadFile(file, fileName, bucketName);
 
-        s3client.deleteObject(bucketName, fileName);
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkUploadFile(file, fileName, bucketName);
     }
 
     @Test
-    void uploadFile_validation() throws Exception{
+    void uploadFile_validation() {
 
-        file = new MockMultipartFile(
-                "imageFile", fileName + ".txt",
+        String invalidFileName = "invalidFile";
+
+        MockMultipartFile invalidFile = new MockMultipartFile(
+                "imageFile", invalidFileName + ".txt",
                 String.valueOf(TEXT_PLAIN),
                 "123".getBytes());
+        checkUploadInvalidFile(invalidFile, invalidFileName);
 
-        mockMvc.perform(multipart("/image/upload/{imageName}", fileName).
-                        file(file).
+        invalidFile = new MockMultipartFile(
+                "imageFile", invalidFileName + ".exe",
+                String.valueOf(TEXT_PLAIN),
+                "123".getBytes());
+        checkUploadInvalidFile(invalidFile, invalidFileName);
+    }
+
+    @Test
+    void deleteFile() {
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName, bucketName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName, bucketName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName, bucketName);
+    }
+
+    @SneakyThrows
+    private static void checkUploadFile(MockMultipartFile uploadFile, String uploadFileName, String bucketName) {
+
+        mockMvc.perform(multipart("/image/{imageName}", uploadFileName).
+                        file(uploadFile).header(AUTHORIZATION, token)).
+                andExpect(status().isCreated()).
+                andReturn();
+
+        mockMvc.perform(multipart("/image/{imageName}", uploadFileName).
+                        file(uploadFile)).
+                andExpect(status().isForbidden()).
+                andReturn();
+
+        S3Object s3Object = s3client.getObject(bucketName, uploadFileName);
+
+        assertEquals(uploadFileName, s3Object.getKey());
+
+        s3client.deleteObject(bucketName, uploadFileName);
+    }
+
+    @SneakyThrows
+    private static void checkUploadInvalidFile(MockMultipartFile uploadFile, String uploadFileName) {
+
+        mockMvc.perform(multipart("/image/{imageName}", uploadFileName).
+                        file(uploadFile).
                         header(AUTHORIZATION, token)).
                 andExpect(status().isBadRequest()).
                 andDo(result -> System.out.println(result.getResponse().getContentAsString() + " " + result.getResponse().getStatus())).
                 andExpect(jsonPath("$.error_message").value("Invalid image type.")).
                 andReturn();
 
-        mockMvc.perform(multipart("/image/upload/{imageName}", fileName).
-                        file(file)).
+        mockMvc.perform(multipart("/image/{imageName}", uploadFileName).
+                        file(uploadFile)).
                 andExpect(status().isForbidden()).
                 andReturn();
     }
 
-    @Test
-    void deleteFile() throws Exception{
+    @SneakyThrows
+    private static void checkDeleteFile(MockMultipartFile deleteFile, String deleteFileName, String bucketName) {
 
-        amazonClient.uploadFileTos3bucket(fileName, file);
-        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        amazonClient.uploadFileTos3bucket(deleteFileName, deleteFile);
+        S3Object s3Object = s3client.getObject(bucketName, deleteFileName);
 
-        assertEquals(fileName, s3Object.getKey());
+        assertEquals(deleteFileName, s3Object.getKey());
 
-        mockMvc.perform(delete("/image/delete/{imageName}", fileName).
+        mockMvc.perform(delete("/image/{imageName}", deleteFileName).
                         header(AUTHORIZATION, token)).
                 andExpect(status().isOk()).
                 andReturn();
 
-        amazonClient.deleteFileFromS3Bucket(fileName);
+        amazonClient.deleteFileFromS3Bucket(deleteFileName);
 
-        assertThatThrownBy(() -> s3client.getObject(bucketName, fileName)).
+        assertThatThrownBy(() -> s3client.getObject(bucketName, deleteFileName)).
                 isInstanceOf(AmazonS3Exception.class);
+    }
+
+    @Autowired
+    public void setS3client(AmazonS3 s3client) {
+        ImageControllerTest.s3client = s3client;
+    }
+
+    @Autowired
+    public void setAmazonClient(AmazonClient amazonClient) {
+        ImageControllerTest.amazonClient = amazonClient;
     }
 }

@@ -32,44 +32,44 @@ public class ImageController {
 
     private final AmazonClient amazonClient;
 
-    @Operation(summary = "Upload car image.",
-            description = "Loads the car image, if not a graft extension, returns 400 http status.")
+    @Operation(summary = "Upload image.",
+            description = "Loads the image to AWS S3 and set image id to this file, if not a graft extension, returns 400 http status.")
     @ApiResponses({@ApiResponse(responseCode = "201", description = "Image is uploaded successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "400", description = "Incorrect image file expansion.",
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)})})
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/upload/{imageName}", produces = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadFile(@Parameter(description = "car image file.")
+    @PostMapping(value = "/{imageId}", produces = MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> uploadFile(@Parameter(description = "image file.")
                                                           @RequestPart("imageFile") MultipartFile image,
                                                       @Parameter(name = "image file name that has car and" +
-                                                              " get from AWS S3 by its name") @PathVariable String imageName)
+                                                              " get from AWS S3 by its image file id") @PathVariable String imageId)
             throws InvalidImageTypeException {
 
-        log.info("Http method - Post, post image with name {}", imageName);
+        log.info("Http method - Post, post image with name {}", imageId);
         log.info("Http method - Post, post image with name {}", FilenameUtils.getExtension(image.getOriginalFilename()));
-        this.amazonClient.uploadFileTos3bucket(imageName, image);
+        this.amazonClient.uploadFileTos3bucket(imageId, image);
 
         URI uri = URI.create(ServletUriComponentsBuilder.
                 fromCurrentContextPath().
-                path(format("/image/upload/%s", imageName)).
+                path(format("/image/upload/%s", imageId)).
                 toUriString());
 
         return ResponseEntity.created(uri).build();
     }
 
-    @Operation(summary = "Delete car image.",
+    @Operation(summary = "Delete  image.",
             description = "Deletes car image by their name if image is not found returns 404 http status.")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Image is deleted successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "404", description = "Cannot find image with this name.",
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)})})
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(value = "/delete/{imageName}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> deleteFile(@PathVariable @Parameter(name = "Image file name")String imageName) {
+    @DeleteMapping(value = "/{imageId}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deleteFile(@PathVariable @Parameter(name = "Image file id")String imageId) {
 
-        log.info("Http method - Delete, delete image with name {}", imageName);
-        this.amazonClient.deleteFileFromS3Bucket(imageName);
+        log.info("Http method - Delete, delete image with name {}", imageId);
+        this.amazonClient.deleteFileFromS3Bucket(imageId);
 
         return ResponseEntity.ok().build();
     }

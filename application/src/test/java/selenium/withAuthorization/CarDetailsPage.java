@@ -10,7 +10,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.*;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -31,7 +33,7 @@ import static org.openqa.selenium.Keys.ENTER;
 import static org.openqa.selenium.Keys.chord;
 import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static utils.selenium.PageNavigation.threadSleep1Seconds;
-import static utils.selenium.URLUtils.*;
+import static utils.selenium.URLUtils.getHomePageURL;
 import static utils.spring.AuthTestUtils.getPassword;
 import static utils.spring.AuthTestUtils.getUsername;
 import static utils.spring.StringUtils.toTitleCase;
@@ -52,9 +54,6 @@ public class CarDetailsPage {
     private static String detailsUrl;
 
     private static String detailsPrefixUrl;
-
-    @FindBy(xpath = "//*[@id=\"loginButton\"]")
-    private static WebElement loginButton;
 
     @FindBy(xpath = "//*[@id=\"logout-button\"]")
     private static WebElement logoutButton;
@@ -235,6 +234,8 @@ public class CarDetailsPage {
 
         checkTextInInputSelect(toTitleCase(car.getBrand().getStringValue()), brandInput);
         checkTextInInputField(car.getModel(), modelInput);
+        checkTextInInputField(car.getShortDescription(), shortDescriptionInput);
+        checkTextInInputField(car.getFullDescription(), fullDescriptionInput);
         checkTextInInputField(Short.toString(car.getYear()), yearInput);
         checkTextInInputField(Double.toString(car.getEngineCapacity()), engineCapacityInput);
         checkTextInInputSelect(toTitleCase(car.getCarBodyTypes().getStringValue()), carBodyTypeInput);
@@ -285,6 +286,7 @@ public class CarDetailsPage {
 
         wait.until(visibilityOfElementLocated(xpath("//*[@id=\"confirm-delete-button\"]"))).click();
     }
+
     private static void addCar(){
 
         driver.get(homePageURL);
@@ -340,6 +342,7 @@ public class CarDetailsPage {
         threadSleep1Seconds();
         pageNavigation.scrollDown();
     }
+
     private static void login() {
 
         driver.get(homePageURL);

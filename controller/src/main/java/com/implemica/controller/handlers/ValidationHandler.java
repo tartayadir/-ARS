@@ -1,5 +1,9 @@
 package com.implemica.controller.handlers;
 
+import com.auth0.jwt.exceptions.AlgorithmMismatchException;
+import com.auth0.jwt.exceptions.InvalidClaimException;
+import com.auth0.jwt.exceptions.SignatureVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.exceptions.NoSuchCarException;
 import com.implemica.model.error_massage.ErrorMassageResponse;
@@ -73,5 +77,41 @@ public class ValidationHandler {
         log.error(ex.getMessage(), (Object) ex.getStackTrace());
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    @ExceptionHandler(AlgorithmMismatchException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Void> handleAlgorithmMismatchException(AlgorithmMismatchException ex) {
+
+        log.error(ex.getMessage(), (Object) ex.getStackTrace());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @ExceptionHandler(SignatureVerificationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Void> handleSignatureVerificationException(SignatureVerificationException ex) {
+
+        log.error(ex.getMessage(), (Object) ex.getStackTrace());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<Void> handleTokenExpiredException(TokenExpiredException ex) {
+
+        log.error(ex.getMessage(), (Object) ex.getStackTrace());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @ExceptionHandler(InvalidClaimException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<Void> handleInvalidClaimException(InvalidClaimException ex) {
+
+        log.error(ex.getMessage(), (Object) ex.getStackTrace());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 }

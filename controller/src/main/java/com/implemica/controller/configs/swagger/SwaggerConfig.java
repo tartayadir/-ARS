@@ -41,8 +41,8 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("API Car catalog V1.0")
-                .description("This is API for work with car catalog server. For this sample, you can use the JWT" +
-                        " to test the authorization filters and perform authorised requests to server like add or" +
+                .description("This is API for work with the car catalog server. For this sample, you can use the JWT" +
+                        " to test the authorization filters and perform authorized requests to server like add or" +
                         "delete car. You should put your JWT token with prefix \"Bearer \" in authorise filed to " +
                         "authorize. Also, there are examples of request and response that you can use for test API.\n")
                 .contact(new Contact("Implemica", "https://implemica.com", "welcome@implemica.com"))

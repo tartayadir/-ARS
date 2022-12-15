@@ -41,12 +41,12 @@ public class CarController {
 
     private final AmazonClient amazonClient;
 
-    @Operation(summary = "All cars list.", description = "Brings up a list of all the cars.")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful found all cars.",
+    @Operation(summary = "All cars.", description = "Returns all owned сфкы.")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE,
                     array = @ArraySchema(schema = @Schema(implementation = CarDTO.class)))})})
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/all-cars", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CarDTO>> getAllCars() {
 
         log.info("Http method - Get, all cars");
@@ -61,18 +61,19 @@ public class CarController {
         return ResponseEntity.ok().body(dtoList);
     }
 
-    @Operation(summary = "Found car.", description = "Returns found car by its id.")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful found the car",
+    @Operation(summary = "Found car.", description = "Returns the car by id if the car was found. If no such " +
+            "machine is found, it returns 404 or if no valid id returns 400.")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = CarDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Car not found.",
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)}),
-            @ApiResponse(responseCode = "400", description = "Invalid car ID.",
+            @ApiResponse(responseCode = "400", description = "Invalid car id.",
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)})
     })
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(value = "/details/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarDTO> getCar(@Parameter(description = "ID of car to return")
+    @GetMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<CarDTO> getCar(@Parameter(description = "id of car to return")
                                              @PathVariable Long id) throws NoSuchCarException {
 
         log.info("Http method - Get, car details with id {}", id);
@@ -83,14 +84,15 @@ public class CarController {
         return ResponseEntity.ok().body(carDTO);
     }
 
-    @Operation(summary = "Add car.", description = "Adds a new car and returns it.")
-    @ApiResponses({@ApiResponse(responseCode = "201", description = "Car is added successful.",
+    @Operation(summary = "Add car.", description = "Makes the car and returns the car if all fields of the machine are" +
+            " valid. If not valid then return 400.")
+    @ApiResponses({@ApiResponse(responseCode = "201", description = "Successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = CarDTO.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid car data.",
               content = { @Content(mediaType = APPLICATION_JSON_VALUE)})})
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping(value = "/add", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> addCar(@Parameter(description = "car that will be added")
                                              @Valid @RequestBody CarDTO carDTO) {
 
@@ -108,8 +110,9 @@ public class CarController {
         return ResponseEntity.created(uri).body(carDTO);
     }
 
-    @Operation(summary = "Update car.", description = "Updates a car and returns it.")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Car is updated successful.",
+    @Operation(summary = "Update car.", description = "Finds the car by the id and updates it. If the fields" +
+            " are not valid then return 400 or if the cars were not found, return 404")
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = CarDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Car not found and cannot be updated.",
@@ -117,7 +120,7 @@ public class CarController {
             @ApiResponse(responseCode = "400", description = "Invalid car.",
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)})})
     @ResponseStatus(HttpStatus.OK)
-    @PutMapping(value = "/update", produces = APPLICATION_JSON_VALUE)
+    @PutMapping(value = "", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> updateCar(@Parameter(description = "car that will be updated")
                                                 @Valid @RequestBody CarDTO carDTO) throws NoSuchCarException {
 
@@ -131,9 +134,9 @@ public class CarController {
     }
 
     @Operation(summary = "Delete car and their image.",
-            description = "For valid response try integer IDs with positive integer value. " +
+            description = "Removes machine and image by id. For valid response try integer IDs with positive integer value. " +
                     "Negative or non-integer values will generate API errors")
-    @ApiResponses({@ApiResponse(responseCode = "200", description = "Deletes the car and their image file.",
+    @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = CarDTO.class))}),
             @ApiResponse(responseCode = "404", description = "Car not found and cannot be deleted.",
@@ -142,20 +145,20 @@ public class CarController {
                     content = { @Content(mediaType = APPLICATION_JSON_VALUE)})
     })
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping(value = "/remove/{id}", produces = APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<CarDTO> removeCar(@Parameter(description = "ID of car that needs to be deleted.")
                                                 @PathVariable Long id,
                                             @Parameter(description = "name of mage file that has car needs to be deleted")
-                                            @RequestParam String imageName) throws NoSuchCarException {
+                                            @RequestParam String imageId) throws NoSuchCarException {
 
         log.info("Http method - Delete, delete car with id {}", id);
 
         carService.deleteById(id);
         ResponseEntity<CarDTO> response = ResponseEntity.ok().build();
 
-        if(!imageName.equals("default-car-image")){
-            log.info("Http method - Delete, delete image with name {}", imageName);
-            this.amazonClient.deleteFileFromS3Bucket(imageName);
+        if(!imageId.equals("default-car-image")){
+            log.info("Http method - Delete, delete image with name {}", imageId);
+            this.amazonClient.deleteFileFromS3Bucket(imageId);
         }
 
         return response;

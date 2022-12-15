@@ -12,9 +12,9 @@ public class AuthTestUtils {
 
     private static final String username = "Admin_1";
 
-    private static final String password = "a43eb61ea0d7cfc3a56b71c64c848be7c9834ff33dcf2d2d21d5b06a16a98b36";
+    private static final String password = "Admin_pass";
 
-    private static String secret;
+    private static final String secret;
 
     static {
         secret = AuthServiceImpl.getSecret();
@@ -27,7 +27,7 @@ public class AuthTestUtils {
         return "Bearer " + JWT.create().
                 withSubject(username)
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2*60*1_000))
-                .withIssuer("http://localhost:8080/api/login")
+                .withIssuer("http://localhost:8080/authorization/login")
                 .withClaim("roles", List.of("ADMIN_ROLE"))
                 .sign(algorithm);
     }
