@@ -38,6 +38,6 @@ export class CarDetailsPageComponent implements OnInit
   hasDescription(): boolean {
 
     let description: string = this.car.fullDescription!;
-    return description.length > 1 && description != " ";
+    return description!.length! > 1 && description != " ";
   }
 }

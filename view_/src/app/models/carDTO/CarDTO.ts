@@ -14,5 +14,5 @@ export class CarDTO {
   fullDescription!: string;
   shortDescription!: string;
   additionalOptions!: string[];
-  imageFileName!: string;
+  imageFileId!: string;
 }

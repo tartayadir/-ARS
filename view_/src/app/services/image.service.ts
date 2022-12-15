@@ -15,24 +15,24 @@ export class ImageService {
               private errorService: ErrorService) {
   }
 
-  public uploadImage(image: File, imageName: string): Observable<any> {
+  public uploadImage(image: File, imageId: string): Observable<any> {
 
-    console.log("Http method - Post, image with name " + imageName);
+    console.log("Http method - Post, image with name " + imageId);
 
     const uploadImageData = new FormData();
     uploadImageData.append('imageFile', image);
 
-    return this.http.post<void>(`${this.apiServerURL}/image/upload/${imageName}`,
+    return this.http.post<void>(`${this.apiServerURL}/image/${imageId}`,
       uploadImageData, {observe: 'response'}).pipe(
       catchError(this.errorHandler.bind(this))
     );
   }
 
-  public deleteImage(imageName: string): Observable<any> {
+  public deleteImage(imageId: string): Observable<any> {
 
-    console.log("Http method - Delete, image with name " + imageName);
+    console.log("Http method - Delete, image with name " + imageId);
 
-    return this.http.delete<void>(`${this.apiServerURL}/image/delete/${imageName}`).pipe(
+    return this.http.delete<void>(`${this.apiServerURL}/image/${imageId}`).pipe(
       catchError(this.errorHandler.bind(this))
     );
   }

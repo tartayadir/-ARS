@@ -15,7 +15,13 @@ import {LoginService} from "../../../services/auth/login.service";
 })
 
 export class CarsComponent implements OnInit {
+
   cars: Car[] = [];
+  isReadMore: boolean[] = [];
+
+  showText(i: number): void {
+    this.isReadMore[i] = !this.isReadMore[i];
+  }
 
   constructor(private carService: CarsService, private router: Router, private route: ActivatedRoute,
               private imageService: ImageService, private titleService: Title, public loginService: LoginService) {
@@ -29,6 +35,9 @@ export class CarsComponent implements OnInit {
     this.carService.getCars().subscribe(
       (response: Car[]) => {
         this.cars = response;
+        this.cars.forEach(car => {
+          this.isReadMore.push(true);
+        })
         this.titleService.setTitle("Car Catalog");
       },
       (error: HttpErrorResponse) => {

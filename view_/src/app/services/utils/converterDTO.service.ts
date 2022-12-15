@@ -29,7 +29,7 @@ export class ConverterDTO {
     carDTO.fullDescription = car.fullDescription as string;
     carDTO.shortDescription = car.shortDescription as string;
     carDTO.additionalOptions = car.additionalOptions as string[];
-    carDTO.imageFileName = car.imageFileName as string;
+    carDTO.imageFileId = car.imageFileName as string;
 
     return carDTO;
   }
@@ -48,7 +48,7 @@ export class ConverterDTO {
     car.fullDescription = carDTO.fullDescription;
     car.shortDescription = carDTO.shortDescription;
     car.additionalOptions = carDTO.additionalOptions;
-    car.imageFileName = carDTO.imageFileName;
+    car.imageFileName = carDTO.imageFileId;
 
     car.image = this.s3URL + car.imageFileName;
 

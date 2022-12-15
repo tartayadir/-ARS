@@ -43,3 +43,8 @@ figure figcaption {
     display: inline-block;
   }
 }
+
+.limitTextHeight {
+  height: 150px;
+  overflow: hidden;
+}

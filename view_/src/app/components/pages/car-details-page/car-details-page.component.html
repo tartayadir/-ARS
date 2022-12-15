@@ -1,7 +1,7 @@
 <div class="container my-4">
   <div class="card border-secondary text-dark my-4 " style="background: #f5f1ed">
 
-    <div class="card-header">
+    <div class="card-header d-inline-block" style="height: 55px;">
       <h2 class="card-title text-center" id="car-brand-model"><b>{{car?.brand!.toString() | titlecase}}
       </b><b>{{car!.model}}</b></h2>
     </div>
@@ -9,35 +9,59 @@
     <div class="row">
       <div class="col-sm-7 my-4">
         <div class = "text-center mx-2 card-header">
-          <img cacheimg  [src]="car.image" alt="9" class="card-img-top my-1">
+          <img cacheimg  [src]="car.image" alt="9" class="card-img-top">
         </div>
       </div>
       <div class="col-sm-5 my-4">
-        <div class="mx-2">
-          <h3 class="card-title mx-2">Characteristics</h3>
-          <ul class=" list-group-flush text-dark" style="background: #f5f1ed">
-            <li class="list-group-item text-dark" id="car-body-type" style="background: #f5f1ed"><b>Body type : </b>{{car.carBodyTypes | titlecase}}</li>
-            <li class="list-group-item text-dark" id="car-transmission-type" style="background: #f5f1ed"><b>Transmission type : </b>{{car.transmissionBoxTypes | titlecase}}</li>
-            <li class="list-group-item text-dark" id="car-engine-capacity" style="background: #f5f1ed">
-              <ng-container *ngIf="car?.engineCapacity! == 0">
-                <b>Engine : </b> Electric engine
-              </ng-container>
-              <ng-container *ngIf="car?.engineCapacity! > 0">
-                <b>Engine capacity : </b>{{car.engineCapacity | number: '1.1'}} liter inline
-              </ng-container>
-            </li>
-            <li class="list-group-item text-dark" id="car-produce-year" style="background: #f5f1ed"><b>Production year : </b>{{car!.year}}</li>
-            <ng-container *ngIf="car.additionalOptions.length > 0">
-              <li class="list-group-item text-dark" id="car-year" style="background: #f5f1ed">
-                <b>Additional options :</b>
-                <ng-container *ngFor="let option of car.additionalOptions">
-            <span id="car-option-{{option}}" class="text-dark" style="background: #f5f1ed; border: none">
+        <div class="row">
+          <div class="col-12">
+            <div class="mx-2">
+              <h3 class="card-title mx-2">Characteristics</h3>
+              <ul class=" list-group-flush text-dark" style="background: #f5f1ed">
+                <li class="list-group-item text-dark" id="car-body-type" style="background: #f5f1ed"><b>Body type : </b>{{car.carBodyTypes | titlecase}}</li>
+                <li class="list-group-item text-dark" id="car-transmission-type" style="background: #f5f1ed"><b>Transmission type : </b>{{car.transmissionBoxTypes | titlecase}}</li>
+                <li class="list-group-item text-dark" id="car-engine-capacity" style="background: #f5f1ed">
+                  <ng-container *ngIf="car?.engineCapacity! == 0">
+                    <b>Engine : </b> Electric engine
+                  </ng-container>
+                  <ng-container *ngIf="car?.engineCapacity! > 0">
+                    <b>Engine capacity : </b>{{car.engineCapacity | number: '1.1'}} liter inline
+                  </ng-container>
+                </li>
+                <li class="list-group-item text-dark" id="car-produce-year" style="background: #f5f1ed"><b>Production year : </b>{{car!.year}}</li>
+                <ng-container *ngIf="car.additionalOptions.length > 0">
+                  <li class="list-group-item text-dark" id="car-year" style="background: #f5f1ed">
+                    <b>Additional options :</b>
+                    <ng-container *ngFor="let option of car.additionalOptions; let i = index">
+                      <ng-container *ngIf="car.additionalOptions.length - 1 > i">
+                    <span id="car-option-{{option}}" class="text-dark" style="background: #f5f1ed; border: none">
                {{option}}</span>,
+                      </ng-container>
+                      <ng-container *ngIf="!(car.additionalOptions.length - 1 > i)">
+                    <span id="car-option-{{option}}" class="text-dark" style="background: #f5f1ed; border: none">
+               {{option}}</span>
+                      </ng-container>
+                    </ng-container>
+                  </li>
                 </ng-container>
-              </li>
-            </ng-container>
-          </ul>
+              </ul>
+            </div>
+          </div>
+          <div class="col">
+
+            <div class="mx-2">
+              <h3 class="card-title mx-2">Short description</h3>
+              <ul class=" list-group-flush text-dark mx-2" style="background: #f5f1ed">
+                <li class="list-group-item text-dark"
+                    id="car-short-description-{{car.brand}}-{{car.model}}"
+                    style="white-space: pre-line;background: #f5f1ed">{{car!.shortDescription}}
+                </li>
+              </ul>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </div>
 

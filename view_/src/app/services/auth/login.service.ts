@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {catchError, Observable, throwError} from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 import {LoginInfo} from "../../models/auth/LoginInfo";
 import {JwtResponse} from "../../models/auth/JwtResponse";
 import {ErrorService} from "../error/error.service";
 import * as moment from 'moment';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from "../../../environments/environment";
-import {Router} from "@angular/router";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})
@@ -32,7 +31,7 @@ export class LoginService {
 
   private apiServerURL = environment.apiServerURL;
 
-  constructor(private http: HttpClient, private errorService: ErrorService, private router: Router) {
+  constructor(private http: HttpClient, private errorService: ErrorService) {
     this.decodedToken = JSON.parse(localStorage.getItem('auth_meta')!) || new DecodedToken();
   }
 
@@ -42,7 +41,7 @@ export class LoginService {
     body.set('username', loginInfo.username as string);
     body.set('password', loginInfo.password as string);
 
-    return this.http.post<JwtResponse>(`${this.apiServerURL}/api/login`, body, httpOptions)
+    return this.http.post<JwtResponse>(`${this.apiServerURL}/authorization/login`, body, httpOptions)
       .pipe(
         map((token: JwtResponse) => {
           return this.saveToken(token);

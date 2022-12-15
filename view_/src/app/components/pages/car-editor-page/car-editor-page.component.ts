@@ -215,16 +215,16 @@ export class CarEditorPageComponent implements OnInit {
     console.log("Model : " + model);
     carIsValid = carIsValid && model.length >= 2 && model.length <= 40 && regexModel.test(model);
     console.log("Model is " + carIsValid);
-    carIsValid = carIsValid && year >= 1_920 && year <= this.concurredYear && (year != null && true);
+    carIsValid = carIsValid && year >= 1_920 && year <= this.concurredYear && (year != null && true) && year % 1 == 0;
     console.log("Year is " + carIsValid);
     carIsValid = carIsValid && engineCapacity >= 0.0 && engineCapacity <= 15.0 && (engineCapacity != null && true);
     console.log("engineCapacity is " + carIsValid);
     console.log("engineCapacity is " + engineCapacity);
     carIsValid = carIsValid && shortDescription.length <= 1_000 &&
-      regexDescriptions.test(shortDescription);
+      (regexDescriptions.test(shortDescription));
     console.log("shortDescription is " + carIsValid);
     carIsValid = carIsValid && fullDescription.length <= 5_000 &&
-      regexDescriptions.test(fullDescription);
+      (regexDescriptions.test(fullDescription));
     console.log("fullDescription is " + carIsValid);
     additionalOptions.filter(option => option.length > 0 && option != "undefined").forEach(option => carIsValid =
       regexAddOptions.test(option) && carIsValid && option.length <= 20 && option.length >= 2);

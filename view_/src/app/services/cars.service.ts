@@ -29,7 +29,7 @@ export class CarsService {
 
     console.log("Http method - GET, all cars");
 
-    return this.http.get<CarDTO[]>(`${this.apiServerURL}/car-catalog/all-cars`).pipe(
+    return this.http.get<CarDTO[]>(`${this.apiServerURL}/car-catalog`).pipe(
       map((carDTOs: CarDTO[]) => carDTOs.
       sort((a, b) => a.id - b.id).
       map(dto => this.converterDTO.CarDTOToCarEntity(dto))),
@@ -37,13 +37,13 @@ export class CarsService {
     );
   }
 
-  public deleteCar(carId: number, imageName: string) {
+  public deleteCar(carId: number, imageId: string) {
 
     console.log("Http method - DELETE, car with id " + carId);
 
-    return this.http.delete<void>(`${this.apiServerURL}/car-catalog/remove/${carId}`,{
+    return this.http.delete<void>(`${this.apiServerURL}/car-catalog/${carId}`,{
       params: {
-        imageName: imageName,
+        imageId: imageId,
       }}).pipe(
       catchError(this.errorHandler.bind(this))
     );
@@ -54,7 +54,7 @@ export class CarsService {
 
     console.log("Http method - Get, car with id " + carId);
 
-    return  this.http.get<CarDTO>(`${this.apiServerURL}/car-catalog/details/${carId}`).pipe(
+    return  this.http.get<CarDTO>(`${this.apiServerURL}/car-catalog/${carId}`).pipe(
       map(dto => this.converterDTO.CarDTOToCarEntity(dto)),
       catchError(this.errorHandler.bind(this))
     );
@@ -66,7 +66,7 @@ export class CarsService {
 
     let carDTO: CarDTO = this.converterDTO.carEntityToCarDTO(car);
 
-    return this.http.put<void>(`${this.apiServerURL}/car-catalog/update`, carDTO).pipe(
+    return this.http.put<void>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
       catchError(this.errorHandler.bind(this))
     );
   }
@@ -76,7 +76,7 @@ export class CarsService {
     console.log("Http method - POST, car " + car);
 
     let carDTO: CarDTO = this.converterDTO.carEntityToCarDTO(car);
-    return this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog/add`, carDTO).pipe(
+    return this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
       map(dto => this.converterDTO.CarDTOToCarEntity(dto)),
       catchError(this.errorHandler.bind(this))
     );
@@ -85,6 +85,7 @@ export class CarsService {
   private errorHandler(error: HttpErrorResponse) {
 
     console.log("Error in CarService");
+    console.log("status : " + error.status);
 
     this.errorService.handlesWithStatus(error.status);
     this.router.navigate(["/"]).then(r => r);
