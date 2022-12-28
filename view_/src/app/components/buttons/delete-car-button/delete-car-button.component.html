@@ -1,4 +1,4 @@
-<ng-container *ngIf="loginService.isAuthenticated()">
+<ng-container *ngIf="loginService.isAuthenticated() && loginService.isAdmin()">
   <div class="container">
     <button class="btn" style="background: #ed6a5a" (click)="deleteCar()">
 

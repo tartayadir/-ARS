@@ -4,7 +4,7 @@ import {ModalWindowService} from "../../../services/modal-window.service";
 import {CarsService} from "../../../services/cars.service";
 import {Router} from "@angular/router";
 import {CarsComponent} from "../../page-elements/cars/cars.component";
-import {CarBrands} from "../../../models/car/carBrands";
+import {CarBrands} from "../../../models/car/CarBrands";
 
 @Component({
   selector: 'app-confirm-delete-car-button',

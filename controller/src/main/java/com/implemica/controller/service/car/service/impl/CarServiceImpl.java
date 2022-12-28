@@ -5,7 +5,11 @@ import com.implemica.controller.service.car.service.CarService;
 import com.implemica.model.car.entity.Car;
 import com.implemica.model.car.repository.CarRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,16 +17,17 @@ import static java.lang.String.format;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class CarServiceImpl implements CarService {
-
     private CarRepository carRepository;
-
     @Override
+    @Cacheable(cacheNames = "cars")
     public List<Car> findAll() {
         return carRepository.findAll();
     }
 
     @Override
+    @Cacheable(cacheNames = "car", key = "#id")
     public Car findById(Long id) throws NoSuchCarException {
 
         if (id == null){
@@ -34,11 +39,13 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @CacheEvict(cacheNames = "cars", allEntries=true)
     public Car save(Car car) {
         return carRepository.save(car);
     }
 
     @Override
+    @Caching(evict = { @CacheEvict(cacheNames = "cars", allEntries=true), @CacheEvict(cacheNames = "car", key = "#id")})
     public void deleteById(Long id) throws NoSuchCarException{
 
         if (id == null){
@@ -50,6 +57,7 @@ public class CarServiceImpl implements CarService {
     }
 
     @Override
+    @Caching(evict = { @CacheEvict(cacheNames = "cars", allEntries=true), @CacheEvict(cacheNames = "car", key = "#car.id")})
     public Car update(Car car) throws NoSuchCarException{
 
         if (car.getId() == null){

@@ -1,4 +1,4 @@
-<ng-container *ngIf="loginService.isAuthenticated()">
+<ng-container *ngIf="loginService.isAuthenticated() && loginService.isAdmin()">
   <div class="container my-2">
     <button class="btn d-inline-flex align-items-center" id="addCarButton" style="background: #a1cca5" (click)="goToAddPage('add-car-page')">
       <img src="assets/icons/icons8-add-car-48.png" height="20" width="20">

@@ -23,13 +23,15 @@ public class AuthServiceImpl implements AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    private static String secret = "MegaLargeSigningSecretKeyForDemoApplicationMegaLargeSigningSecretKeyForDemoApplica" +
+    private static final String secret = "MegaLargeSigningSecretKeyForDemoApplicationMegaLargeSigningSecretKeyForDemoApplica" +
             "tion606f95011b64545d269fc6e7286c289f8c7a164bd429be382ba6d87c";
 
     @Override
     public String attemptAuthentication(String username, String password) throws AuthenticationException {
 
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(username, password);
+        authenticationToken.getAuthorities().forEach(System.out::println);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         return this.successfulAuthentication(authentication);

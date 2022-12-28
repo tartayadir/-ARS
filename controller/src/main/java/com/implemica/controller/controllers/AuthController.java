@@ -36,7 +36,7 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestParam @Parameter(description = "User username") String username,
                                               @RequestParam @Parameter(description = "User password") String password){
 
-        log.info("Http method - Post, try to login user with name{}", username);
+        log.info("Http method - Post, try to login user with name {}", username);
 
         String token = authService.attemptAuthentication(username, password);
         AuthResponse authResponse = new AuthResponse(token);

@@ -1,26 +1,31 @@
 package com.implemica.model.car.entity;
 
+import java.util.List;
+import java.util.Random;
+
 public enum CarBrands {
-    AUDI("AUDI"), ACURA("ACURA"), ALFA("ALFA"), ROMEO("ROMEO"),
-    ASTON_MARTIN("ASTON_MARTIN"), BENTLEY("BENTLEY"), BYD("BYD"), BMW("BMW"),
-    BRILLIANCE("BRILLIANCE"), BUICK("BUICK"), BUGATTI("BUGATTI"),
-    CADILLAC("CADILLAC"), CHANGAN("CHANGAN"),  CHEVROLET("CHEVROLET"),
-    CHERY("CHERY"), CHRYSLER("CHRYSLER"), CITROEN("CITROEN"), DAEWOO("DAEWOO"),
-    DACIA("DACIA"), DAIHATSU("DAIHATSU"), DODGE("DODGE"), FAW("FAW"),
-    FERRARI("FERRARI"), FIAT("FIAT"), FORD("FORD"), GEELY("GEELY"),
-    GMC("GMC"), GREAT_WALL("GREAT_WALL"), HONDA("HONDA"), HUMMER("HUMMER"),
-    HYUNDAI("HYUNDAI"), INFINITI("INFINITI"), JAGUAR("JAGUAR"), JEEP("JEEP"),
-    KIA("KIA"), LAMBORGHINI("LAMBORGHINI"), LAND_ROVER("LAND_ROVER"),
-    LANCIA("LANCIA"), LEXUS("LEXUS"), LIFAN("LIFAN"), LINCOLN("LINCOLN"),
-    LOTUS("LOTUS"), MARUSSIA("MARUSSIA"), MAYBACH("MAYBACH"), MAZDA("MAZDA"),
-    MERCEDES("MERCEDES"), MASERATI("MASERATI"), MINI("MINI"), MCLAREN("MCLAREN"),
-    MITSUBISHI("MITSUBISHI"), NISSAN("NISSAN"), OPEL("OPEL"), PEUGEOT("PEUGEOT"),
-    PORSCHE("PORSCHE"), RENAULT("RENAULT"), SAAB("SAAB"), SEAT("SEAT"),
-    SKODA("SKODA"), SUBARU("SUBARU"), SUZUKI("SUZUKI"), TOYOTA("TOYOTA"),
-    PONTIAC("PONTIAC"), ROLLS_ROYCE("ROLLS_ROYCE"), SMART("SMART"),
-    SSANGYONG("SSANGYONG"), TESLA("TESLA"), VOLVO("VOLVO"), DATSUN("DATSUN"),
-    VOLKSWAGEN("VOLKSWAGEN"), TAGAZ("TAGAZ"), HAVAL_ROVER("HAVAL_ROVER"),
-    GENESIS("GENESIS");
+    AUDI("Audi"), ACURA("Acura"), ALFA("Alfa"), ROMEO("Romeo"),
+    ASTON_MARTIN("Aston Martin"), BENTLEY("Bentley"), BYD("BYD"), BMW("BMW"),
+    BRILLIANCE("Brilliance"), BUICK("Buick"), BUGATTI("Bugatti"),
+    CADILLAC("Cadillac"), CHANGAN("Changan"),  CHEVROLET("Chevrolet"),
+    CHERY("Chery"), CHRYSLER("Chrysler"), CITROEN("Citroen"), DAEWOO("Daewoo"),
+    DACIA("Dacia"), DAIHATSU("Daihatsu"), DODGE("Dodge"), FAW("FAW"),
+    FERRARI("Ferrari"), FIAT("Fiat"), FORD("Ford"), GEELY("Geely"),
+    GMC("GMC"), GREAT_WALL("Great Wall"), HONDA("Honda"), HUMMER("Hummer"),
+    HYUNDAI("Hyundai"), INFINITI("Infiniti"), JAGUAR("Jaguar"), JEEP("JEEP"),
+    KIA("KIA"), LAMBORGHINI("Lamborghini"), LAND_ROVER("Land Rover"),
+    LANCIA("Lancia"), LEXUS("Lexus"), LIFAN("Lifan"), LINCOLN("Lincoln"),
+    LOTUS("Lotus"), MARUSSIA("Marussia"), MAYBACH("Maybach"), MAZDA("Mazda"),
+    MERCEDES("Mercedes"), MASERATI("Maserati"), MINI("Mini"), MCLAREN("Mclaren"),
+    MITSUBISHI("Mitsubishi"), NISSAN("Nissan"), OPEL("Opel"), PEUGEOT("Peugeot"),
+
+    PORSCHE("Porsche"), RENAULT("Renault"), SAAB("SAAB"), SEAT("Seat"),
+    SKODA("Skoda"), SUBARU("Subaru"), SUZUKI("Suzuki"), TOYOTA("Toyota"),
+    PONTIAC("Pontiac"), ROLLS_ROYCE("Rolls Royce"), SMART("Smart"),
+
+    SSANGYONG("Ssanyong"), TESLA("Tesla"), VOLVO("Volvo"), DATSUN("Datsun"),
+    VOLKSWAGEN("Volkswagen"), TAGAZ("Tagaz"), HAVAL_ROVER("Haval Rover"),
+    GENESIS("Genesis");
     
     private final String stringValue;
 
@@ -30,5 +35,13 @@ public enum CarBrands {
     
     public String getStringValue(){
         return stringValue;
+    }
+
+    private static final List<CarBrands> VALUES = List.of(values());
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
+
+    public static CarBrands getRandomCarBrand()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

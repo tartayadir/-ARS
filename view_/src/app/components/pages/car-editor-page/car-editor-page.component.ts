@@ -12,6 +12,8 @@ import {Title} from "@angular/platform-browser";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {Option} from "../../../models/option/Option";
 import {MatChipInputEvent} from "@angular/material/chips";
+import {CarBrands} from "../../../models/car/CarBrands";
+import {CarBodyTypes} from "../../../models/car/CarBodyTypes";
 
 
 @Component({
@@ -47,10 +49,6 @@ export class CarEditorPageComponent implements OnInit {
     }
   }
 
-
-
-  mouseIsOverUploadImageButton: boolean = true;
-
   imageTypeIsValid = true;
   imgChangeEvt: any = '';
   imageUrl: any;
@@ -65,6 +63,10 @@ export class CarEditorPageComponent implements OnInit {
   regexStringModel: string = "^[a-zA-Z\s ]+[a-zA-Z0-9\s ]*$";
   regexStringDescriptions: string = "^[a-zA-Z\s \n\r]+[a-zA-Z-\"/0-9\s \r\n.,:!?%()’‘\`\'—–-]*$";
   regexStringAddOptions: string = "^[a-zA-Z ]+[a-zA-Z–0-9 –-]*$";
+
+  public brands = Object.keys(CarBrands);
+
+  public carBodyTypes = Object.keys(CarBodyTypes);
 
   constructor(private carService: CarsService, private activateRoute: ActivatedRoute, private router: Router,
               private imageService: ImageService, private modalWindowService: ModalWindowService,
@@ -83,12 +85,26 @@ export class CarEditorPageComponent implements OnInit {
           this.options.push({name: option})
         });
 
-        this.titleService.setTitle("Edit " + this.car.brand + " " + this.car.model)
+        this.titleService.setTitle("Edit " + this.getBrandValue() + " " + this.car.model)
       },
       (error: HttpErrorResponse) => {
         alert(error.message)
       }
     );
+  }
+
+  public getBrandEnumValue(value: string) : string{
+    // @ts-ignore
+    return CarBrands[value];
+  }
+
+  public getCarBodyTypesEnumValue(value: string) : string{
+    // @ts-ignore
+    return CarBodyTypes[value];
+  }
+
+  public getBrandValue(): string {
+    return CarBrands[this.car!.brand!];
   }
 
   public updateCar(content: any) {
@@ -102,6 +118,9 @@ export class CarEditorPageComponent implements OnInit {
 
         this.car.imageFileName = "" + this.car.brand + this.car.model + Math.floor(Math.random() * 1_000_000_000);
         this.car.imageFileName = this.car.imageFileName.replace(" ", "");
+        //
+        // this.car.brand = Object.keys(CarBrands)[Object.values(CarBrands).indexOf(this.car!.brand!)] as unknown as CarBrands;
+        // this.car.carBodyType = Object.keys(CarBodyTypes)[Object.values(CarBodyTypes).indexOf(this.car!.carBodyType!)] as unknown as CarBodyTypes;
 
         this.carService.update(this.car).subscribe( () => {});
         if(this.car.imageFileName != "default-car-image"){
@@ -112,6 +131,11 @@ export class CarEditorPageComponent implements OnInit {
         });
 
       }else {
+        //
+        // this.car.brand = Object.keys(CarBrands)[Object.values(CarBrands).indexOf(this.car!.brand!)] as unknown as CarBrands;
+        // this.car.carBodyType = Object.keys(CarBodyTypes)[Object.values(CarBodyTypes).indexOf(this.car!.carBodyType!)] as unknown as CarBodyTypes;
+        //
+
         this.carService.update(this.car).subscribe( () => {
           this.goToHomePage();
         });

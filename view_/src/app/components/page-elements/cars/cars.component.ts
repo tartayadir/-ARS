@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {ImageService} from "../../../services/image.service";
 import {Title} from "@angular/platform-browser";
 import {LoginService} from "../../../services/auth/login.service";
+import {CarBrands} from "../../../models/car/CarBrands";
 
 @Component({
   selector: "app-cars",
@@ -61,5 +62,10 @@ export class CarsComponent implements OnInit {
       navigationDetails.push($myParam);
     }
     this.router.navigate(navigationDetails).then(r => r);
+  }
+
+  public getCarBrand(i: number): string {
+
+    return CarBrands[this.cars[i].brand!];
   }
 }

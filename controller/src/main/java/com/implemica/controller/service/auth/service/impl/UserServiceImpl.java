@@ -2,9 +2,8 @@ package com.implemica.controller.service.auth.service.impl;
 
 import com.implemica.model.auth.entity.User;
 import com.implemica.model.auth.repository.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,12 +15,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Transactional
 @Slf4j
 public class UserServiceImpl implements UserDetailsService {
 
-    @Autowired
     private final UserRepository userRepository;
 
     @Override

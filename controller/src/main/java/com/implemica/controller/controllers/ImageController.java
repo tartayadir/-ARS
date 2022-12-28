@@ -58,7 +58,7 @@ public class ImageController {
         return ResponseEntity.created(uri).build();
     }
 
-    @Operation(summary = "Delete  image.",
+    @Operation(summary = "Delete image.",
             description = "Deletes car image by their name if image is not found returns 404 http status.")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Image is deleted successful.",
             content = { @Content(mediaType = APPLICATION_JSON_VALUE)}),

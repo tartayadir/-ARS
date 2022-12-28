@@ -44,7 +44,7 @@
                 <div class="form-outline form-white mb-4">
                   <label class="form-label" >Password</label>
                   <input type="password" class="form-control form-control-lg" style="background: #f5f1ed" name="password"
-                         minlength="8" maxlength="102" pattern='^[a-zA-z0-9_]+' required
+                         minlength="8" maxlength="101" required
                          id="passwordInputField" #password="ngModel" [(ngModel)]="loginInfo.password">
 
                   <div id="passwordErrorMassage">
@@ -57,11 +57,11 @@
                       <ng-container *ngIf="password.errors?.['minlength']" class="invalid-feedback">
                         <span class="text-danger">Password must be greater than 8.</span>
                       </ng-container>
-                      <ng-container *ngIf="password.errors?.['pattern'] && !password.errors?.['minlength']"
-                                    class="invalid-feedback">
-                      <span class="text-danger">Password must not contain anything other than digits,
-                        letters and underlining.</span>
-                      </ng-container>
+<!--                      <ng-container *ngIf="password.errors?.['pattern'] && !password.errors?.['minlength']"-->
+<!--                                    class="invalid-feedback">-->
+<!--                      <span class="text-danger">Password must not contain anything other than digits,-->
+<!--                        letters and underlining.</span>-->
+<!--                      </ng-container>-->
                     </ng-container>
                     <ng-container *ngIf="loginInfo!.password!.length > 100 &&
                     !(password.invalid && (password.touched || password.dirty))" class="invalid-feedback">
@@ -92,7 +92,7 @@
                     <div class="modal-header" id="modal-header" style="background: #dad2bc">
                       <h4 class="modal-title text-danger" id="modal-basic-title">Incorrect user info</h4>
                     </div>
-                    <div class="modal-body" div="modal-body" style="background: #dad2bc">
+                    <div class="modal-body" id="modal-body" style="background: #dad2bc">
                       You entered incorrect username or password. Please, check your entered date and try again.
                     </div>
                     <div class="modal-footer" style="background: #dad2bc">

@@ -1,14 +1,12 @@
 export enum CarBodyTypes{
 
-  SEDAN='SEDAN',
-  COUPE='COUPE',
-  SPORTS_CAR='SPORTS_CAR',
-  STATION_WAGON='STATION_WAGON',
-  HATCHBACK='HATCHBACK',
-  CONVERTIBLE='CONVERTIBLE',
-  MINIVAN='MINIVAN',
-  PICKUP='PICKUP',
-  SUV='SUV'
-
-
+  SEDAN= 'Sedan',
+  COUPE= 'Coupe',
+  SPORTS_CAR= 'Sports car',
+  STATION_WAGON= "Station wagon",
+  HATCHBACK= 'Hatchback',
+  CONVERTIBLE= 'Convertible',
+  MINIVAN= 'Minivan',
+  PICKUP= 'Pickup',
+  SUV= 'SUV'
 }

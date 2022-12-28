@@ -1,7 +1,7 @@
 <div class="container mx-auto w-75 h-75 my-5 card" style="background: #252323; color: #f5f1ed">
 
   <div class="card-header" style="background: #252323">
-    <h2 class="card-title my-2">Edit {{car.brand!.toString() | titlecase}} {{car.model | titlecase}}</h2>
+    <h2 class="card-title my-2">Edit {{getBrandValue()}} {{car.model | titlecase}}</h2>
   </div>
 
   <div class="card-body" style="background: #252323;  color: #f5f1ed">
@@ -73,75 +73,9 @@
         <div class="form-outline ">
           <label><h6>Brand</h6></label>
           <select class="form-select" name="brand" id="brand-input" [(ngModel)]="car.brand">
-            <option value="AUDI">Audi</option>
-            <option value="ACURA">Acura</option>
-            <option value="ALFA">Alfa</option>
-            <option value="ASTON_MARTIN">Aston Martin</option>
-            <option value="BENTLEY">Bentley</option>
-            <option value="BYD">BYD</option>
-            <option value="BMW">BMW</option>
-            <option value="BRILLIANCE">{{ "BRILLIANCE" | titlecase}}</option>
-            <option value="BUICK">{{ "BUICK" | titlecase}}</option>
-            <option value="BUGATTI">{{ "BUGATTI" | titlecase}}</option>
-            <option value="CADILLAC">{{ "CADILLAC" | titlecase}}</option>
-            <option value="CHANGAN">{{ "CHANGAN" | titlecase}}</option>
-            <option value="CHEVROLET">{{ "CHEVROLET" | titlecase}}</option>
-            <option value="CHERY">{{ "CHERY" | titlecase}}</option>
-            <option value="CHRYSLER">{{ "CHRYSLER" | titlecase}}</option>
-            <option value="CITROEN">{{ "CITROEN" | titlecase}}</option>
-            <option value="DAEWOO">{{ "DAEWOO" | titlecase}}</option>
-            <option value="DACIA">{{ "DACIA" | titlecase}}</option>
-            <option value="DAIHATSU">{{ "DAIHATSU" | titlecase}}</option>
-            <option value="DODGE">{{ "DODGE" | titlecase}}</option>
-            <option value="FAW">FAW</option>
-            <option value="FERRARI">{{ "FERRARI" | titlecase}}</option>
-            <option value="FIAT">{{ "FIAT" | titlecase}}</option>
-            <option value="FORD">{{ "FORD" | titlecase}}</option>
-            <option value="GEELY">{{ "GEELY" | titlecase}}</option>
-            <option value="GMC">GMC</option>
-            <option value="GREAT_WALL">Great wall</option>
-            <option value="HONDA">{{ "HONDA" | titlecase}}</option>
-            <option value="HUMMER">{{ "HUMMER" | titlecase}}</option>
-            <option value="HYUNDAI">{{ "HYUNDAI" | titlecase}}</option>
-            <option value="INFINITI">{{ "INFINITI" | titlecase}}</option>
-            <option value="JEEP">JEEP</option>
-            <option value="KIA">KIA</option>
-            <option value="LAMBORGHINI">{{ "LAMBORGHINI" | titlecase}}</option>
-            <option value="LAND_ROVER">LAND ROVER</option>
-            <option value="LANCIA">{{ "LANCIA" | titlecase}}</option>
-            <option value="LEXUS">{{ "LEXUS" | titlecase}}</option>
-            <option value="LIFAN">{{ "LIFAN" | titlecase}}</option>
-            <option value="LINCOLN">{{ "LINCOLN" | titlecase}}</option>
-            <option value="LOTUS">{{ "LOTUS" | titlecase}}</option>
-            <option value="MARUSSIA">{{ "MARUSSIA" | titlecase}}</option>
-            <option value="MAYBACH">{{ "MAYBACH" | titlecase}}</option>
-            <option value="MAZDA">{{ "MAZDA" | titlecase}}</option>
-            <option value="MERCEDES">{{ "MERCEDES" | titlecase}}</option>
-            <option value="MASERATI">{{ "MASERATI" | titlecase}}</option>
-            <option value="MINI">{{ "MINI" | titlecase}}</option>
-            <option value="MCLAREN">{{ "MCLAREN" | titlecase}}</option>
-            <option value="MITSUBISHI">{{ "MITSUBISHI" | titlecase}}</option>
-            <option value="NISSAN">{{ "NISSAN" | titlecase}}</option>
-            <option value="OPEL">{{ "OPEL" | titlecase}}</option>
-            <option value="PEUGEOT">{{ "PEUGEOT" | titlecase}}</option>
-            <option value="PORSCHE">{{ "PORSCHE" | titlecase}}</option>
-            <option value="RENAULT">{{ "RENAULT" | titlecase}}</option>
-            <option value="SAAB">{{ "SAAB" | titlecase}}</option>
-            <option value="SEAT">{{ "SEAT" | titlecase}}</option>
-            <option value="SKODA">{{ "SKODA" | titlecase}}</option>
-            <option value="SUZUKI">{{ "SUZUKI" | titlecase}}</option>
-            <option value="TOYOTA">{{ "TOYOTA" | titlecase}}</option>
-            <option value="PONTIAC">{{ "PONTIAC" | titlecase}}</option>
-            <option value="ROLLS_ROYCE">{{ "ROLLS ROYCE" | titlecase}}</option>
-            <option value="SMART">{{ "SMART" | titlecase}}</option>
-            <option value="SSANGYONG">{{ "SSANGYONG" | titlecase}}</option>
-            <option value="TESLA">{{ "TESLA" | titlecase}}</option>
-            <option value="VOLVO">{{ "VOLVO" | titlecase}}</option>
-            <option value="DATSUN">{{ "DATSUN" | titlecase}}</option>
-            <option value="VOLKSWAGEN">{{ "VOLKSWAGEN" | titlecase}}</option>
-            <option value="TAGAZ">{{ "TAGAZ" | titlecase}}</option>
-            <option value="HAVAL_ROVER">{{ "HAVAL ROVER" | titlecase}}</option>
-            <option value="GENESIS">{{ "GENESIS" | titlecase}}</option>
+            <option *ngFor="let brand of brands" [value]="brand">
+              {{getBrandEnumValue(brand)}}
+            </option>
           </select>
         </div>
       </div>
@@ -149,16 +83,10 @@
       <div class="col d-inline-flex">
         <div class="form-outline">
           <label><h6>Car body type</h6></label>
-          <select class="form-select" name="carBodyTypes" id="car-body-type-input" [(ngModel)]="car.carBodyTypes">
-            <option value="SEDAN">Sedan</option>
-            <option value="COUPE">Coupe</option>
-            <option value="SPORTS_CAR">Sports car</option>
-            <option value="STATION_WAGON">Station wagon</option>
-            <option value="HATCHBACK">Hatchback</option>
-            <option value="CONVERTIBLE">Convertible</option>
-            <option value="MINIVAN">Minivan</option>
-            <option value="PICKUP">Pickup</option>
-            <option value="SUV">SUV</option>
+          <select class="form-select" name="carBodyTypes" id="car-body-type-input" [(ngModel)]="car.carBodyType">
+            <option *ngFor="let carBodyType of carBodyTypes" [value]="carBodyType">
+              {{getCarBodyTypesEnumValue(carBodyType)}}
+            </option>
           </select>
         </div>
       </div>
@@ -170,28 +98,28 @@
         <div class="form-outline mb-4">
           <label><h6>Transmission box type</h6></label>
           <div class="form-check"  id="transmission-box-input">
-            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxType"
                    checked value="MECHANICAL" id="MECHANICAL">
             <label class="form-check-label" >
               Mechanical
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxType"
                    value="AUTOMATIC" id="AUTOMATIC">
             <label class="form-check-label" >
               Automatic
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxType"
                    value="ROBOTIC" id="ROBOTIC">
             <label class="form-check-label" >
               Robotic
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxTypes"
+            <input class="form-check-input" type="radio" [(ngModel)]="car.transmissionBoxType"
                    value="VARIATIONAL" id="VARIATIONAL">
             <label class="form-check-label" >
               Variational

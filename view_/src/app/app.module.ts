@@ -56,7 +56,6 @@ const appRoutes: Routes = [
   { path: '', component: CarsComponent },
   { path: 'details/:id', component: CarDetailsPageComponent},
   { path: 'login-page', component: LoginPageComponent},
-  { path: '132', component: TesrComponent},
   { path: 'add-car-page', component: AddCarPageComponent, canActivate: [AuthGuard]},
   { path: 'update/:id', component: CarEditorPageComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: '' }

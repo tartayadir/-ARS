@@ -1,13 +1,13 @@
 import {CarBodyTypes} from "../car/CarBodyTypes";
 import {TransmissionBoxTypes} from "../car/TransmissionBoxTypes";
-import {CarBrands} from "../car/carBrands";
+import {CarBrands} from "../car/CarBrands";
 
 export class CarDTO {
 
   id!: number;
   brand!: CarBrands;
   model!: string;
-  carBodyTypes!: CarBodyTypes
+  carBodyTypes!: CarBodyTypes | undefined
   year!: number;
   transmissionBoxTypes!: TransmissionBoxTypes;
   engineCapacity!: number;

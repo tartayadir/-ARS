@@ -1,14 +1,14 @@
 import {CarBodyTypes} from "./CarBodyTypes";
 import {TransmissionBoxTypes} from "./TransmissionBoxTypes";
-import {CarBrands} from "./carBrands";
+import {CarBrands} from "./CarBrands";
 
 export class Car {
   id?: number;
   brand?: CarBrands;
   model?: string;
-  carBodyTypes?: CarBodyTypes
+  carBodyType?: CarBodyTypes
   year?: number;
-  transmissionBoxTypes?: TransmissionBoxTypes;
+  transmissionBoxType?: TransmissionBoxTypes;
   engineCapacity?: number;
   fullDescription?: string;
   shortDescription?: string;

@@ -4,7 +4,8 @@ import {ActivatedRoute} from "@angular/router";
 import {Car} from "../../../models/car/car";
 import {CarsService} from "../../../services/cars.service";
 import {Title} from "@angular/platform-browser";
-import {CarBrands} from "../../../models/car/carBrands";
+import {CarBodyTypes} from "../../../models/car/CarBodyTypes";
+import {CarBrands} from "../../../models/car/CarBrands";
 
 @Component({
   selector: 'app-car-details',
@@ -14,7 +15,6 @@ export class CarDetailsPageComponent implements OnInit
   {
 
   public car: Car  = {
-    brand: CarBrands.AUDI,
     additionalOptions: []
   };
 
@@ -39,5 +39,14 @@ export class CarDetailsPageComponent implements OnInit
 
     let description: string = this.car.fullDescription!;
     return description!.length! > 1 && description != " ";
+  }
+
+  public getCarBodyType(): string {
+    // @ts-ignore
+    return CarBodyTypes[this.car!.carBodyType!];
+  }
+
+  public getCarBrand(): string {
+    return CarBrands[this.car!.brand!];
   }
 }

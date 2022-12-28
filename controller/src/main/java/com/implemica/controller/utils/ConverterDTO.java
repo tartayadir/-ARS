@@ -23,9 +23,9 @@ public class ConverterDTO {
         CarDTO carDTO = CarDTO.builder().build();
 
         carDTO.setId(car.getId());
-        carDTO.setBrand(car.getBrand().getStringValue());
+        carDTO.setBrand(car.getBrand().toString());
         carDTO.setModel(car.getModel());
-        carDTO.setCarBodyTypes(car.getCarBodyTypes().getStringValue());
+        carDTO.setCarBodyTypes(car.getCarBodyTypes().toString());
         carDTO.setYear(car.getYear());
         carDTO.setTransmissionBoxTypes(car.getTransmissionBoxTypes().getStringValue());
         carDTO.setEngineCapacity(car.getEngineCapacity());

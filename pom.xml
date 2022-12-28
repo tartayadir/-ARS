@@ -16,16 +16,19 @@
     <packaging>pom</packaging>
     <properties>
         <java.version>11</java.version>
+        <spring.profiles.active>prod</spring.profiles.active>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -63,11 +66,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
 
         <!-- JWT -->
         <!-- https://mvnrepository.com/artifact/com.auth0/java-jwt -->
@@ -159,6 +157,13 @@
             <version>3.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.fluttercode.datafactory</groupId>
+            <artifactId>datafactory</artifactId>
+            <version>0.8</version>
+            <type>jar</type>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -173,49 +178,38 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <excludeDevtools>true</excludeDevtools>
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                <version>0.2</version>
-                <executions>
-                    <execution>
-                        <phase>integration-test</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>io.swagger</groupId>-->
-<!--                <artifactId>swagger-codegen-maven-plugin</artifactId>-->
-<!--                <version>2.3.1</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <goals>-->
-<!--                            <goal>generate</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <inputSpec>application/src/main/resources/car-catalog</inputSpec>-->
-<!--                            &lt;!&ndash; language file, like e.g. JavaJaxRSCodegen shipped with swagger &ndash;&gt;-->
-<!--                            <language>java</language>-->
-<!--                            <templateDirectory>resttemplate</templateDirectory>-->
-
-<!--                            <output>${project.build.directory}/generated-sources</output>-->
-<!--                            <apiPackage>${default.package}.handler</apiPackage>-->
-<!--                            <modelPackage>${default.package}.model</modelPackage>-->
-<!--                            <invokerPackage>${default.package}.handler</invokerPackage>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>application/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
+
+    <profiles>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+
 
     <modules>
         <module>controller</module>

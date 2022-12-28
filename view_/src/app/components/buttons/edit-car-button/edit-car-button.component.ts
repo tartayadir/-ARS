@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {LoginService} from "../../../services/auth/login.service";
-import {CarBrands} from "../../../models/car/carBrands";
+import {CarBrands} from "../../../models/car/CarBrands";
 
 @Component({
   selector: 'app-edit-car-button',

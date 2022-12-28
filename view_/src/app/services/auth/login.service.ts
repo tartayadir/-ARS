@@ -18,7 +18,8 @@ const jwt = new JwtHelperService();
 
 class DecodedToken {
   exp!: number;
-  username!: string;
+  sub!: string;
+  roles!: string[];
 }
 
 @Injectable({
@@ -54,6 +55,8 @@ export class LoginService {
     this.decodedToken = jwt.decodeToken(token.access_token);
 
     localStorage.setItem('auth_tkn', token.access_token);
+    localStorage.setItem('auth_sub', this.decodedToken.sub);
+    localStorage.setItem('auth_role', this.decodedToken.roles[0]);
     localStorage.setItem('auth_meta', JSON.stringify(this.decodedToken));
     return token;
   }
@@ -65,6 +68,14 @@ export class LoginService {
     this.decodedToken = new DecodedToken();
 
     location.reload();
+  }
+
+  public getUsername(): string {
+    return localStorage.getItem('auth_sub')!;
+  }
+
+  public isAdmin(): boolean {
+    return localStorage.getItem('auth_role') == 'ADMIN_ROLE';
   }
 
   public isAuthenticated(): boolean {

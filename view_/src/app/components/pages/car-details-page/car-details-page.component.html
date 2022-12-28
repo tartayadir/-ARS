@@ -2,14 +2,13 @@
   <div class="card border-secondary text-dark my-4 " style="background: #f5f1ed">
 
     <div class="card-header d-inline-block" style="height: 55px;">
-      <h2 class="card-title text-center" id="car-brand-model"><b>{{car?.brand!.toString() | titlecase}}
-      </b><b>{{car!.model}}</b></h2>
+      <h2 class="card-title text-center" id="car-brand-model"><b>{{getCarBrand()! + " " + car!.model!}}</b></h2>
     </div>
 
     <div class="row">
       <div class="col-sm-7 my-4">
         <div class = "text-center mx-2 card-header">
-          <img cacheimg  [src]="car.image" alt="9" class="card-img-top">
+          <img cacheimg  [src]="car.image" alt="9" id="car-image-{{car.brand}}-{{car.model}}" class="card-img-top">
         </div>
       </div>
       <div class="col-sm-5 my-4">
@@ -18,8 +17,8 @@
             <div class="mx-2">
               <h3 class="card-title mx-2">Characteristics</h3>
               <ul class=" list-group-flush text-dark" style="background: #f5f1ed">
-                <li class="list-group-item text-dark" id="car-body-type" style="background: #f5f1ed"><b>Body type : </b>{{car.carBodyTypes | titlecase}}</li>
-                <li class="list-group-item text-dark" id="car-transmission-type" style="background: #f5f1ed"><b>Transmission type : </b>{{car.transmissionBoxTypes | titlecase}}</li>
+                <li class="list-group-item text-dark" id="car-body-type" style="background: #f5f1ed"><b>Body type : </b>{{getCarBodyType()}}</li>
+                <li class="list-group-item text-dark" id="car-transmission-type" style="background: #f5f1ed"><b>Transmission type : </b>{{car.transmissionBoxType | titlecase}}</li>
                 <li class="list-group-item text-dark" id="car-engine-capacity" style="background: #f5f1ed">
                   <ng-container *ngIf="car?.engineCapacity! == 0">
                     <b>Engine : </b> Electric engine

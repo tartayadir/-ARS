@@ -1,4 +1,4 @@
-<ng-container *ngIf="loginService.isAuthenticated()" >
+<ng-container *ngIf="loginService.isAuthenticated() && loginService.isAdmin()" >
   <button class="btn" style="background: #ed6a5a" id="delete-car-{{brand}}-{{model}}-button"
           (click)="open(confirmDeleteCarModal)">
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">

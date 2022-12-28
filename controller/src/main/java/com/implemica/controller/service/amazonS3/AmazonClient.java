@@ -25,8 +25,8 @@ public class AmazonClient {
     @Autowired
     private AmazonS3 s3client;
 
-    @Value("${aws.s3.bucket.name}")
-    private String bucketName;
+//    @Value("${aws.s3.bucket.name}")
+    private String bucketName = " ";
 
     public void uploadFileTos3bucket(String fileName, MultipartFile multipartFile) throws InvalidImageTypeException {
 

@@ -10,7 +10,7 @@ import {Car} from "../../../models/car/car";
 import {ModalWindowService} from "../../../services/modal-window.service";
 import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
 import {ImagesService} from "../../../services/utils/images.service";
-import {CarBrands} from "../../../models/car/carBrands";
+import {CarBrands} from "../../../models/car/CarBrands";
 import {Title} from "@angular/platform-browser";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -50,14 +50,14 @@ export class AddCarPageComponent implements OnInit{
               private images: ImagesService, private titleService: Title,private loginService: LoginService) {
 
     this.form = this.formBuilder.group({
-      brand: [CarBrands.AUDI, [Validators.required]],
+      brand: ["AUDI", [Validators.required]],
       model: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(40),
         Validators.pattern('[a-zA-Z\s ]+[a-zA-Z0-9\s ]*$')]],
       year: [2010, [Validators.required, Validators.min(1920), Validators.max(this.concurredYear),
         Validators.pattern("^[0-9]*$")]],
       engineCapacity: [1.0, [Validators.required, Validators.min(0.0), Validators.max(15.0)]],
       transmissionBoxTypes: [TransmissionBoxTypes.AUTOMATIC, [Validators.required]],
-      carBodyTypes: [CarBodyTypes.COUPE, [Validators.required]],
+      carBodyTypes: ["COUPE", [Validators.required]],
       shortDescription: ['', [
         Validators.maxLength(1_000), Validators.pattern("^[a-zA-Z\s \n\r]+[a-zA-Z-\"/0-9\s \r\n.,:!?%()’‘\`\'—–-]*$")]],
       fullDescription: ['', [
@@ -77,9 +77,9 @@ export class AddCarPageComponent implements OnInit{
 
       car.brand = this.form.value.brand as CarBrands;
       car.model = this.form.value.model as string;
-      car.carBodyTypes = this.form.value.carBodyTypes as CarBodyTypes;
+      car.carBodyType = this.form.value.carBodyTypes as CarBodyTypes;
       car.year = this.form.value.year as number;
-      car.transmissionBoxTypes = this.form.value.transmissionBoxTypes as TransmissionBoxTypes;
+      car.transmissionBoxType = this.form.value.transmissionBoxTypes as TransmissionBoxTypes;
       car.engineCapacity = this.form.value.engineCapacity as number;
       car.shortDescription = this.form.value.shortDescription as string;
       if(car.shortDescription.length == 0){

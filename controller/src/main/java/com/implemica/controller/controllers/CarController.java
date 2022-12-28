@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 
 import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
 import static com.implemica.controller.utils.ConverterDTO.dtoToCarEntity;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.springframework.http.CacheControl.maxAge;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -124,8 +126,7 @@ public class CarController {
     public ResponseEntity<CarDTO> updateCar(@Parameter(description = "car that will be updated")
                                                 @Valid @RequestBody CarDTO carDTO) throws NoSuchCarException {
 
-        log.info("Http method - Put, update car {}", carDTO.toString());
-        log.info("Car id : {}", carDTO.getId());
+        log.info("Http method - Put, update car with id {}", carDTO.getId());
 
         Car car = dtoToCarEntity(carDTO);
         carDTO = carEntityToDTO(carService.update(car));
@@ -154,13 +155,12 @@ public class CarController {
         log.info("Http method - Delete, delete car with id {}", id);
 
         carService.deleteById(id);
-        ResponseEntity<CarDTO> response = ResponseEntity.ok().build();
 
         if(!imageId.equals("default-car-image")){
             log.info("Http method - Delete, delete image with name {}", imageId);
             this.amazonClient.deleteFileFromS3Bucket(imageId);
         }
 
-        return response;
+        return ResponseEntity.ok().build();
     }
 }
