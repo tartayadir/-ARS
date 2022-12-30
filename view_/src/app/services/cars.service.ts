@@ -15,7 +15,7 @@ import {Router} from "@angular/router";
 
 export class CarsService {
 
-  private apiServerURL = environment.apiServerURL;
+  private apiServerURL =  environment.apiServerURL;
 
   constructor(
     private http: HttpClient,

@@ -1,13 +1,15 @@
 package com.implemica.controller.service.amazonS3;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,15 +20,12 @@ import static com.implemica.controller.utils.ConverterDTO.convertMultiPartToFile
 
 @Service
 @Slf4j
-@AllArgsConstructor
 @RequiredArgsConstructor
 public class AmazonClient {
 
-    @Autowired
-    private AmazonS3 s3client;
+    private final AmazonS3 s3client;
 
-//    @Value("${aws.s3.bucket.name}")
-    private String bucketName = " ";
+    private final String bucketName = "carcatalogcarsphotop";
 
     public void uploadFileTos3bucket(String fileName, MultipartFile multipartFile) throws InvalidImageTypeException {
 
@@ -43,7 +42,7 @@ public class AmazonClient {
 
     public void deleteFileFromS3Bucket(String imageName) {
 
-        s3client.deleteObject(new DeleteObjectRequest(bucketName, imageName));
+        s3client.deleteObject(new DeleteObjectRequest( bucketName, imageName));
     }
 
     private static void checkImageType(MultipartFile image) throws InvalidImageTypeException {
