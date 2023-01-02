@@ -63,6 +63,8 @@ export class LoginService {
 
   public logout(): void {
     localStorage.removeItem('auth_tkn');
+    localStorage.removeItem('auth_sub');
+    localStorage.removeItem('auth_role');
     localStorage.removeItem('auth_meta');
 
     this.decodedToken = new DecodedToken();
@@ -79,7 +81,14 @@ export class LoginService {
   }
 
   public isAuthenticated(): boolean {
-    return moment().isBefore(moment.unix(this.decodedToken.exp));
+
+    console.log(" " + jwt.isTokenExpired(localStorage.getItem('auth_tkn') as string));
+    console.log(moment().isBefore(moment.unix(this.decodedToken.exp)));
+    console.log(moment.now())
+    console.log(this.decodedToken.exp);
+    console.log(moment.now() >= this.decodedToken.exp)
+
+    return !jwt.isTokenExpired(localStorage.getItem('auth_tkn') as string);
   }
 
   private errorHandler(error: HttpErrorResponse) {

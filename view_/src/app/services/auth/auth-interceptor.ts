@@ -14,6 +14,7 @@ export class AuthInterceptor implements HttpInterceptor {
             next: HttpHandler): Observable<HttpEvent<any>> {
 
     const idToken = localStorage.getItem("auth_tkn");
+    console.log(this.loginService.isAuthenticated() + " is auth ")
 
     if (idToken && this.loginService.isAuthenticated()) {
 

@@ -13,4 +13,5 @@ public class AmazonConfig {
 
         return AmazonS3ClientBuilder.defaultClient();
     }
+
 }

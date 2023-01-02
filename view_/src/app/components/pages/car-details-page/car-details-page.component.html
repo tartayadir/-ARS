@@ -76,22 +76,40 @@
 
     <div class = "card-footer justify-content-end">
 
-      <div>
-        <div class="nav nav-pills nav-justified d-flex bd-highlight mb-3">
-          <div class="me-auto p-2 bd-highlight">
-            <app-come-back-button></app-come-back-button>
-          </div>
-          <div class="p-2 bd-highlight my-2">
-            <app-edit-car-button [carId]=car!.id
-                                 [carBrand]="car.brand" [carModel]="car.model"></app-edit-car-button>
-          </div>
-          <div class="p-2 bd-highlight my-2">
-            <app-confirm-delete-car-button [carId]=car!.id [imageFileName]="car!.imageFileName"
-                                           [brand]="car!.brand" [model]="car!.model">
-            </app-confirm-delete-car-button>
-          </div>
+      <div class="d-flex bd-highlight mb-3">
+        <div class="me-auto p-2 bd-highlight ">
+          <app-come-back-button></app-come-back-button>
         </div>
+
+        <div class="p-2 bd-highlight my-2">
+          <app-edit-car-button [carId]=car!.id
+                               [carBrand]="car.brand" [carModel]="car.model"></app-edit-car-button>
+        </div>
+
+        <div class=" p-2 bd-highlight my-2">
+          <app-confirm-delete-car-button [carId]=car!.id [imageFileName]="car!.imageFileName"
+                                         [brand]="car!.brand" [model]="car!.model">
+          </app-confirm-delete-car-button>
+        </div>
+
       </div>
+
+<!--      <div>-->
+<!--        <div class="nav nav-pills nav-justified d-flex bd-highlight mb-3">-->
+<!--          <div class="me-auto p-2 bd-highlight">-->
+<!--            <app-come-back-button></app-come-back-button>-->
+<!--          </div>-->
+<!--          <div class="p-2 bd-highlight my-2">-->
+<!--            <app-edit-car-button [carId]=car!.id-->
+<!--                                 [carBrand]="car.brand" [carModel]="car.model"></app-edit-car-button>-->
+<!--          </div>-->
+<!--          <div class="p-2 bd-highlight my-2">-->
+<!--            <app-confirm-delete-car-button [carId]=car!.id [imageFileName]="car!.imageFileName"-->
+<!--                                           [brand]="car!.brand" [model]="car!.model">-->
+<!--            </app-confirm-delete-car-button>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
     </div>
   </div>
