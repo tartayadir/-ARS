@@ -1,8 +1,5 @@
 package com.implemica.application.controller.service.amazonS3;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.AWSStaticCredentialsProvider;
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
@@ -10,58 +7,34 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import static org.springframework.http.MediaType.*;
 import static org.springframework.http.MediaType.IMAGE_JPEG;
+import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 @Slf4j
 @SpringBootTest(classes = SpringBootTest.class)
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class AmazonClientTest {
 
-    @Value("${aws.access.key.id}")
-    private String accessKey;
+    private static final AmazonClient amazonClient;
 
-    @Value("${aws.secret.access.key}")
-    private String secretKey;
-
-    @Value("${aws.s3.region}")
-    private String region;
-
-    @Value("${aws.s3.bucket.name}")
-    private String bucketName;
-
-    private static AmazonClient amazonClient;
-
-    private static final String expansion = ".jpeg";
-
-    private static AmazonS3 s3client;
-
-    @BeforeEach
-    void setUp() {
-
-        AWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
-
-        s3client = AmazonS3ClientBuilder
-                .standard()
-                .withRegion(region)
-                .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-                .build();
-
-        amazonClient = new AmazonClient(s3client, bucketName);
+    private static final AmazonS3 s3client;
 
 
+    static {
+        s3client = AmazonS3ClientBuilder.defaultClient();
+        amazonClient = new AmazonClient(s3client);
     }
 
     @Test
@@ -140,11 +113,11 @@ class AmazonClientTest {
         try {
             amazonClient.uploadFileTos3bucket(fileName, multipartFile);
 
-            S3Object s3Object = s3client.getObject("carsbucketspringboot", fileName);
+            S3Object s3Object = s3client.getObject("carcatalogcarsphotop", fileName);
 
             assertEquals(fileName, s3Object.getKey());
 
-            s3client.deleteObject("carsbucketspringboot", fileName);
+            s3client.deleteObject("carcatalogcarsphotop", fileName);
         } catch (InvalidImageTypeException e) {
 
             log.error(e.getMessage(), (Object) e.getStackTrace());
@@ -164,13 +137,13 @@ class AmazonClientTest {
         try {
 
             amazonClient.uploadFileTos3bucket(fileName, multipartFile);
-            S3Object s3Object = s3client.getObject("carsbucketspringboot", fileName);
+            S3Object s3Object = s3client.getObject("carcatalogcarsphotop", fileName);
 
             assertEquals(fileName, s3Object.getKey());
 
             amazonClient.deleteFileFromS3Bucket(fileName);
 
-            assertThatThrownBy(() -> s3client.getObject("carsbucketspringboot", fileName)).
+            assertThatThrownBy(() -> s3client.getObject("carcatalogcarsphotop", fileName)).
                     isInstanceOf(AmazonS3Exception.class);
         } catch (InvalidImageTypeException e) {
 

@@ -1,4 +1,4 @@
-package utils.spring;
+package com.utils.spring;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -10,9 +10,13 @@ import java.util.*;
 
 public class AuthTestUtils {
 
-    private static final String username = "Admin_1";
+    private static final String ADMIN_USERNAME = "Admin_1";
 
-    private static final String password = "Admin_pass";
+    private static final String ADMIN_PASSWORD = "Admin_pass";
+
+    private static final String USER_USERNAME = "User_1";
+
+    private static final String USER_PASSWORD = "User_pass";
 
     private static final String secret;
 
@@ -20,24 +24,32 @@ public class AuthTestUtils {
         secret = AuthServiceImpl.getSecret();
     }
 
-    public static String getToken(){
+    public static String getAdminToken(){
 
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
 
         return "Bearer " + JWT.create().
-                withSubject(username)
+                withSubject(ADMIN_USERNAME)
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2*60*1_000))
                 .withIssuer("http://localhost:8080/authorization/login")
                 .withClaim("roles", List.of("ADMIN_ROLE"))
                 .sign(algorithm);
     }
 
-    public static String getUsername() {
-        return username;
+    public static String getAdminUsername() {
+        return ADMIN_USERNAME;
     }
 
-    public static String getPassword() {
-        return password;
+    public static String getAdminPassword() {
+        return ADMIN_PASSWORD;
+    }
+
+    public static String getUserUsername() {
+        return USER_USERNAME;
+    }
+
+    public static String getUserPassword() {
+        return USER_PASSWORD;
     }
 
     public static boolean tokenIsValid(String token) {

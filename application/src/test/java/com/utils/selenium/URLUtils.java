@@ -1,4 +1,4 @@
-package utils.selenium;
+package com.utils.selenium;
 
 public class URLUtils {
 

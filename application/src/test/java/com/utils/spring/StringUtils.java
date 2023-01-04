@@ -1,4 +1,4 @@
-package utils.spring;
+package com.utils.spring;
 
 import java.util.Random;
 

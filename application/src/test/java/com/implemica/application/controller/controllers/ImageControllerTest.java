@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.env.Environment;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,11 +31,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static utils.spring.AuthTestUtils.getToken;
+import static com.utils.spring.AuthTestUtils.getAdminToken;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
+@ActiveProfiles("test")
 public class ImageControllerTest {
 
     private static MockMultipartFile file;
@@ -46,8 +49,7 @@ public class ImageControllerTest {
 
     private static AmazonS3 s3client;
 
-    @Value("${aws.s3.bucket.name}")
-    private String bucketName;
+    private final String bucketName = "carcatalogcarsphotop";
 
     @Autowired
     private ImageController imageController;
@@ -75,7 +77,7 @@ public class ImageControllerTest {
                 addFilters(springSecurityFilterChain).
                 build();
 
-        token = getToken();
+        token = getAdminToken();
     }
 
     @Test

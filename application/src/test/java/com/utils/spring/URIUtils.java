@@ -1,4 +1,4 @@
-package utils.spring;
+package com.utils.spring;
 
 import static java.lang.String.format;
 

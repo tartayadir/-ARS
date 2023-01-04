@@ -13,11 +13,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.utils.CarsUtils.generateRandomCar;
 import static java.lang.Long.MAX_VALUE;
 import static java.lang.Long.MIN_VALUE;
 import static java.lang.String.format;
@@ -27,8 +30,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @Slf4j
+@ActiveProfiles("test")
 class CarServiceImplTest {
 
     @Mock
@@ -65,10 +70,12 @@ class CarServiceImplTest {
     void findAll() {
 
         List<Car> cars = List.of(
-                Car.builder().build(),
-                Car.builder().build(),
-                Car.builder().build(),
-                Car.builder().build()
+                generateRandomCar(),
+                generateRandomCar(),
+                generateRandomCar(),
+                generateRandomCar(),
+                generateRandomCar(),
+                generateRandomCar()
         );
         checkFindAll(cars);
 
@@ -122,7 +129,7 @@ class CarServiceImplTest {
     void findById_nullId() {
 
         Long id = null;
-        assertThatThrownBy( () -> carService.findById(id)).
+        assertThatThrownBy(() -> carService.findById(id)).
                 isInstanceOf(IllegalArgumentException.class);
 
         verify(carRepository, times(0)).findById(id);
@@ -132,6 +139,16 @@ class CarServiceImplTest {
     void save() {
 
         checkSaveCar(car);
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
+        checkSaveCar(generateRandomCar());
     }
 
     @Test
@@ -139,7 +156,7 @@ class CarServiceImplTest {
 
         car = null;
         when(carRepository.save(car)).thenThrow(IllegalArgumentException.class);
-        assertThatThrownBy( () -> carService.save(car)).
+        assertThatThrownBy(() -> carService.save(car)).
                 isInstanceOf(IllegalArgumentException.class);
 
         verify(carRepository, times(1)).save(car);
@@ -149,7 +166,19 @@ class CarServiceImplTest {
     @Test
     void update() {
 
-       checkUpdate(car);
+        checkUpdate(car);
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
+        checkUpdate(generateRandomCar());
     }
 
     @Test
@@ -177,7 +206,7 @@ class CarServiceImplTest {
     void update_id_null() {
 
         car.setId(null);
-        assertThatThrownBy( () -> carService.update(car)).
+        assertThatThrownBy(() -> carService.update(car)).
                 isInstanceOf(IllegalArgumentException.class).
                 hasMessageContaining("Id cannot be null");
     }
@@ -235,7 +264,7 @@ class CarServiceImplTest {
                 when(carRepository).
                 delete(any(Car.class));
 
-        assertThatThrownBy( () -> carService.deleteById(id)).
+        assertThatThrownBy(() -> carService.deleteById(id)).
                 isInstanceOf(IllegalArgumentException.class);
         verify(carRepository, times(0)).delete(any(Car.class));
     }
@@ -249,7 +278,7 @@ class CarServiceImplTest {
         reset(carRepository);
     }
 
-    private static void checkFindById(Long id){
+    private static void checkFindById(Long id) {
 
         try {
             when(carRepository.findById(id)).thenReturn(Optional.of(car));
@@ -268,8 +297,10 @@ class CarServiceImplTest {
     private static void checkFindByIdCarNotFound(Long id) {
 
         given(carRepository.findById(id)).willAnswer(
-                invocation -> { throw new NoSuchCarException(format("Cannot find car with id %d", id)); });
-        assertThatThrownBy( () -> carService.findById(id)).
+                invocation -> {
+                    throw new NoSuchCarException(format("Cannot find car with id %d", id));
+                });
+        assertThatThrownBy(() -> carService.findById(id)).
                 isInstanceOf(NoSuchCarException.class).
                 hasMessage(format("Cannot find car with id %d", id));
 
@@ -299,7 +330,7 @@ class CarServiceImplTest {
 
             verify(carRepository, times(1)).save(updateCar);
             reset(carRepository);
-        } catch (NoSuchCarException e){
+        } catch (NoSuchCarException e) {
 
             log.error(e.getMessage(), (Object) e.getStackTrace());
             fail();
@@ -310,7 +341,7 @@ class CarServiceImplTest {
 
         lenient().when(carRepository.findById(carId)).thenReturn(Optional.empty());
 
-        assertThatThrownBy( () -> carService.update(updateCar)).
+        assertThatThrownBy(() -> carService.update(updateCar)).
                 isInstanceOf(NoSuchCarException.class).
                 hasMessageContaining(format("Cannot find and update car with id %d", updateCar.getId()));
 
@@ -337,7 +368,7 @@ class CarServiceImplTest {
 
         when(carRepository.findById(id)).thenReturn(Optional.empty());
 
-        assertThatThrownBy( () -> carService.deleteById(id)).
+        assertThatThrownBy(() -> carService.deleteById(id)).
                 isInstanceOf(NoSuchCarException.class).
                 hasMessageContaining(format("Cannot find car with id %d", id));
 

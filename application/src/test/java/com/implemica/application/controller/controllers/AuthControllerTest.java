@@ -5,19 +5,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static com.utils.spring.AuthTestUtils.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static utils.spring.AuthTestUtils.*;
-import static utils.spring.StringUtils.generateRandomString;
+import static com.utils.spring.StringUtils.generateRandomString;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
+@ActiveProfiles("test")
 public class AuthControllerTest {
 
     private static MockMvc mockMvc;
@@ -31,8 +33,8 @@ public class AuthControllerTest {
     public void authorizationSuccessful() throws Exception {
 
         MvcResult mvcResult = mockMvc.perform(post("/authorization/login").
-                        param("username", getUsername()).
-                        param("password", getPassword())).
+                        param("username", getAdminUsername()).
+                        param("password", getAdminPassword())).
                 andExpect(status().isOk()).
                 andReturn();
 
@@ -44,7 +46,7 @@ public class AuthControllerTest {
     @Test
     void checkVariationUsername() {
 
-        String password = getPassword();
+        String password = getAdminPassword();
 
         tryAuthorizeIncorrectLoginData("admin_1", password);
         tryAuthorizeIncorrectLoginData("ADMIN_1", password);
@@ -70,7 +72,7 @@ public class AuthControllerTest {
     @Test
     void checkVariationPassword() {
 
-        String username = getUsername();
+        String username = getAdminUsername();
 
         tryAuthorizeIncorrectLoginData(username, "dmin_pass");
         tryAuthorizeIncorrectLoginData(username, "Amin_pass");
@@ -135,9 +137,9 @@ public class AuthControllerTest {
     @Test
     public void authorization_incorrect_login_date() throws Exception {
 
-        tryAuthorizeIncorrectLoginData(getUsername(), getUsername());
-        tryAuthorizeIncorrectLoginData(getPassword(), getPassword());
-        tryAuthorizeIncorrectLoginData(getPassword(), getUsername());
+        tryAuthorizeIncorrectLoginData(getAdminUsername(), getAdminUsername());
+        tryAuthorizeIncorrectLoginData(getAdminPassword(), getAdminPassword());
+        tryAuthorizeIncorrectLoginData(getAdminPassword(), getAdminUsername());
 
         tryAuthorizeIncorrectLoginData("tormentedtotal", "password");
         tryAuthorizeIncorrectLoginData("cubfeminine", "123456789");

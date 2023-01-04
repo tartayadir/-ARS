@@ -10,16 +10,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import static com.utils.spring.FileUtils.createFile;
+import static com.utils.spring.FileUtils.createMultipartFile;
 import static org.junit.jupiter.api.Assertions.*;
-import static utils.spring.FileUtils.*;
 
 @Slf4j
+@ActiveProfiles("test")
 class ConverterDTOTest {
 
     private static Car car;
@@ -102,7 +105,7 @@ class ConverterDTOTest {
         CarBrands carDtoBrand = CarBrands.valueOf(carDTO.getBrand());
         assertEquals(carBrand, carDtoBrand);
 
-        String carBrandAsString = car.getBrand().getStringValue();
+        String carBrandAsString = car.getBrand().toString();
         String carDtoBrandAsString = carDTO.getBrand();
         assertEquals(carBrandAsString, carDtoBrandAsString);
 
@@ -138,7 +141,7 @@ class ConverterDTOTest {
         CarBodyTypes carDtoBodyType = CarBodyTypes.valueOf(carDTO.getCarBodyTypes());
         assertEquals(carCarBodyTypes, carDtoBodyType);
 
-        String carCarBodyTypesAsString = car.getCarBodyTypes().getStringValue();
+        String carCarBodyTypesAsString = car.getCarBodyTypes().toString();
         String carDtoBodyTypeAsString = carDTO.getCarBodyTypes();
         assertEquals(carDtoBodyTypeAsString, carCarBodyTypesAsString);
 

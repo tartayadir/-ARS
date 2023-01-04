@@ -15,17 +15,16 @@ import com.implemica.model.car.entity.CarBodyTypes;
 import com.implemica.model.car.entity.CarBrands;
 import com.implemica.model.car.entity.TransmissionBoxTypes;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import static org.springframework.http.HttpStatus.*;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,32 +33,37 @@ import javax.servlet.Filter;
 import java.util.List;
 
 import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
+import static com.utils.CarsUtils.generateRandomCar;
+import static com.utils.spring.AuthTestUtils.getAdminToken;
+import static com.utils.spring.StringUtils.generateRandomString;
+import static com.utils.spring.URIUtils.*;
+import static java.lang.Long.MAX_VALUE;
+import static java.lang.Long.MIN_VALUE;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.http.MediaType.IMAGE_JPEG;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static utils.spring.AuthTestUtils.getToken;
-import static utils.spring.StringUtils.generateRandomString;
-import static utils.spring.URIUtils.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
+@ActiveProfiles("test")
+@Slf4j
 class CarControllerTest {
 
     private static AmazonClient amazonClient;
 
     private static AmazonS3 s3client;
 
-    @Value("${aws.s3.bucket.name}")
-    private String bucketName;
+    private final String bucketName = "carcatalogcarsphotop";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -311,7 +315,7 @@ class CarControllerTest {
                 imageFileId("Image file 1").
                 build();
 
-        token = getToken();
+        token = getAdminToken();
         id = 10L;
     }
 
@@ -1075,6 +1079,29 @@ class CarControllerTest {
     void getCar() {
 
         checkGetCar(id, car);
+        checkGetCar(1L, generateRandomCar());
+        checkGetCar(-1L, generateRandomCar());
+        checkGetCar(2L, generateRandomCar());
+        checkGetCar(-2L, generateRandomCar());
+        checkGetCar(0L, generateRandomCar());
+        checkGetCar(MAX_VALUE, generateRandomCar());
+        checkGetCar(MAX_VALUE - 1, generateRandomCar());
+        checkGetCar(MIN_VALUE, generateRandomCar());
+        checkGetCar(MIN_VALUE + 1, generateRandomCar());
+        checkGetCar(22_525L, generateRandomCar());
+        checkGetCar(192L, generateRandomCar());
+        checkGetCar(99L, generateRandomCar());
+        checkGetCar(4_533L, generateRandomCar());
+        checkGetCar(11L, generateRandomCar());
+        checkGetCar(5L, generateRandomCar());
+        checkGetCar(7_877L, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
+        checkGetCar(id, generateRandomCar());
     }
 
     @Test
@@ -1100,6 +1127,22 @@ class CarControllerTest {
                 String.valueOf(IMAGE_JPEG),
                 "123".getBytes());
 
+        checkRemoveCar(1L, fileName, file, bucketName);
+        checkRemoveCar(-1L, fileName, file, bucketName);
+        checkRemoveCar(2L, fileName, file, bucketName);
+        checkRemoveCar(-2L, fileName, file, bucketName);
+        checkRemoveCar(0L, fileName, file, bucketName);
+        checkRemoveCar(MAX_VALUE, fileName, file, bucketName);
+        checkRemoveCar(MAX_VALUE - 1, fileName, file, bucketName);
+        checkRemoveCar(MIN_VALUE, fileName, file, bucketName);
+        checkRemoveCar(MIN_VALUE + 1, fileName, file, bucketName);
+        checkRemoveCar(22_525L, fileName, file, bucketName);
+        checkRemoveCar(192L, fileName, file, bucketName);
+        checkRemoveCar(99L, fileName, file, bucketName);
+        checkRemoveCar(4_533L, fileName, file, bucketName);
+        checkRemoveCar(11L, fileName, file, bucketName);
+        checkRemoveCar(5L, fileName, file, bucketName);
+        checkRemoveCar(7_877L, fileName, file, bucketName);
         checkRemoveCar(id, fileName, file, bucketName);
     }
 
@@ -1133,7 +1176,7 @@ class CarControllerTest {
     }
 
     @Test
-    void removeCar_with_null_id() throws Exception {
+    void removeCar_with_null_id() {
 
         Exception serviceException = new IllegalArgumentException("Id cannot be null");
         checkErrorRemoveCar(id, "", serviceException, "Id cannot be null", BAD_REQUEST);
