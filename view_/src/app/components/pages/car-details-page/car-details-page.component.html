@@ -48,15 +48,18 @@
           </div>
           <div class="col">
 
-            <div class="mx-2">
-              <h3 class="card-title mx-2">Short description</h3>
-              <ul class=" list-group-flush text-dark mx-2" style="background: #f5f1ed">
-                <li class="list-group-item text-dark"
-                    id="car-short-description-{{car.brand}}-{{car.model}}"
-                    style="white-space: pre-line;background: #f5f1ed">{{car!.shortDescription}}
-                </li>
-              </ul>
-            </div>
+            <ng-container *ngIf="hasShortDescription()">
+              <div class="mx-2">
+                <h3 class="card-title mx-2">Short description</h3>
+                <ul class=" list-group-flush text-dark mx-2" style="background: #f5f1ed">
+                  <li class="list-group-item text-dark"
+                      id="car-short-description-{{car.brand}}-{{car.model}}"
+                      style="white-space: pre-line;background: #f5f1ed">{{car!.shortDescription}}
+                  </li>
+                </ul>
+              </div>
+            </ng-container>
+
           </div>
 
         </div>
@@ -64,7 +67,7 @@
       </div>
     </div>
 
-    <ng-container *ngIf="hasDescription()">
+    <ng-container *ngIf="hasFullDescription()">
       <div class="card-body mx-2">
         <h3 class="card-title">Overview</h3>
         <ul class="list-group list-group-flush">
@@ -74,9 +77,9 @@
       </div>
     </ng-container>
 
-    <div class = "card-footer justify-content-end">
+    <div class = "card-footer align-items-end">
 
-      <div class="d-flex bd-highlight mb-3">
+      <div class="d-flex align-items-end bd-highlight mb-3">
         <div class="me-auto p-2 bd-highlight ">
           <app-come-back-button></app-come-back-button>
         </div>

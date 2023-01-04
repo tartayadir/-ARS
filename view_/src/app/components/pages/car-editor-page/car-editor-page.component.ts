@@ -23,10 +23,6 @@ import {CarBodyTypes} from "../../../models/car/CarBodyTypes";
 
 export class CarEditorPageComponent implements OnInit {
 
-
-
-
-
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   options: Option[] = [];

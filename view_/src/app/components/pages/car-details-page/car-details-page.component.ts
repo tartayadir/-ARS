@@ -29,15 +29,21 @@ export class CarDetailsPageComponent implements OnInit
     this.carService.getCar(id).subscribe(
       (response: Car) =>{
         this.car = response;
-        this.titleService.setTitle(this.car.brand!.toString() + " " + this.car.model)
+        this.titleService.setTitle(this.getCarBrand() + " " + this.car.model)
       }
     );
 
   }
 
-  hasDescription(): boolean {
+  hasFullDescription(): boolean {
 
     let description: string = this.car.fullDescription!;
+    return description!.length! > 1 && description != " ";
+  }
+
+  hasShortDescription(): boolean {
+
+    let description: string = this.car.shortDescription!;
     return description!.length! > 1 && description != " ";
   }
 
