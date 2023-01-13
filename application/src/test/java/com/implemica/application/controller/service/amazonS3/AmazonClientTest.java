@@ -24,7 +24,7 @@ import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 @Slf4j
 @SpringBootTest(classes = SpringBootTest.class)
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 class AmazonClientTest {
 
     private static final AmazonClient amazonClient;

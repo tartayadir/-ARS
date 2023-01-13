@@ -36,7 +36,7 @@ import static com.utils.spring.AuthTestUtils.getAdminToken;
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 public class ImageControllerTest {
 
     private static MockMultipartFile file;

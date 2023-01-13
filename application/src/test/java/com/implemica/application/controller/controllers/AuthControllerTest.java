@@ -1,6 +1,8 @@
 package com.implemica.application.controller.controllers;
 
 import lombok.SneakyThrows;
+import org.fluttercode.datafactory.impl.DataFactory;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -11,95 +13,191 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static com.utils.spring.AuthTestUtils.*;
+import static com.utils.spring.StringUtils.generateRandomString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static com.utils.spring.StringUtils.generateRandomString;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 public class AuthControllerTest {
 
     private static MockMvc mockMvc;
+
+    private static DataFactory dataFactory;
 
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
         AuthControllerTest.mockMvc = mockMvc;
     }
 
-    @Test
-    public void authorizationSuccessful() throws Exception {
+    @BeforeAll
+    static void beforeAll() {
 
-        MvcResult mvcResult = mockMvc.perform(post("/authorization/login").
-                        param("username", getAdminUsername()).
-                        param("password", getAdminPassword())).
-                andExpect(status().isOk()).
-                andReturn();
-
-        String token = mvcResult.getResponse().getContentAsString().split("\"")[3];
-        assertTrue(tokenIsValid(token));
+        dataFactory = new DataFactory();
     }
 
-    @SneakyThrows
+    @Test
+    void successfulAuthorization() {
+
+        String firstAdminPassword = getFirstAdminPassword();
+
+        checkSuccessfulAuthorization(getFirstAdminUsername(), getFirstAdminPassword());
+
+        checkSuccessfulAuthorization("Admin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDmin", firstAdminPassword);
+        checkSuccessfulAuthorization("adMin", firstAdminPassword);
+        checkSuccessfulAuthorization("admIn", firstAdminPassword);
+        checkSuccessfulAuthorization("admiN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMin", firstAdminPassword);
+        checkSuccessfulAuthorization("adMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("admIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("adMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("AdmIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmiN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("AdMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMiN", firstAdminPassword);
+
+        checkSuccessfulAuthorization(getSecondAdminUsername(), getSecondAdminPassword());
+    }
+
+    @Test
+    void loginDataFromDB(){
+
+        checkIncorrectLoginData("admin", "$2a$12$N0uY4GewYyFM1s3TN7SzXuqoTbnW9NK3mcdoG6WdLLfUNswDL5gvu");
+        checkIncorrectLoginData("admin1", "$2a$12$Fy4pxxZDrbL6H3pyxom9J.bTdL.FNubxBVymHq9ZX2OJiOi3X1aWq");
+    }
+
+
+    @Test
+    void checkUsersVariationData() {
+
+        checkIncorrectLoginData(getFirstAdminUsername(), getSecondAdminPassword());
+        checkIncorrectLoginData(getSecondAdminUsername(), getFirstAdminPassword());
+    }
+
+    @Test
+    void checkIncorrectLoginData() {
+
+        checkIncorrectLoginData("tormentedtotal", "password");
+        checkIncorrectLoginData("cubfeminine", "123456789");
+        checkIncorrectLoginData("wefferbv", "111111111");
+        checkIncorrectLoginData("thrd2533", "1234567890");
+        checkIncorrectLoginData("user_1", "D1lakisss");
+        checkIncorrectLoginData("admin", "5y4yeg354hge");
+        checkIncorrectLoginData("brtgg333", "ret43tge");
+        checkIncorrectLoginData("bfb43", "h5ge45hgevdv4");
+        checkIncorrectLoginData("gtg4r", "3456423256");
+        checkIncorrectLoginData("bgbgbr44", "464hgt5y455");
+
+        checkIncorrectLoginData(dataFactory.getFirstName(), dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(dataFactory.getFirstName(), dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(dataFactory.getFirstName(), dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(dataFactory.getFirstName(), dataFactory.getRandomText(8, 100));
+
+        checkIncorrectLoginData(dataFactory.getRandomText(2), dataFactory.getRandomText(8));
+        checkIncorrectLoginData(dataFactory.getRandomText(4), dataFactory.getRandomText(19));
+        checkIncorrectLoginData(dataFactory.getRandomText(29), dataFactory.getRandomText(43));
+        checkIncorrectLoginData(dataFactory.getRandomText(10), dataFactory.getRandomText(23));
+        checkIncorrectLoginData(dataFactory.getRandomText(30), dataFactory.getRandomText(100));
+    }
+
     @Test
     void checkVariationUsername() {
 
-        String password = getAdminPassword();
+        String firstAdminPassword = getFirstAdminPassword();
 
-        tryAuthorizeIncorrectLoginData("admin_1", password);
-        tryAuthorizeIncorrectLoginData("ADMIN_1", password);
-        tryAuthorizeIncorrectLoginData("_1admin", password);
-        tryAuthorizeIncorrectLoginData("amin_1d", password);
-        tryAuthorizeIncorrectLoginData("AdMiN_1", password);
-        tryAuthorizeIncorrectLoginData("Admin1", password);
-        tryAuthorizeIncorrectLoginData("Amin_1", password);
-        tryAuthorizeIncorrectLoginData("dmin_1", password);
-        tryAuthorizeIncorrectLoginData("Adin_1", password);
-        tryAuthorizeIncorrectLoginData("Admn_1", password);
-        tryAuthorizeIncorrectLoginData("Admi_1", password);
-        tryAuthorizeIncorrectLoginData("Admin1", password);
-        tryAuthorizeIncorrectLoginData("Admin_", password);
-        tryAuthorizeIncorrectLoginData("aDmin_1", password);
-        tryAuthorizeIncorrectLoginData("AdMin_1", password);
-        tryAuthorizeIncorrectLoginData("AdmIn_1", password);
-        tryAuthorizeIncorrectLoginData("AdmiN_1", password);
-        tryAuthorizeIncorrectLoginData("Admin11", password);
+        checkIncorrectLoginData("damin", firstAdminPassword);
+        checkIncorrectLoginData("madin", firstAdminPassword);
+        checkIncorrectLoginData("iadmn", firstAdminPassword);
+        checkIncorrectLoginData("nadmi", firstAdminPassword);
+        checkIncorrectLoginData("dmina", firstAdminPassword);
+        checkIncorrectLoginData("dmina", firstAdminPassword);
+
+        checkIncorrectLoginData("tormentedtotal", firstAdminPassword);
+        checkIncorrectLoginData("cubfeminine", firstAdminPassword);
+        checkIncorrectLoginData("wefferbv", firstAdminPassword);
+        checkIncorrectLoginData("thrd2533", firstAdminPassword);
+        checkIncorrectLoginData("user_1", firstAdminPassword);
+        checkIncorrectLoginData("brtgg333", firstAdminPassword);
+        checkIncorrectLoginData("bfb43", firstAdminPassword);
+        checkIncorrectLoginData("gtg4r", firstAdminPassword);
+        checkIncorrectLoginData("bgbgbr44", firstAdminPassword);
+
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+
+        checkIncorrectLoginData(dataFactory.getRandomText(2), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(4), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(29), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(10), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(30), firstAdminPassword);
     }
 
-    @SneakyThrows
     @Test
     void checkVariationPassword() {
 
-        String username = getAdminUsername();
+        String firstAdminUsername = getFirstAdminUsername();
 
-        tryAuthorizeIncorrectLoginData(username, "dmin_pass");
-        tryAuthorizeIncorrectLoginData(username, "Amin_pass");
-        tryAuthorizeIncorrectLoginData(username, "Adin_pass");
-        tryAuthorizeIncorrectLoginData(username, "Admn_pass");
-        tryAuthorizeIncorrectLoginData(username, "Admi_pass");
-        tryAuthorizeIncorrectLoginData(username, "Adminpass");
-        tryAuthorizeIncorrectLoginData(username, "Admin_ass");
-        tryAuthorizeIncorrectLoginData(username, "Admin_pss");
-        tryAuthorizeIncorrectLoginData(username, "Admin_pas");
-        tryAuthorizeIncorrectLoginData(username, "admin_pass");
-        tryAuthorizeIncorrectLoginData(username, "ADMIN_PASS");
-        tryAuthorizeIncorrectLoginData(username, "ADmin_pass");
-        tryAuthorizeIncorrectLoginData(username, "AdMin_pass");
-        tryAuthorizeIncorrectLoginData(username, "AdmIn_pass");
-        tryAuthorizeIncorrectLoginData(username, "AdmiN_pass");
-        tryAuthorizeIncorrectLoginData(username, "Admin_Pass");
-        tryAuthorizeIncorrectLoginData(username, "Admin_pAss");
-        tryAuthorizeIncorrectLoginData(username, "Admin_paSs");
-        tryAuthorizeIncorrectLoginData(username, "Admin_pAsS");
-        tryAuthorizeIncorrectLoginData(username, "_passAdmin");
-        tryAuthorizeIncorrectLoginData(username, "Aminpass_");
-        tryAuthorizeIncorrectLoginData(username, "passAmin_");
+        checkIncorrectLoginData(firstAdminUsername, "Admin");
+        checkIncorrectLoginData(firstAdminUsername, "aDmin");
+        checkIncorrectLoginData(firstAdminUsername, "adMin");
+        checkIncorrectLoginData(firstAdminUsername, "admIn");
+        checkIncorrectLoginData(firstAdminUsername, "admiN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmin");
+        checkIncorrectLoginData(firstAdminUsername, "aDMin");
+        checkIncorrectLoginData(firstAdminUsername, "adMIn");
+        checkIncorrectLoginData(firstAdminUsername, "admIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMin");
+        checkIncorrectLoginData(firstAdminUsername, "aDMIn");
+        checkIncorrectLoginData(firstAdminUsername, "adMIN");
+        checkIncorrectLoginData(firstAdminUsername, "AdmIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmiN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIn");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIN");
+        checkIncorrectLoginData(firstAdminUsername, "aDMIN");
+        checkIncorrectLoginData(firstAdminUsername, "AdMIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMiN");
+
+        checkIncorrectLoginData(firstAdminUsername, "password");
+        checkIncorrectLoginData(firstAdminUsername, "123456789");
+        checkIncorrectLoginData(firstAdminUsername, "111111111");
+        checkIncorrectLoginData(firstAdminUsername, "1234567890");
+        checkIncorrectLoginData(firstAdminUsername, "D1lakisss");
+        checkIncorrectLoginData(firstAdminUsername, "5y4yeg354hge");
+        checkIncorrectLoginData(firstAdminUsername, "ret43tge");
+        checkIncorrectLoginData(firstAdminUsername, "h5ge45hgevdv4");
+        checkIncorrectLoginData(firstAdminUsername, "3456423256");
+        checkIncorrectLoginData(firstAdminUsername, "464hgt5y455");
+
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(19));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(43));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(23));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(100));
     }
 
     @Test
-    public void authorization_invalid_login_date() throws Exception {
+    public void authorization_invalid_login_date() {
 
         tryAuthorizeInvalidLoginData(null, generateRandomString(23));
         tryAuthorizeInvalidLoginData(null, generateRandomString(544));
@@ -134,49 +232,21 @@ public class AuthControllerTest {
         tryAuthorizeInvalidLoginData(null, null);
     }
 
-    @Test
-    public void authorization_incorrect_login_date() throws Exception {
+   @SneakyThrows
+    private static void checkSuccessfulAuthorization(String username, String password){
 
-        tryAuthorizeIncorrectLoginData(getAdminUsername(), getAdminUsername());
-        tryAuthorizeIncorrectLoginData(getAdminPassword(), getAdminPassword());
-        tryAuthorizeIncorrectLoginData(getAdminPassword(), getAdminUsername());
+        MvcResult mvcResult = mockMvc.perform(post("/authorization/login").
+                        param("username", username).
+                        param("password", password)).
+                andExpect(status().isOk()).
+                andReturn();
 
-        tryAuthorizeIncorrectLoginData("tormentedtotal", "password");
-        tryAuthorizeIncorrectLoginData("cubfeminine", "123456789");
-        tryAuthorizeIncorrectLoginData("wefferbv", "111111111");
-        tryAuthorizeIncorrectLoginData("thrd2533", "1234567890");
-        tryAuthorizeIncorrectLoginData("user_1", "D1lakisss");
-        tryAuthorizeIncorrectLoginData("admin", "5y4yeg354hge");
-        tryAuthorizeIncorrectLoginData("brtgg333", "ret43tge");
-        tryAuthorizeIncorrectLoginData("bfb43", "h5ge45hgevdv4");
-        tryAuthorizeIncorrectLoginData("gtg4r", "3456423256");
-        tryAuthorizeIncorrectLoginData("bgbgbr44", "464hgt5y455");
-
-        tryAuthorizeIncorrectLoginData(generateRandomString(1), generateRandomString(89));
-        tryAuthorizeIncorrectLoginData(generateRandomString(24), generateRandomString(51));
-        tryAuthorizeIncorrectLoginData(generateRandomString(254), generateRandomString(7));
-        tryAuthorizeIncorrectLoginData(generateRandomString(3), generateRandomString(70));
-        tryAuthorizeIncorrectLoginData(generateRandomString(89), generateRandomString(39));
-        tryAuthorizeIncorrectLoginData(generateRandomString(231), generateRandomString(88549));
-        tryAuthorizeIncorrectLoginData(generateRandomString(544), generateRandomString(73));
-        tryAuthorizeIncorrectLoginData(generateRandomString(1), generateRandomString(21));
-        tryAuthorizeIncorrectLoginData(generateRandomString(556), generateRandomString(435));
-        tryAuthorizeIncorrectLoginData(generateRandomString(5452), generateRandomString(562));
-        tryAuthorizeIncorrectLoginData(generateRandomString(231), generateRandomString(871));
-        tryAuthorizeIncorrectLoginData(generateRandomString(21243), generateRandomString(32));
-        tryAuthorizeIncorrectLoginData(generateRandomString(8), generateRandomString(44));
-        tryAuthorizeIncorrectLoginData(generateRandomString(5), generateRandomString(90));
-        tryAuthorizeIncorrectLoginData(generateRandomString(245), generateRandomString(673));
-        tryAuthorizeIncorrectLoginData(generateRandomString(943), generateRandomString(54));
-        tryAuthorizeIncorrectLoginData(generateRandomString(2452), generateRandomString(1233));
-        tryAuthorizeIncorrectLoginData(generateRandomString(2), generateRandomString(44));
-        tryAuthorizeIncorrectLoginData(generateRandomString(6763), generateRandomString(90));
-        tryAuthorizeIncorrectLoginData(generateRandomString(4), generateRandomString(34));
-        tryAuthorizeIncorrectLoginData(generateRandomString(545), generateRandomString(869));
-        tryAuthorizeIncorrectLoginData(generateRandomString(563), generateRandomString(44));
+        String token = mvcResult.getResponse().getContentAsString().split("\"")[3];
+        assertTrue(tokenIsValid(token));
     }
 
-    private static void tryAuthorizeIncorrectLoginData(String username, String password) throws Exception {
+    @SneakyThrows
+    private static void checkIncorrectLoginData(String username, String password) {
 
         mockMvc.perform(post("/authorization/login").
                         param("username", username).
@@ -185,7 +255,8 @@ public class AuthControllerTest {
                 andReturn();
     }
 
-    private static void tryAuthorizeInvalidLoginData(String username, String password) throws Exception {
+    @SneakyThrows
+    private static void tryAuthorizeInvalidLoginData(String username, String password) {
 
         mockMvc.perform(post("/authorization/login").
                         param("username", username).

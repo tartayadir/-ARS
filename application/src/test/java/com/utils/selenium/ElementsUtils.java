@@ -7,6 +7,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -20,8 +21,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 import static com.utils.selenium.PageNavigation.threadSleep1Seconds;
 import static com.utils.selenium.URLUtils.getHomePageURL;
 import static com.utils.selenium.URLUtils.getLoginPageURL;
-import static com.utils.spring.AuthTestUtils.getAdminPassword;
-import static com.utils.spring.AuthTestUtils.getAdminUsername;
+import static com.utils.spring.AuthTestUtils.getFirstAdminPassword;
+import static com.utils.spring.AuthTestUtils.getFirstAdminUsername;
 
 public class ElementsUtils {
 
@@ -41,7 +42,10 @@ public class ElementsUtils {
 
     public static void setUP() {
 
-        driver = new ChromeDriver();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments("--enable-javascript");
+
+        driver = new ChromeDriver(chromeOptions);
         js = ((JavascriptExecutor) driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
@@ -94,8 +98,8 @@ public class ElementsUtils {
 
         driver.get(getLoginPageURL());
 
-        sendPutTextKeyInInputField("usernameInputField", getAdminUsername());
-        sendPutTextKeyInInputField("passwordInputField", getAdminPassword());
+        sendPutTextKeyInInputField("usernameInputField", getFirstAdminUsername());
+        sendPutTextKeyInInputField("passwordInputField", getFirstAdminPassword());
         pageNavigation.clickOnElement("sendLoginDataButton");
 
         threadSleep1Seconds();

@@ -108,8 +108,8 @@ public class EditCarPage {
 
         System.getProperty("spring.profiles.active", "test");
 
-        image1 = new File("src/test/resources/images/modern-blue-urban-adventure-suv-vehicle-illustration_1344-205.png");
-        image2 = new File("src/test/resources/images/FORD_FUSION_2020.png");
+        image1 = new File("src/test/resources/images/CatherineMCLAREN267912502.png");
+        image2 = new File("src/test/resources/images/MCLARENCatherine943268122.png");
         text = new File("src/test/resources/files/text.txt");
 
         short year = 2013;

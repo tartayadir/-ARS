@@ -17,7 +17,7 @@ public class CarsUtils {
         return Car.builder().
                 id((long) dataFactory.getNumberBetween(1, 100)).
                 brand(CarBrands.getRandomCarBrand()).
-                model(dataFactory.getRandomText(3, 20)).
+                model(dataFactory.getFirstName()).
                 carBodyTypes(CarBodyTypes.getRandomCarBodyType()).
                 year((short) dataFactory.getNumberBetween(1_921, 2_020)).
                 transmissionBoxTypes(TransmissionBoxTypes.getRandomTransmissionBoxTypes()).

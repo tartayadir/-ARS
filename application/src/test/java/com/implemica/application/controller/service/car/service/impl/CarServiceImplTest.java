@@ -33,7 +33,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
 @Slf4j
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 class CarServiceImplTest {
 
     @Mock

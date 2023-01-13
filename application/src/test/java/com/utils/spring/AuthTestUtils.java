@@ -10,13 +10,13 @@ import java.util.*;
 
 public class AuthTestUtils {
 
-    private static final String ADMIN_USERNAME = "Admin_1";
+    private static final String ADMIN_USERNAME = "admin";
 
-    private static final String ADMIN_PASSWORD = "Admin_pass";
+    private static final String ADMIN_PASSWORD = "admin";
 
-    private static final String USER_USERNAME = "User_1";
+    private static final String USER_USERNAME = "admin1";
 
-    private static final String USER_PASSWORD = "User_pass";
+    private static final String USER_PASSWORD = "admin1";
 
     private static final String secret;
 
@@ -31,24 +31,24 @@ public class AuthTestUtils {
         return "Bearer " + JWT.create().
                 withSubject(ADMIN_USERNAME)
                 .withExpiresAt(new Date(System.currentTimeMillis() + 2*60*1_000))
-                .withIssuer("http://localhost:8080/authorization/login")
+                .withIssuer("/authorization/login")
                 .withClaim("roles", List.of("ADMIN_ROLE"))
                 .sign(algorithm);
     }
 
-    public static String getAdminUsername() {
+    public static String getFirstAdminUsername() {
         return ADMIN_USERNAME;
     }
 
-    public static String getAdminPassword() {
+    public static String getFirstAdminPassword() {
         return ADMIN_PASSWORD;
     }
 
-    public static String getUserUsername() {
+    public static String getSecondAdminUsername() {
         return USER_USERNAME;
     }
 
-    public static String getUserPassword() {
+    public static String getSecondAdminPassword() {
         return USER_PASSWORD;
     }
 

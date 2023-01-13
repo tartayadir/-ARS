@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 class UserServiceImplTest {
 
     @Mock

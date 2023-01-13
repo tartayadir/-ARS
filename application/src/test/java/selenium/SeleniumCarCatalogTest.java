@@ -14,7 +14,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 
@@ -26,9 +25,11 @@ import static com.utils.selenium.ElementsUtils.*;
 import static com.utils.selenium.SeleniumTestsUtils.*;
 import static com.utils.selenium.URLUtils.getHomePageURL;
 import static java.lang.String.format;
+import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.Keys.ENTER;
 import static org.openqa.selenium.Keys.chord;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 @TestPropertySource(locations = "classpath:application.properties")
 @ActiveProfiles("test")
@@ -54,10 +55,8 @@ public class SeleniumCarCatalogTest {
     @BeforeAll
     static void beforeAll() {
 
-//        System.getProperty("spring.profiles.active", "test");
-
-        image1 = new File("src/test/resources/images/modern-blue-urban-adventure-suv-vehicle-illustration_1344-205.png");
-        image2 = new File("src/test/resources/images/FORD_FUSION_2020.png");
+        image1 = new File("src/test/resources/images/MAZDARX8589601474.png");
+        image2 = new File("src/test/resources/images/TOYOTACamry372501944.png");
 
         openWindow();
 
@@ -142,7 +141,6 @@ public class SeleniumCarCatalogTest {
                 build();
 
         addEditAndCheckCar(addCar, image1, editCar, image2);
-
     }
 
     @Test
@@ -172,8 +170,9 @@ public class SeleniumCarCatalogTest {
         fillFieldsEditForm(editCar, editImage, currentCar.getAdditionalOptions().size());
 
         pageNavigation.clickOnElement("submit-car-button");
+        wait.until(visibilityOfElementLocated(id("logo-image")));
 
-        checkDataCar(editCar);
+        checkDataCar(editCar, editImage);
     }
 
     private static void fillFieldsEditForm(Car editCar, File editImage, int optionsNumber) {

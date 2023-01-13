@@ -195,21 +195,6 @@ public class LoginPageTest {
     }
 
     @Test
-    void successfulAuthorization() {
-
-        checkSuccessfulAuthorizationAdmin(getAdminUsername(), getAdminPassword());
-        checkSuccessfulAuthorizationAdmin(getUserUsername(), getUserPassword());
-    }
-
-    @Test
-    void loginDataFromDB(){
-
-        checkIncorrectLoginData("Admin_1", "$2a$12$4UZ6J30Pxj864vYraN/0debR.Ct9sXY.AZaFKt5QR8bd8pwSaoFMi");
-        checkIncorrectLoginData("User_1", "$2a$12$5IYQmiuyEw5wimD5Z0heyOq/MtjWAE98yAVdfHKOtyC4lbHCbbBtm");
-    }
-
-    @Test
-
     void usernameRequiredValidation() {
 
         String requiredUsernameErrorMassage = "Username is required.";
@@ -228,10 +213,9 @@ public class LoginPageTest {
     }
 
     @Test
-
     void usernameMinLengthValidation(){
 
-        String errorValidationMassage = "Username must be greater than 2.";
+        String errorValidationMassage = "Username must be greater than 1.";
         String password = "123456789";
 
         checkInvalidLoginData("s", password, errorValidationMassage, usernameErrorMassage);
@@ -295,7 +279,6 @@ public class LoginPageTest {
     }
 
     @Test
-
     void passwordRequiredValidation() {
 
         String requiredPasswordErrorMassage = "Password is required.";
@@ -313,26 +296,21 @@ public class LoginPageTest {
     }
 
     @Test
-
     void passwordMinLengthValidation(){
 
-        String errorValidationMassage = "Password must be greater than 8.";
+        String errorValidationMassage = "Password must be greater than 4.";
         String username = "User_123";
 
-        checkInvalidLoginData(username, "tIGSK", errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, "e", errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, "wwf", errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, "lkyt", errorValidationMassage, passwordErrorMassage);
-        checkInvalidLoginData(username, "ergrg", errorValidationMassage, passwordErrorMassage);
+        checkInvalidLoginData(username, "errg", errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, "mq", errorValidationMassage, passwordErrorMassage);
 
         checkInvalidLoginData(username, dataFactory.getRandomText(1), errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, dataFactory.getRandomText(2), errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, dataFactory.getRandomText(3), errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginData(username, dataFactory.getRandomText(4), errorValidationMassage, passwordErrorMassage);
-        checkInvalidLoginData(username, dataFactory.getRandomText(5), errorValidationMassage, passwordErrorMassage);
-        checkInvalidLoginData(username, dataFactory.getRandomText(6), errorValidationMassage, passwordErrorMassage);
-        checkInvalidLoginData(username, dataFactory.getRandomText(7), errorValidationMassage, passwordErrorMassage);
     }
 
     @Test
@@ -355,6 +333,53 @@ public class LoginPageTest {
         checkInvalidLoginDataMaxLength(username, dataFactory.getRandomText(754), errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginDataMaxLength(username, dataFactory.getRandomText(334), errorValidationMassage, passwordErrorMassage);
         checkInvalidLoginDataMaxLength(username, dataFactory.getRandomText(152), errorValidationMassage, passwordErrorMassage);
+    }
+
+    @Test
+    void successfulAuthorization() {
+
+        String firstAdminPassword = getFirstAdminPassword();
+
+        checkSuccessfulAuthorization(getFirstAdminUsername(), getFirstAdminPassword());
+
+        checkSuccessfulAuthorization("Admin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDmin", firstAdminPassword);
+        checkSuccessfulAuthorization("adMin", firstAdminPassword);
+        checkSuccessfulAuthorization("admIn", firstAdminPassword);
+        checkSuccessfulAuthorization("admiN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMin", firstAdminPassword);
+        checkSuccessfulAuthorization("adMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("admIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMin", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("adMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("AdmIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmiN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIn", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("aDMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("AdMIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADmIN", firstAdminPassword);
+        checkSuccessfulAuthorization("ADMiN", firstAdminPassword);
+
+        checkSuccessfulAuthorization(getSecondAdminUsername(), getSecondAdminPassword());
+    }
+
+    @Test
+    void loginDataFromDB(){
+
+        checkIncorrectLoginData("admin", "$2a$12$N0uY4GewYyFM1s3TN7SzXuqoTbnW9NK3mcdoG6WdLLfUNswDL5gvu");
+        checkIncorrectLoginData("admin1", "$2a$12$Fy4pxxZDrbL6H3pyxom9J.bTdL.FNubxBVymHq9ZX2OJiOi3X1aWq");
+    }
+
+
+    @Test
+    void checkUsersVariationData() {
+
+        checkIncorrectLoginData(getFirstAdminUsername(), getSecondAdminPassword());
+        checkIncorrectLoginData(getSecondAdminUsername(), getFirstAdminPassword());
     }
 
     @Test
@@ -386,64 +411,88 @@ public class LoginPageTest {
     @Test
     void checkVariationUsername() {
 
-        String password = getAdminPassword();
+        String firstAdminPassword = getFirstAdminPassword();
 
-        checkIncorrectLoginData("admin_1", password);
-        checkIncorrectLoginData("ADMIN_1", password);
-        checkIncorrectLoginData("_1admin", password);
-        checkIncorrectLoginData("amin_1d", password);
-        checkIncorrectLoginData("AdMiN_1", password);
-        checkIncorrectLoginData("Admin1", password);
-        checkIncorrectLoginData("Amin_1", password);
-        checkIncorrectLoginData("dmin_1", password);
-        checkIncorrectLoginData("Adin_1", password);
-        checkIncorrectLoginData("Admn_1", password);
-        checkIncorrectLoginData("Admi_1", password);
-        checkIncorrectLoginData("Admin1", password);
-        checkIncorrectLoginData("Admin_", password);
-        checkIncorrectLoginData("aDmin_1", password);
-        checkIncorrectLoginData("AdMin_1", password);
-        checkIncorrectLoginData("AdmIn_1", password);
-        checkIncorrectLoginData("AdmiN_1", password);
-        checkIncorrectLoginData("Admin11", password);
+        checkIncorrectLoginData("damin", firstAdminPassword);
+        checkIncorrectLoginData("madin", firstAdminPassword);
+        checkIncorrectLoginData("iadmn", firstAdminPassword);
+        checkIncorrectLoginData("nadmi", firstAdminPassword);
+        checkIncorrectLoginData("dmina", firstAdminPassword);
+        checkIncorrectLoginData("dmina", firstAdminPassword);
+
+        checkIncorrectLoginData("tormentedtotal", firstAdminPassword);
+        checkIncorrectLoginData("cubfeminine", firstAdminPassword);
+        checkIncorrectLoginData("wefferbv", firstAdminPassword);
+        checkIncorrectLoginData("thrd2533", firstAdminPassword);
+        checkIncorrectLoginData("user_1", firstAdminPassword);
+        checkIncorrectLoginData("brtgg333", firstAdminPassword);
+        checkIncorrectLoginData("bfb43", firstAdminPassword);
+        checkIncorrectLoginData("gtg4r", firstAdminPassword);
+        checkIncorrectLoginData("bgbgbr44", firstAdminPassword);
+
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getFirstName(), firstAdminPassword);
+
+        checkIncorrectLoginData(dataFactory.getRandomText(2), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(4), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(29), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(10), firstAdminPassword);
+        checkIncorrectLoginData(dataFactory.getRandomText(30), firstAdminPassword);
     }
 
     @Test
     void checkVariationPassword() {
 
-        String username = getAdminUsername();
-        checkIncorrectLoginData(username, "dmin_pass");
-        checkIncorrectLoginData(username, "Amin_pass");
-        checkIncorrectLoginData(username, "Adin_pass");
-        checkIncorrectLoginData(username, "Admn_pass");
-        checkIncorrectLoginData(username, "Admi_pass");
-        checkIncorrectLoginData(username, "Adminpass");
-        checkIncorrectLoginData(username, "Admin_ass");
-        checkIncorrectLoginData(username, "Admin_pss");
-        checkIncorrectLoginData(username, "Admin_pas");
-        checkIncorrectLoginData(username, "admin_pass");
-        checkIncorrectLoginData(username, "ADMIN_PASS");
-        checkIncorrectLoginData(username, "ADmin_pass");
-        checkIncorrectLoginData(username, "AdMin_pass");
-        checkIncorrectLoginData(username, "AdmIn_pass");
-        checkIncorrectLoginData(username, "AdmiN_pass");
-        checkIncorrectLoginData(username, "Admin_Pass");
-        checkIncorrectLoginData(username, "Admin_pAss");
-        checkIncorrectLoginData(username, "Admin_paSs");
-        checkIncorrectLoginData(username, "Admin_pAsS");
-        checkIncorrectLoginData(username, "_passAdmin");
-        checkIncorrectLoginData(username, "Aminpass_");
-        checkIncorrectLoginData(username, "passAmin_");
+        String firstAdminUsername = getFirstAdminUsername();
+
+        checkIncorrectLoginData(firstAdminUsername, "Admin");
+        checkIncorrectLoginData(firstAdminUsername, "aDmin");
+        checkIncorrectLoginData(firstAdminUsername, "adMin");
+        checkIncorrectLoginData(firstAdminUsername, "admIn");
+        checkIncorrectLoginData(firstAdminUsername, "admiN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmin");
+        checkIncorrectLoginData(firstAdminUsername, "aDMin");
+        checkIncorrectLoginData(firstAdminUsername, "adMIn");
+        checkIncorrectLoginData(firstAdminUsername, "admIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMin");
+        checkIncorrectLoginData(firstAdminUsername, "aDMIn");
+        checkIncorrectLoginData(firstAdminUsername, "adMIN");
+        checkIncorrectLoginData(firstAdminUsername, "AdmIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmiN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIn");
+        checkIncorrectLoginData(firstAdminUsername, "ADMIN");
+        checkIncorrectLoginData(firstAdminUsername, "aDMIN");
+        checkIncorrectLoginData(firstAdminUsername, "AdMIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADmIN");
+        checkIncorrectLoginData(firstAdminUsername, "ADMiN");
+
+        checkIncorrectLoginData(firstAdminUsername, "password");
+        checkIncorrectLoginData(firstAdminUsername, "123456789");
+        checkIncorrectLoginData(firstAdminUsername, "111111111");
+        checkIncorrectLoginData(firstAdminUsername, "1234567890");
+        checkIncorrectLoginData(firstAdminUsername, "D1lakisss");
+        checkIncorrectLoginData(firstAdminUsername, "5y4yeg354hge");
+        checkIncorrectLoginData(firstAdminUsername, "ret43tge");
+        checkIncorrectLoginData(firstAdminUsername, "h5ge45hgevdv4");
+        checkIncorrectLoginData(firstAdminUsername, "3456423256");
+        checkIncorrectLoginData(firstAdminUsername, "464hgt5y455");
+
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8, 100));
+
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(8));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(19));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(43));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(23));
+        checkIncorrectLoginData(firstAdminUsername, dataFactory.getRandomText(100));
     }
 
-    @Test
-    void checkUsersVariationData() {
-
-        checkIncorrectLoginData(getAdminUsername(), getUserPassword());
-        checkIncorrectLoginData(getUserUsername(), getAdminPassword());
-    }
-
-    private static void checkSuccessfulAuthorizationAdmin(String username, String password){
+    private static void checkSuccessfulAuthorization(String username, String password){
 
         driver.get(getLoginPageURL());
         wait.until(visibilityOf(loginForm));

@@ -55,7 +55,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 @Slf4j
 class CarControllerTest {
 

@@ -98,7 +98,7 @@ public class AddCarPage {
     @BeforeAll
     static void beforeAll() {
 
-        image = new File("src/test/resources/images/FORD_FUSION_2020.png");
+        image = new File("src/test/resources/images/CatherineMCLAREN267912502.png");
         text = new File("src/test/resources/files/text.txt");
 
         openWindow();
@@ -319,8 +319,6 @@ public class AddCarPage {
 
         sendPutTextKeyInInputField(yearInput, Integer.toString(dataFactory.getNumberBetween(year, MAX_VALUE)));
         checkFieldValidation(exceptedErrorValidationMassage, yearInputErrorMassage);
-
-
     }
 
     @Test

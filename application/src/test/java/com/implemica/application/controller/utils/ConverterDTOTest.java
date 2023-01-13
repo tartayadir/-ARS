@@ -22,7 +22,7 @@ import static com.utils.spring.FileUtils.createMultipartFile;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
-@ActiveProfiles("test")
+@ActiveProfiles("prod")
 class ConverterDTOTest {
 
     private static Car car;

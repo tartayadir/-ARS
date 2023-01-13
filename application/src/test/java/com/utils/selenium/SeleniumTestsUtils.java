@@ -1,7 +1,15 @@
 package com.utils.selenium;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
+import com.github.romankh3.image.comparison.ImageComparison;
+import com.github.romankh3.image.comparison.model.ImageComparisonResult;
+import com.github.romankh3.image.comparison.model.ImageComparisonState;
 import com.implemica.model.car.entity.Car;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -9,19 +17,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import javax.imageio.ImageIO;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
+import static com.utils.selenium.ElementsUtils.elementIsViewed;
+import static com.utils.selenium.ElementsUtils.findWebElementById;
+import static com.utils.selenium.URLUtils.getAddCarPageURL;
+import static com.utils.selenium.URLUtils.getHomePageURL;
+import static com.utils.spring.StringUtils.toTitleCase;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.Keys.ENTER;
 import static org.openqa.selenium.Keys.chord;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-import static com.utils.selenium.URLUtils.getAddCarPageURL;
-import static com.utils.selenium.URLUtils.getHomePageURL;
-import static com.utils.spring.StringUtils.toTitleCase;
 
+@Slf4j
 public class SeleniumTestsUtils {
 
     private static PageNavigation pageNavigation;
@@ -36,16 +52,14 @@ public class SeleniumTestsUtils {
     }
 
     @SneakyThrows
-    public static void checkDataCar(Car addedCar){
+    public static void checkDataCar(Car addedCar, File imageFile){
 
-        driver.get(getHomePageURL());
+        wait.until(visibilityOfElementLocated(id("cars")));
         driver.navigate().refresh();
 
         String carBrandEnumValue = addedCar.getBrand().toString();
         String carBrand = addedCar.getBrand().getStringValue();
         String carModel = addedCar.getModel();
-
-        wait.until(visibilityOfElementLocated(id(format("car-brand-model-%s-%s", carBrandEnumValue, carModel))));
 
         WebElement carCardTitle = ElementsUtils.findWebElementById(format("car-brand-model-%s-%s", carBrandEnumValue, carModel));
         pageNavigation.moveToElement(carCardTitle);
@@ -55,9 +69,16 @@ public class SeleniumTestsUtils {
         checkElementInnerText(exceptedCarCardTitle, carCardTitle);
         checkElementInnerText(addedCar.getShortDescription(), ElementsUtils.findWebElementById(format("car-short-description-%s-%s", carBrandEnumValue, carModel)));
 
-        pageNavigation.clickOnElement(format("car-image-%s-%s", carBrandEnumValue, carModel));
+        WebElement image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
+        elementIsViewed(image);
+        checkImage(image, imageFile);
+
+        pageNavigation.clickOnElement(format("car-image-%s-%s-a", carBrandEnumValue, carModel));
 
         wait.until(visibilityOfElementLocated(id("car-engine-capacity")));
+        image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
+        elementIsViewed(image);
+        checkImage(image, imageFile);
 
         checkElementInnerText("Body type : " + addedCar.getCarBodyTypes().getStringValue(), "car-body-type");
         checkElementInnerText("Transmission type : " + toTitleCase(addedCar.getTransmissionBoxTypes().getStringValue()), "car-transmission-type");
@@ -70,6 +91,25 @@ public class SeleniumTestsUtils {
                 checkElementInnerText(option, ElementsUtils.findWebElementById(format("car-option-%s", option))));
 
         pageNavigation.clickOnElement("come-back-button");
+    }
+
+    @SneakyThrows
+    public static void checkImage(WebElement actualImageWebElement, File expectedImage) {
+
+        AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
+        String src = actualImageWebElement.getAttribute("src");
+        String imageName = src.replaceAll("https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/", "");
+
+        S3Object s3Object = s3.getObject(new GetObjectRequest("carcatalogcarsphotop", imageName));
+        InputStream in = s3Object.getObjectContent();
+        File actualImage = File.createTempFile("s3Image" + imageName, "");
+        Files.copy(in, actualImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        ImageComparisonResult result = new ImageComparison(ImageIO.read(expectedImage),
+                ImageIO.read(actualImage)).compareImages();
+        assertEquals(ImageComparisonState.MATCH, result.getImageComparisonState());
+
+        assertTrue(actualImage.delete());
     }
 
     public static void addCar(Car car, File imageFile){
@@ -102,7 +142,7 @@ public class SeleniumTestsUtils {
         pageNavigation.clickOnElement("apply-image-upload-button");
         pageNavigation.clickOnElement("submit-car-button");
 
-        checkDataCar(car);
+        checkDataCar(car, imageFile);
     }
 
     public static void deleteCar(Car deleteCar){
