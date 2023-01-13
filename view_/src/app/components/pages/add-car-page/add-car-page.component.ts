@@ -16,6 +16,7 @@ import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {Option} from "../../../models/option/Option";
 import {LoginService} from "../../../services/auth/login.service";
+import {delay} from "rxjs";
 
 @Component({
   selector: 'app-add-car-page',
@@ -66,11 +67,13 @@ export class AddCarPageComponent implements OnInit{
     this.titleService.setTitle("Add new car");
   }
 
-  public addCar(content: any) {
+  public async addCar(content: any) {
     let car: Car = {
       additionalOptions: []
     };
     this.trySubmitted = true;
+
+    const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
 
     if(this.formIsValid() && this.imageIsUploaded && this.imageTypeIsValid ||
       this.formIsValid() && !this.imageIsUploaded && this.imageTypeIsValid ){
@@ -96,34 +99,44 @@ export class AddCarPageComponent implements OnInit{
       if (this.imageIsUploaded){
 
         car.image = this.image as string;
-        car.imageFileName = (car.model + car.brand + Math.floor(Math.random() * 1_000_000_000)).
-        replace(" ", "");
+        car.imageFileName = (car.model + car.brand + Math.floor(Math.random() * 1_000_000_000) +
+          "." + this.imageFile.type.split("/")[1]).replace(" ", "");
 
-        this.carsService.addCar(car).subscribe(
-          responseCar => {
-            car = responseCar;
-            this.imageService.uploadImage(this.imageFile, car.imageFileName!).subscribe(
-              () => {
-                this.goToHomePage();
-              },
-              error => {
-                this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
-              });
-          }
-        );
+        this.imageService.uploadImage(this.imageFile, car.imageFileName!).then( () => {
+
+          sleep(1000);
+          this.carsService.addCar(car).then(() => {
+
+            this.goToHomePage();
+          });
+        });
+
+
+        //
+        //   .subscribe(
+        //   responseCar => {
+        //     car = responseCar;
+        //   },
+        //   error => {
+        //     this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
+        //   }
+        // );
+
+
       } else {
 
         car.image = "";
         car.imageFileName = "default-car-image";
 
-        this.carsService.addCar(car).subscribe(
-          responseCar => {
-            car = responseCar;
-            this.goToHomePage();
-          },
-          error => {
-            this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
-          });
+        this.carsService.addCar(car);
+        // .subscribe(
+        //   responseCar => {
+        //     car = responseCar;
+        //     this.goToHomePage();
+        //   },
+        //   error => {
+        //     this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
+        //   });
       }
 
 

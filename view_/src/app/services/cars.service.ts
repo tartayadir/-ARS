@@ -60,26 +60,29 @@ export class CarsService {
     );
   }
 
-  public update(car: Car) {
+  public async update(car: Car) {
 
     console.log("Http method - PUT, car " + car);
 
     let carDTO: CarDTO = this.converterDTO.carEntityToCarDTO(car);
 
-    return this.http.put<void>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
-      catchError(this.errorHandler.bind(this))
-    );
+    return await this.http.put<void>(`${this.apiServerURL}/car-catalog`, carDTO).
+    toPromise().catch(this.errorHandler.bind(this));
   }
 
-  public addCar(car: Car) {
+  public async addCar(car: Car) {
 
     console.log("Http method - POST, car " + car);
 
     let carDTO: CarDTO = this.converterDTO.carEntityToCarDTO(car);
-    return this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
-      map(dto => this.converterDTO.CarDTOToCarEntity(dto)),
-      catchError(this.errorHandler.bind(this))
-    );
+
+    return await this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).
+    toPromise().
+    catch(this.errorHandler.bind(this));
+    // return this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
+    //   map(dto => this.converterDTO.CarDTOToCarEntity(dto)),
+    //   catchError(this.errorHandler.bind(this))
+    // );
   }
 
   private errorHandler(error: HttpErrorResponse) {

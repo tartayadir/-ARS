@@ -30,7 +30,7 @@ public class AuthServiceImpl implements AuthService {
     public String attemptAuthentication(String username, String password) throws AuthenticationException {
 
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(username, password);
+                new UsernamePasswordAuthenticationToken(username.toLowerCase(), password);
         authenticationToken.getAuthorities().forEach(System.out::println);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 

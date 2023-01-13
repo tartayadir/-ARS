@@ -14,12 +14,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static java.lang.String.format;
+import static org.springframework.transaction.annotation.Isolation.READ_UNCOMMITTED;
+import static org.springframework.transaction.annotation.Isolation.SERIALIZABLE;
+import static org.springframework.transaction.annotation.Propagation.REQUIRES_NEW;
+import static org.springframework.transaction.annotation.Propagation.SUPPORTS;
 
 @Service
 @AllArgsConstructor
-@Transactional
+@Transactional(isolation = SERIALIZABLE)
 public class CarServiceImpl implements CarService {
+
     private CarRepository carRepository;
+
     @Override
     @Cacheable(cacheNames = "cars")
     public List<Car> findAll() {

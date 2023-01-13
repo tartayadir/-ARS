@@ -59,8 +59,8 @@
                                                [brand]="car.brand" [model]="car.model">
                 </app-confirm-delete-car-button>
               </div>
-              <a [routerLink]="['details', car.id]" id="car-image-{{car.brand}}-{{car.model}}">
-                <img src="{{car.image}}" alt="" class="card-img-top img-thumbnail" >
+              <a [routerLink]="['details', car.id]" id="car-image-{{car.brand}}-{{car.model}}-a">
+                <img src="{{car.image}}" id="car-image-{{car.brand}}-{{car.model}}" alt="" class="card-img-top img-thumbnail" >
               </a>
             </div>
           </div>

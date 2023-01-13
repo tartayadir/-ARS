@@ -103,7 +103,7 @@ export class CarEditorPageComponent implements OnInit {
     return CarBrands[this.car!.brand!];
   }
 
-  public updateCar(content: any) {
+  public async updateCar(content: any) {
 
     if (this.carIsValid() && this.imageTypeIsValid) {
       this.car.image = this.image as string;
@@ -113,28 +113,31 @@ export class CarEditorPageComponent implements OnInit {
       if (this.imageIsUploaded) {
 
         this.car.imageFileName = "" + this.car.brand + this.car.model + Math.floor(Math.random() * 1_000_000_000);
-        this.car.imageFileName = this.car.imageFileName.replace(" ", "");
-        //
-        // this.car.brand = Object.keys(CarBrands)[Object.values(CarBrands).indexOf(this.car!.brand!)] as unknown as CarBrands;
-        // this.car.carBodyType = Object.keys(CarBodyTypes)[Object.values(CarBodyTypes).indexOf(this.car!.carBodyType!)] as unknown as CarBodyTypes;
+        this.car.imageFileName = this.car.imageFileName.replace(" ", "") + "."
+          + this.imageFile.type.split("/")[1];
 
-        this.carService.update(this.car).subscribe( () => {});
-        if(this.car.imageFileName != "default-car-image"){
-          this.imageService.deleteImage(this.car.imageFileName as string).subscribe( () => {});
-        }
-        this.imageService.uploadImage(this.imageFile, this.car.imageFileName as string).subscribe( () => {
-          this.goToHomePage();
+        const sleep = (ms: number) => new Promise(r => setTimeout(r, ms));
+
+        this.imageService.uploadImage(this.imageFile, this.car.imageFileName as string).then( () => {
+
+          sleep(1000);
+
+          if(this.car.imageFileName != "default-car-image"){
+            this.imageService.deleteImage(this.car.imageFileName as string);
+          }
+
+          this.carService.update(this.car).then( () => {
+
+            this.goToHomePage();
+          });
         });
+
 
       }else {
-        //
-        // this.car.brand = Object.keys(CarBrands)[Object.values(CarBrands).indexOf(this.car!.brand!)] as unknown as CarBrands;
-        // this.car.carBodyType = Object.keys(CarBodyTypes)[Object.values(CarBodyTypes).indexOf(this.car!.carBodyType!)] as unknown as CarBodyTypes;
-        //
 
-        this.carService.update(this.car).subscribe( () => {
+        this.carService.update(this.car).then(() => {
           this.goToHomePage();
-        });
+        })
       }
     } else {
       this.modalWindowService.open(content);

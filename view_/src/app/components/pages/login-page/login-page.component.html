@@ -25,7 +25,7 @@
                         <span class="text-danger">Username is required.</span>
                       </ng-container>
                       <ng-container *ngIf="username.errors?.['minlength']" class="invalid-feedback">
-                        <span class="text-danger">Username must be greater than 2.</span>
+                        <span class="text-danger">Username must be greater than 1.</span>
                       </ng-container>
                       <ng-container *ngIf="username.errors?.['pattern'] && !username.errors?.['minlength']"
                                     class="invalid-feedback">
@@ -44,7 +44,7 @@
                 <div class="form-outline form-white mb-4">
                   <label class="form-label" >Password</label>
                   <input type="password" class="form-control form-control-lg" style="background: #f5f1ed" name="password"
-                         minlength="8" maxlength="101" required
+                         minlength="5" maxlength="101" required
                          id="passwordInputField" #password="ngModel" [(ngModel)]="loginInfo.password">
 
                   <div id="passwordErrorMassage">
@@ -55,7 +55,7 @@
                         <span class="text-danger">Password is required.</span>
                       </ng-container>
                       <ng-container *ngIf="password.errors?.['minlength']" class="invalid-feedback">
-                        <span class="text-danger">Password must be greater than 8.</span>
+                        <span class="text-danger">Password must be greater than 4.</span>
                       </ng-container>
 <!--                      <ng-container *ngIf="password.errors?.['pattern'] && !password.errors?.['minlength']"-->
 <!--                                    class="invalid-feedback">-->
