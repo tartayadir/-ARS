@@ -96,11 +96,15 @@ public class SeleniumTestsUtils {
     @SneakyThrows
     public static void checkImage(WebElement actualImageWebElement, File expectedImage) {
 
+//        String bucketName = "carcatalogcarsphotop";
+        String bucketName = "cars-storage-yaroslav-b.implemica.com";
+        String bucketPrefix = "https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/";
+
         AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
         String src = actualImageWebElement.getAttribute("src");
-        String imageName = src.replaceAll("https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/", "");
+        String imageName = src.replaceAll(bucketPrefix, "");
 
-        S3Object s3Object = s3.getObject(new GetObjectRequest("carcatalogcarsphotop", imageName));
+        S3Object s3Object = s3.getObject(new GetObjectRequest(bucketName, imageName));
         InputStream in = s3Object.getObjectContent();
         File actualImage = File.createTempFile("s3Image" + imageName, "");
         Files.copy(in, actualImage.toPath(), StandardCopyOption.REPLACE_EXISTING);

@@ -31,6 +31,9 @@ class AmazonClientTest {
 
     private static final AmazonS3 s3client;
 
+    private static final String bucketName = "carcatalogcarsphotop";
+//    private static final String bucketName = "cars-storage-yaroslav-b.implemica.com";
+
 
     static {
         s3client = AmazonS3ClientBuilder.defaultClient();
@@ -113,11 +116,11 @@ class AmazonClientTest {
         try {
             amazonClient.uploadFileTos3bucket(fileName, multipartFile);
 
-            S3Object s3Object = s3client.getObject("carcatalogcarsphotop", fileName);
+            S3Object s3Object = s3client.getObject(bucketName, fileName);
 
             assertEquals(fileName, s3Object.getKey());
 
-            s3client.deleteObject("carcatalogcarsphotop", fileName);
+            s3client.deleteObject(bucketName, fileName);
         } catch (InvalidImageTypeException e) {
 
             log.error(e.getMessage(), (Object) e.getStackTrace());
@@ -137,13 +140,13 @@ class AmazonClientTest {
         try {
 
             amazonClient.uploadFileTos3bucket(fileName, multipartFile);
-            S3Object s3Object = s3client.getObject("carcatalogcarsphotop", fileName);
+            S3Object s3Object = s3client.getObject(bucketName, fileName);
 
             assertEquals(fileName, s3Object.getKey());
 
             amazonClient.deleteFileFromS3Bucket(fileName);
 
-            assertThatThrownBy(() -> s3client.getObject("carcatalogcarsphotop", fileName)).
+            assertThatThrownBy(() -> s3client.getObject(bucketName, fileName)).
                     isInstanceOf(AmazonS3Exception.class);
         } catch (InvalidImageTypeException e) {
 

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.implemica</groupId>
         <artifactId>CarCatalog_</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>application</artifactId>
@@ -75,14 +75,6 @@
             <groupId>com.implemica</groupId>
             <artifactId>controller</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
-
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>4.6.0</version>
         </dependency>
 
     </dependencies>

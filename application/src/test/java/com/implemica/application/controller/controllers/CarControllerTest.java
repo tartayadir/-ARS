@@ -63,7 +63,7 @@ class CarControllerTest {
 
     private static AmazonS3 s3client;
 
-    private final String bucketName = "carcatalogcarsphotop";
+    private static final String bucketName = "carcatalogcarsphotop";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -1127,23 +1127,23 @@ class CarControllerTest {
                 String.valueOf(IMAGE_JPEG),
                 "123".getBytes());
 
-        checkRemoveCar(1L, fileName, file, bucketName);
-        checkRemoveCar(-1L, fileName, file, bucketName);
-        checkRemoveCar(2L, fileName, file, bucketName);
-        checkRemoveCar(-2L, fileName, file, bucketName);
-        checkRemoveCar(0L, fileName, file, bucketName);
-        checkRemoveCar(MAX_VALUE, fileName, file, bucketName);
-        checkRemoveCar(MAX_VALUE - 1, fileName, file, bucketName);
-        checkRemoveCar(MIN_VALUE, fileName, file, bucketName);
-        checkRemoveCar(MIN_VALUE + 1, fileName, file, bucketName);
-        checkRemoveCar(22_525L, fileName, file, bucketName);
-        checkRemoveCar(192L, fileName, file, bucketName);
-        checkRemoveCar(99L, fileName, file, bucketName);
-        checkRemoveCar(4_533L, fileName, file, bucketName);
-        checkRemoveCar(11L, fileName, file, bucketName);
-        checkRemoveCar(5L, fileName, file, bucketName);
-        checkRemoveCar(7_877L, fileName, file, bucketName);
-        checkRemoveCar(id, fileName, file, bucketName);
+        checkRemoveCar(1L, fileName, file);
+        checkRemoveCar(-1L, fileName, file);
+        checkRemoveCar(2L, fileName, file);
+        checkRemoveCar(-2L, fileName, file);
+        checkRemoveCar(0L, fileName, file);
+        checkRemoveCar(MAX_VALUE, fileName, file);
+        checkRemoveCar(MAX_VALUE - 1, fileName, file);
+        checkRemoveCar(MIN_VALUE, fileName, file);
+        checkRemoveCar(MIN_VALUE + 1, fileName, file);
+        checkRemoveCar(22_525L, fileName, file);
+        checkRemoveCar(192L, fileName, file);
+        checkRemoveCar(99L, fileName, file);
+        checkRemoveCar(4_533L, fileName, file);
+        checkRemoveCar(11L, fileName, file);
+        checkRemoveCar(5L, fileName, file);
+        checkRemoveCar(7_877L, fileName, file);
+        checkRemoveCar(id, fileName, file);
     }
 
     @Test
@@ -1291,13 +1291,12 @@ class CarControllerTest {
     }
 
     @SneakyThrows
-    private static void checkRemoveCar(Long deleteCarID, String deleteCarImageId, MockMultipartFile image,
-                                       String bucketName) {
+    private static void checkRemoveCar(Long deleteCarID, String deleteCarImageId, MockMultipartFile image) {
 
         amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
         doNothing().when(carService).deleteById(deleteCarID);
 
-        S3Object s3Object = s3client.getObject(bucketName, deleteCarImageId);
+        S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
 
         assertEquals(deleteCarImageId, s3Object.getKey());
 
@@ -1306,7 +1305,7 @@ class CarControllerTest {
                         .header(AUTHORIZATION, token)).
                 andExpect(status().isOk());
 
-        assertThatThrownBy(() -> s3client.getObject(bucketName, deleteCarImageId)).
+        assertThatThrownBy(() -> s3client.getObject(CarControllerTest.bucketName, deleteCarImageId)).
                 isInstanceOf(AmazonS3Exception.class);
 
         mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))).
