@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "./error/error.service";
 import {environment} from "../../environments/environment";
-import {catchError, Observable, throwError} from "rxjs";
+import {throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -28,13 +28,12 @@ export class ImageService {
     catch(this.errorHandler.bind(this));
   }
 
-  public deleteImage(imageId: string): Observable<any> {
+  public async deleteImage(imageId: string) {
 
     console.log("Http method - Delete, image with name " + imageId);
 
-    return this.http.delete<void>(`${this.apiServerURL}/image/${imageId}`).pipe(
-      catchError(this.errorHandler.bind(this))
-    );
+    return await this.http.delete<void>(`${this.apiServerURL}/image/${imageId}`).
+    toPromise().catch(this.errorHandler.bind(this));
   }
 
   private errorHandler(error: HttpErrorResponse) {

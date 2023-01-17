@@ -112,31 +112,14 @@ export class AddCarPageComponent implements OnInit{
         });
 
 
-        //
-        //   .subscribe(
-        //   responseCar => {
-        //     car = responseCar;
-        //   },
-        //   error => {
-        //     this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
-        //   }
-        // );
-
-
       } else {
 
         car.image = "";
         car.imageFileName = "default-car-image";
 
-        this.carsService.addCar(car);
-        // .subscribe(
-        //   responseCar => {
-        //     car = responseCar;
-        //     this.goToHomePage();
-        //   },
-        //   error => {
-        //     this.carsService.deleteCar(car.id!, car.imageFileName!).subscribe();
-        //   });
+        this.carsService.addCar(car).then(() => {
+          this.goToHomePage();
+        });
       }
 
 

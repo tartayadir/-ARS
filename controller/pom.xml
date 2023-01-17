@@ -5,11 +5,10 @@
     <parent>
         <groupId>com.implemica</groupId>
         <artifactId>CarCatalog_</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>controller</artifactId>
-
 
     <properties>
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
@@ -19,7 +18,7 @@
         <dependency>
             <groupId>com.implemica</groupId>
             <artifactId>model</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.0.2-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

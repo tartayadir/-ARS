@@ -11,7 +11,8 @@ import {CarBrands} from "../../models/car/CarBrands";
 
 export class ConverterDTO {
 
-  private s3URL : string = "https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/";
+  // private s3URL : string = "https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/";
+  private s3URL : string = "https://https://s3.amazonaws.com/cars-storage-yaroslav-b.implemica.com/";
 
   constructor() {}
 

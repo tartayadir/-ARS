@@ -1,7 +1,11 @@
 package com.implemica.controller.service.amazonS3;
 
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.*;
+
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +24,13 @@ public class AmazonClient {
 
     private final AmazonS3 s3client;
 
-    private final String bucketName = "carcatalogcarsphotop";
+//    private final String bucketName = "carcatalogcarsphotop";
+    private final String bucketName = "cars-storage-yaroslav-b.implemica.com";
 
     public void uploadFileTos3bucket(String fileName, MultipartFile multipartFile) throws InvalidImageTypeException {
+
+        log.info("bucket name : " + bucketName);
+        log.info("region : " + s3client.getRegion());
 
         checkImageType(multipartFile);
 

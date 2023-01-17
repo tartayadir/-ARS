@@ -11,8 +11,9 @@ import {CarBrands} from "../../../models/car/CarBrands";
   selector: 'app-car-details',
   templateUrl: './car-details-page.component.html'
 })
-export class CarDetailsPageComponent implements OnInit
-  {
+export class CarDetailsPageComponent implements OnInit {
+
+  public testURL: string = "https://s3.eu-central-1.amazonaws.com/cars-storage-yaroslav-b.implemica.com/default-car-image.png";
 
   public car: Car  = {
     additionalOptions: []

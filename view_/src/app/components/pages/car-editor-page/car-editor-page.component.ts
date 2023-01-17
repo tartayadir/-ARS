@@ -106,12 +106,14 @@ export class CarEditorPageComponent implements OnInit {
   public async updateCar(content: any) {
 
     if (this.carIsValid() && this.imageTypeIsValid) {
+
       this.car.image = this.image as string;
       this.car.additionalOptions = [];
-
       this.options.forEach((option) => this.car.additionalOptions.push(option.name as string))
+
       if (this.imageIsUploaded) {
 
+        let oldImageName: string = this.car.imageFileName as string;
         this.car.imageFileName = "" + this.car.brand + this.car.model + Math.floor(Math.random() * 1_000_000_000);
         this.car.imageFileName = this.car.imageFileName.replace(" ", "") + "."
           + this.imageFile.type.split("/")[1];
@@ -122,11 +124,11 @@ export class CarEditorPageComponent implements OnInit {
 
           sleep(1000);
 
-          if(this.car.imageFileName != "default-car-image"){
-            this.imageService.deleteImage(this.car.imageFileName as string);
-          }
-
           this.carService.update(this.car).then( () => {
+
+            if(oldImageName != "default-car-image"){
+              this.imageService.deleteImage(oldImageName);
+            }
 
             this.goToHomePage();
           });

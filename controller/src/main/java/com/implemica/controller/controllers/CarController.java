@@ -18,7 +18,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
@@ -28,8 +37,6 @@ import java.util.stream.Collectors;
 
 import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
 import static com.implemica.controller.utils.ConverterDTO.dtoToCarEntity;
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.springframework.http.CacheControl.maxAge;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -52,6 +59,7 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getAllCars() {
 
         log.info("Http method - Get, all cars");
+        log.info("1");
 
         List<CarDTO> dtoList = carService.
                 findAll().

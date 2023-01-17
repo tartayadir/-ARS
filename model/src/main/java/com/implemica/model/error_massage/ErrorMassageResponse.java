@@ -2,8 +2,6 @@ package com.implemica.model.error_massage;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
 import java.io.Serializable;
