@@ -12,7 +12,7 @@
 
     <groupId>com.implemica</groupId>
     <artifactId>CarCatalog_</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>CarCatalog_</name>
     <description>CarCatalog_</description>
     <packaging>pom</packaging>
@@ -200,12 +200,6 @@
                 <spring.profiles.active>integration-test</spring.profiles.active>
             </properties>
         </profile>
-<!--        <profile>-->
-<!--            <id>test</id>-->
-<!--            <properties>-->
-<!--                <spring.profiles.active>test</spring.profiles.active>-->
-<!--            </properties>-->
-<!--        </profile>-->
     </profiles>
 
 

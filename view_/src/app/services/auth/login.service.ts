@@ -82,11 +82,11 @@ export class LoginService {
 
   public isAuthenticated(): boolean {
 
-    console.log(" " + jwt.isTokenExpired(localStorage.getItem('auth_tkn') as string));
-    console.log(moment().isBefore(moment.unix(this.decodedToken.exp)));
-    console.log(moment.now())
-    console.log(this.decodedToken.exp);
-    console.log(moment.now() >= this.decodedToken.exp)
+    // console.log(" " + jwt.isTokenExpired(localStorage.getItem('auth_tkn') as string));
+    // console.log(moment().isBefore(moment.unix(this.decodedToken.exp)));
+    // console.log(moment.now())
+    // console.log(this.decodedToken.exp);
+    // console.log(moment.now() >= this.decodedToken.exp)
 
     return !jwt.isTokenExpired(localStorage.getItem('auth_tkn') as string);
   }

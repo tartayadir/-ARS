@@ -59,7 +59,6 @@ public class CarController {
     public ResponseEntity<List<CarDTO>> getAllCars() {
 
         log.info("Http method - Get, all cars");
-        log.info("1");
 
         List<CarDTO> dtoList = carService.
                 findAll().

@@ -5,7 +5,7 @@
     <parent>
         <groupId>com.implemica</groupId>
         <artifactId>CarCatalog_</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>application</artifactId>

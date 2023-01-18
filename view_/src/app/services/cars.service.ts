@@ -39,7 +39,7 @@ export class CarsService {
 
   public deleteCar(carId: number, imageId: string) {
 
-    console.log("Http method - DELETE, car with id " + carId);
+    console.log("Http method - DELETE, car with id " + carId + " " + imageId);
 
     return this.http.delete<void>(`${this.apiServerURL}/car-catalog/${carId}`,{
       params: {
@@ -79,10 +79,6 @@ export class CarsService {
     return await this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).
     toPromise().
     catch(this.errorHandler.bind(this));
-    // return this.http.post<CarDTO>(`${this.apiServerURL}/car-catalog`, carDTO).pipe(
-    //   map(dto => this.converterDTO.CarDTOToCarEntity(dto)),
-    //   catchError(this.errorHandler.bind(this))
-    // );
   }
 
   private errorHandler(error: HttpErrorResponse) {
