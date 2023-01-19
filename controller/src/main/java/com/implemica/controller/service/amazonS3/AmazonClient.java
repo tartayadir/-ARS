@@ -24,8 +24,8 @@ public class AmazonClient {
 
     private final AmazonS3 s3client;
 
-//    private final String bucketName = "carcatalogcarsphotop";
-    private final String bucketName = "cars-storage-yaroslav-b.implemica.com";
+    private final static String bucketName = "carcatalogcarsphotop";
+//    private final String bucketName = "cars-storage-yaroslav-b.implemica.com";
 
     public void uploadFileTos3bucket(String fileName, MultipartFile multipartFile) throws InvalidImageTypeException {
 
@@ -41,6 +41,8 @@ public class AmazonClient {
 
         s3client.putObject(new PutObjectRequest(bucketName, fileName, file)
                 .withCannedAcl(CannedAccessControlList.PublicRead).withMetadata(objectMetadata));
+
+        file.delete();
     }
 
     public void deleteFileFromS3Bucket(String imageName) {
@@ -57,5 +59,9 @@ public class AmazonClient {
 
             throw new InvalidImageTypeException("Invalid image type.");
         }
+    }
+
+    public static String getBucketName() {
+        return bucketName;
     }
 }

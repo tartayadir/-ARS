@@ -19,11 +19,10 @@ public class AmazonConfig {
 //                .withCredentials(provider)
 //                .build();
 
-        AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
-        log.info("region : " + s3.getRegion());
+        //        log.info("region : " + s3.getRegion());
         //        return AmazonS3ClientBuilder.defaultClient();
 
-        return s3;
+        return AmazonS3ClientBuilder.defaultClient();
     }
 
 }

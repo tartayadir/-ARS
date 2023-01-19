@@ -13,19 +13,17 @@ import {CarBrands} from "../../../models/car/CarBrands";
 })
 export class CarDetailsPageComponent implements OnInit {
 
-  public testURL: string = "https://s3.eu-central-1.amazonaws.com/cars-storage-yaroslav-b.implemica.com/default-car-image.png";
-
   public car: Car  = {
     additionalOptions: []
   };
 
   constructor(private carService: CarsService, private activateRoute: ActivatedRoute,
               private titleService: Title
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     let id: number = this.activateRoute.snapshot.params['id'];
+    console.log("car id on details page : " + id)
 
     this.carService.getCar(id).subscribe(
       (response: Car) =>{
