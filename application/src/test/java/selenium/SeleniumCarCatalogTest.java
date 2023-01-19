@@ -5,6 +5,7 @@ import com.implemica.model.car.entity.CarBodyTypes;
 import com.implemica.model.car.entity.CarBrands;
 import com.implemica.model.car.entity.TransmissionBoxTypes;
 import com.utils.selenium.PageNavigation;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,17 +23,18 @@ import java.util.List;
 
 import static com.utils.CarsUtils.generateRandomCar;
 import static com.utils.selenium.ElementsUtils.*;
+import static com.utils.selenium.PageNavigation.threadSleep1Seconds;
 import static com.utils.selenium.SeleniumTestsUtils.*;
 import static com.utils.selenium.URLUtils.getHomePageURL;
 import static java.lang.String.format;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.Keys.ENTER;
 import static org.openqa.selenium.Keys.chord;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 @TestPropertySource(locations = "classpath:application.properties")
 @ActiveProfiles("test")
+@Slf4j
 public class SeleniumCarCatalogTest {
 
     private static WebDriverWait wait;
@@ -87,7 +89,7 @@ public class SeleniumCarCatalogTest {
         short year = 2015;
         Car addCar = Car.builder().
                 id(10L).
-                brand(CarBrands.AUDI).
+                brand(CarBrands.DAEWOO).
                 model("Klass E").
                 carBodyTypes(CarBodyTypes.SPORTS_CAR).
                 year(year).
@@ -176,6 +178,10 @@ public class SeleniumCarCatalogTest {
     }
 
     private static void fillFieldsEditForm(Car editCar, File editImage, int optionsNumber) {
+
+        wait.until(elementToBeClickable(id("model-input")));
+        threadSleep1Seconds();
+        threadSleep1Seconds();
 
         Select brandSelect = new Select(findWebElementById("brand-input"));
         Select carBodyTypeSelect = new Select(findWebElementById("car-body-type-input"));

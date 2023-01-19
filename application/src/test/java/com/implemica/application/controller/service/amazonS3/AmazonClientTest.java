@@ -31,13 +31,13 @@ class AmazonClientTest {
 
     private static final AmazonS3 s3client;
 
-    private static final String bucketName = "carcatalogcarsphotop";
-//    private static final String bucketName = "cars-storage-yaroslav-b.implemica.com";
-
+    private static final String bucketName;
 
     static {
+
         s3client = AmazonS3ClientBuilder.defaultClient();
         amazonClient = new AmazonClient(s3client);
+        bucketName = AmazonClient.getBucketName();
     }
 
     @Test

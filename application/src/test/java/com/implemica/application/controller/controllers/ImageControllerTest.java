@@ -47,8 +47,7 @@ public class ImageControllerTest {
 
     private static AmazonS3 s3client;
 
-    private static final String bucketName = "carcatalogcarsphotop";
-//    private final String bucketName = "cars-storage-yaroslav-b.implemica.com";
+    private static String bucketName;
 
     @Autowired
     private ImageController imageController;
@@ -65,6 +64,9 @@ public class ImageControllerTest {
 
     @BeforeEach
     void setUp() {
+
+        bucketName = AmazonClient.getBucketName();
+
         file = new MockMultipartFile(
                 "imageFile", fileName + expansion,
                 String.valueOf(IMAGE_JPEG),

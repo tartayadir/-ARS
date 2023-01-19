@@ -15,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.springframework.test.context.ActiveProfiles;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.test.context.TestPropertySource;
 
 import java.io.File;
@@ -23,22 +23,27 @@ import java.time.Year;
 import java.util.List;
 
 import static com.utils.selenium.ElementsUtils.*;
+import static com.utils.selenium.PageNavigation.threadSleep1Seconds;
 import static com.utils.selenium.SeleniumTestsUtils.*;
+import static com.utils.selenium.URLUtils.getUpdateCarPageURL;
 import static com.utils.spring.StringUtils.generateRandomString;
 import static com.utils.spring.StringUtils.generateRandomStringWithSpecialChars;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.Keys.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
 
 @Slf4j
-@ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application.properties")
 public class EditCarPage {
 
     private static PageNavigation pageNavigation;
 
     private static WebDriver driver;
+
+    private static WebDriverWait wait;
 
     private static String editCarPage;
 
@@ -106,8 +111,6 @@ public class EditCarPage {
     @BeforeAll
     static void beforeAll() {
 
-        System.getProperty("spring.profiles.active", "test");
-
         image1 = new File("src/test/resources/images/CatherineMCLAREN267912502.png");
         image2 = new File("src/test/resources/images/MCLARENCatherine943268122.png");
         text = new File("src/test/resources/files/text.txt");
@@ -150,23 +153,30 @@ public class EditCarPage {
         openWindow();
 
         driver = getDriver();
+        wait = getWait();
         pageNavigation = getPageNavigation();
 
         loginAdmin();
-
         addCar(exampleCar, image1);
 
-        pageNavigation.clickOnElement(format("car-image-%s-%s", exampleCar.getBrand().toString(), exampleCar.getModel()));
 
-        String detailsPrefixUrl = "http://localhost:4200/car-catalog/details/";
+        String carWebId = format("car-image-%s-%s", exampleCar.getBrand().toString(), exampleCar.getModel());
+        getWait().until(visibilityOfAllElementsLocatedBy(id(carWebId)));
+        pageNavigation.clickOnElement(carWebId);
+
+//        String detailsPrefixUrl = "http://localhost:4200/car-catalog/details/";
+        String detailsPrefixUrl = "https://cars-yaroslav-b.implemica.com/details/";
         long carId = Long.parseLong(driver.getCurrentUrl().substring(detailsPrefixUrl.length()));
-        editCarPage = "http://localhost:4200/car-catalog/update/" + carId;
+        editCarPage = getUpdateCarPageURL(carId);
     }
 
     @BeforeEach
     void setUp()  {
-        
+
         driver.get(editCarPage);
+        wait.until(elementToBeClickable(id("model-input")));
+        threadSleep1Seconds();
+        threadSleep1Seconds();
     }
 
     @AfterAll
@@ -388,6 +398,10 @@ public class EditCarPage {
 
     @Test
     void engineCapacityValidationMaxValue() {
+
+        wait.until(elementToBeClickable(id("model-input")));
+        threadSleep1Seconds();
+        threadSleep1Seconds();
 
         String exceptedErrorValidationMassage = "Engine capacity must be less than 15,0.";
         checkErrorValidationMassage("", engineCapacityInputErrorMassage);

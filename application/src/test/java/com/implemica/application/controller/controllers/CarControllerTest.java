@@ -63,7 +63,7 @@ class CarControllerTest {
 
     private static AmazonS3 s3client;
 
-    private static final String bucketName = "carcatalogcarsphotop";
+    private static String bucketName;
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -98,6 +98,8 @@ class CarControllerTest {
     @SneakyThrows
     @BeforeEach
     void setUp() {
+
+        bucketName = AmazonClient.getBucketName();
 
         mockMvc = MockMvcBuilders.
                 standaloneSetup(carController).
