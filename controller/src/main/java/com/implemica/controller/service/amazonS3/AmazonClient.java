@@ -24,8 +24,9 @@ public class AmazonClient {
 
     private final AmazonS3 s3client;
 
-    private final static String bucketName = "carcatalogcarsphotop";
-//    private final String bucketName = "cars-storage-yaroslav-b.implemica.com";
+//    private final static String bucketName = "carcatalogcarsphotop";
+    private final static String bucketName = "cars-storage-yaroslav-b.implemica.com";
+
 
     public void uploadFileTos3bucket(String fileName, MultipartFile multipartFile) throws InvalidImageTypeException {
 

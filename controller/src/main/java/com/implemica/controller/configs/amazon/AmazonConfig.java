@@ -13,15 +13,6 @@ public class AmazonConfig {
     @Bean
     public AmazonS3 s3() {
 
-//        InstanceProfileCredentialsProvider provider = new InstanceProfileCredentialsProvider(true);
-//        AmazonS3 s3 = AmazonS3ClientBuilder.standard()
-//                .withRegion("us-east-1")
-//                .withCredentials(provider)
-//                .build();
-
-        //        log.info("region : " + s3.getRegion());
-        //        return AmazonS3ClientBuilder.defaultClient();
-
         return AmazonS3ClientBuilder.defaultClient();
     }
 
