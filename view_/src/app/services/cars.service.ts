@@ -47,7 +47,6 @@ export class CarsService {
       }}).pipe(
       catchError(this.errorHandler.bind(this))
     );
-
   }
 
   public getCar(carId: number): Observable<Car> {
