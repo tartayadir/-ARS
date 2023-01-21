@@ -16,13 +16,18 @@ public class AmazonConfig {
     @Bean
     public AmazonS3 s3() {
 
-        AWSCredentialsProviderChain providerChain = new AWSCredentialsProviderChain(
-                InstanceProfileCredentialsProvider.getInstance(),
-                new ProfileCredentialsProvider()
-        );
+//        AWSCredentialsProviderChain providerChain = new AWSCredentialsProviderChain(
+//                InstanceProfileCredentialsProvider.getInstance(),
+//                new ProfileCredentialsProvider()
+//        );
+//
+//        return AmazonS3ClientBuilder.standard()
+//                .withCredentials(providerChain)
+//                .build();
 
         return AmazonS3ClientBuilder.standard()
-                .withCredentials(providerChain)
+                .withCredentials(new InstanceProfileCredentialsProvider(false))
+                .withRegion("us-east-1")
                 .build();
 //        return AmazonS3ClientBuilder.defaultClient();
     }
