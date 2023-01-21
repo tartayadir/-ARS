@@ -1,6 +1,7 @@
 package com.implemica.controller.configs.amazon;
 
 import com.amazonaws.auth.AWSCredentialsProviderChain;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.auth.InstanceProfileCredentialsProvider;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.services.s3.AmazonS3;
@@ -24,9 +25,9 @@ public class AmazonConfig {
 //        return AmazonS3ClientBuilder.standard()
 //                .withCredentials(providerChain)
 //                .build();
-
+//
         return AmazonS3ClientBuilder.standard()
-                .withCredentials(new InstanceProfileCredentialsProvider(false))
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
                 .withRegion("us-east-1")
                 .build();
 //        return AmazonS3ClientBuilder.defaultClient();
