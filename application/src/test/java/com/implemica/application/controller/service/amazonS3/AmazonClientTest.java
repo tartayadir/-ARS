@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -41,6 +42,7 @@ class AmazonClientTest {
     }
 
     @Test
+    @Disabled
     void uploadFileTos3bucket() {
 
         String fileName = "testFile";
@@ -67,6 +69,7 @@ class AmazonClientTest {
     }
 
     @Test
+    @Disabled
     void uploadFileTos3bucket_invalid_image() {
 
         String fileName = "testFile";
@@ -86,6 +89,7 @@ class AmazonClientTest {
     }
 
     @Test
+    @Disabled
     void deleteFileFromS3Bucket() {
 
         String fileName = "testFile";

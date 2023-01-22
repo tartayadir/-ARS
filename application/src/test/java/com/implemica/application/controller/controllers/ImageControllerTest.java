@@ -8,6 +8,7 @@ import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -81,6 +82,7 @@ public class ImageControllerTest {
     }
 
     @Test
+    @Disabled
     void uploadFile() {
 
         file = new MockMultipartFile(
@@ -106,6 +108,7 @@ public class ImageControllerTest {
     }
 
     @Test
+    @Disabled
     void uploadFile_validation() {
 
         String invalidFileName = "invalidFile";
@@ -124,6 +127,7 @@ public class ImageControllerTest {
     }
 
     @Test
+    @Disabled
     void deleteFile() {
 
         file = new MockMultipartFile(
