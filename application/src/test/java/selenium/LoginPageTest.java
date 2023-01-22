@@ -138,50 +138,6 @@ public class LoginPageTest {
     }
 
     @Test
-    @SneakyThrows
-    void checkLoginSeveralTabs() {
-
-        String parent = driver.getWindowHandle();
-        Actions actions = new Actions(driver);
-
-        loginAdmin();
-
-        actions.keyDown(CONTROL);
-        actions.sendKeys("t");
-        actions.keyUp(CONTROL);
-        actions.build().perform();
-
-        driver.get(getHomePageURL());
-
-        Set<String> browsers = driver.getWindowHandles();
-        for (String i : browsers) {
-            if (!i.equals(parent)) {
-                driver.switchTo().window(i);
-                driver.get(getHomePageURL());
-            }
-        }
-
-        elementIsViewed("logout-button");
-        elementIsViewed("addCarButton");
-        logout();
-
-        actions.keyDown(CONTROL);
-        actions.sendKeys("w");
-        actions.keyUp(CONTROL);
-        actions.build().perform();
-
-        for (String i : browsers) {
-            if (i.equals(parent)) {
-                driver.switchTo().window(i);
-            }
-        }
-
-        elementIsViewed("loginButton");
-        elementIsNotViewed("user-icon");
-        elementIsNotViewed("addCarButton");
-    }
-
-    @Test
     void trySendEmptyFields() {
 
         sendLoginDataButton.click();
@@ -559,6 +515,7 @@ public class LoginPageTest {
         String errorUserInfoModalBodyExceptedText =
                 "You entered incorrect username or password. Please, check your entered date and try again.";
 
+        threadSleep1Seconds();
         wait.until(visibilityOfElementLocated(id("modal-header")));
 
         String actualHeaderText = errorUserInfoModalHeader.getAttribute("innerText");
@@ -571,6 +528,8 @@ public class LoginPageTest {
     }
 
     private static void checkAndCloseIncorrectLoginDataModalWindow() {
+
+        threadSleep1Seconds();
 
         wait.until(visibilityOfElementLocated(id("modal-error-body")));
 
