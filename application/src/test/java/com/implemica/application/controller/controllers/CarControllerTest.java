@@ -1128,8 +1128,7 @@ class CarControllerTest {
     @Test
     void removeCar() {
 
-//        String fileName = "FileName";
-        String fileName =  "default-car-image";
+        String fileName = "FileName";
         MockMultipartFile file = new MockMultipartFile(
                 "imageId", fileName + ".jpeg",
                 String.valueOf(IMAGE_JPEG),
@@ -1155,21 +1154,20 @@ class CarControllerTest {
     }
 
     @Test
-    @Disabled
     void removeCar_default_image() throws Exception {
 
         String fileName = "default-car-image";
 
-//        S3Object s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
+        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
 
         mockMvc.perform(delete(format(getDeleteCarUri(id)))
                         .param("imageId", fileName)
                         .header(AUTHORIZATION, token)).
                 andExpect(status().isOk());
 
-//        s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
+        s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
 
         mockMvc.perform(delete(format(getDeleteCarUri(id)))).
                 andExpect(status().isForbidden());

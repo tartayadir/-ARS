@@ -42,7 +42,6 @@ class AmazonClientTest {
     }
 
     @Test
-    
     void uploadFileTos3bucket() {
 
         String fileName = "testFile";
@@ -69,7 +68,6 @@ class AmazonClientTest {
     }
 
     @Test
-    
     void uploadFileTos3bucket_invalid_image() {
 
         String fileName = "testFile";
@@ -89,7 +87,6 @@ class AmazonClientTest {
     }
 
     @Test
-    
     void deleteFileFromS3Bucket() {
 
         String fileName = "testFile";
