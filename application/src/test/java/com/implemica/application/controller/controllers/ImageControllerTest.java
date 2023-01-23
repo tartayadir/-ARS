@@ -82,7 +82,7 @@ public class ImageControllerTest {
     }
 
     @Test
-    @Disabled
+
     void uploadFile() {
 
         file = new MockMultipartFile(
@@ -108,7 +108,7 @@ public class ImageControllerTest {
     }
 
     @Test
-    @Disabled
+
     void uploadFile_validation() {
 
         String invalidFileName = "invalidFile";
@@ -127,7 +127,7 @@ public class ImageControllerTest {
     }
 
     @Test
-    @Disabled
+
     void deleteFile() {
 
         file = new MockMultipartFile(
