@@ -26,11 +26,11 @@ public class AmazonConfig {
 //                .withCredentials(providerChain)
 //                .build();
 //
-//        return AmazonS3ClientBuilder.standard()
-//                .withCredentials(new DefaultAWSCredentialsProviderChain())
-//                .withRegion("us-east-1")
-//                .build();
-        return AmazonS3ClientBuilder.defaultClient();
+        return AmazonS3ClientBuilder.standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion("us-east-1")
+                .build();
+//        return AmazonS3ClientBuilder.defaultClient();
     }
 
 }

@@ -56,7 +56,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("prod")
+@ActiveProfiles("integration-test")
 @Slf4j
 class CarControllerTest {
 

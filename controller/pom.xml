@@ -10,10 +10,6 @@
 
     <artifactId>controller</artifactId>
 
-<!--    <properties>-->
-<!--        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>-->
-<!--    </properties>-->
-
     <dependencies>
         <dependency>
             <groupId>com.implemica</groupId>

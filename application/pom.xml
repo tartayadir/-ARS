@@ -10,11 +10,6 @@
 
     <artifactId>application</artifactId>
 
-<!--    <properties>-->
-<!--        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>-->
-<!--        <maven.assembly.plugin.version>2.4</maven.assembly.plugin.version>-->
-<!--    </properties>-->
-
     <dependencies>
 
         <dependency>
@@ -22,6 +17,7 @@
             <artifactId>model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>com.implemica</groupId>
             <artifactId>controller</artifactId>

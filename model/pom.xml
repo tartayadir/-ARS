@@ -11,9 +11,4 @@
 
     <artifactId>model</artifactId>
 
-<!--    <properties>-->
-<!--        <useIncrementalCompilation>false</useIncrementalCompilation>-->
-<!--&lt;!&ndash;        <spring-boot.repackage.skip>true</spring-boot.repackage.skip>&ndash;&gt;-->
-<!--    </properties>-->
-
 </project>

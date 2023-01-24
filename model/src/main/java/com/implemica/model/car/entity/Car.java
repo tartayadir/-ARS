@@ -37,7 +37,7 @@ public class Car implements Serializable {
     private String model;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="car_body_types")
+    @Column(name="body_types")
     private CarBodyTypes carBodyTypes;
 
     @Column(name="year")
@@ -50,15 +50,15 @@ public class Car implements Serializable {
     @Column(name="engine_capacity")
     private double engineCapacity;
 
-    @Column(name = "full_description", columnDefinition = "text")
+    @Column(name="full_description", columnDefinition = "text")
     private String fullDescription;
 
-    @Column(name = "short_description",columnDefinition = "text")
+    @Column(name="short_description",columnDefinition = "text")
     private String shortDescription;
 
     @ElementCollection
     private List<String> additionalOptions;
 
-    @Column(name = "image_file_name")
+    @Column(name="image_file_name")
     private String imageFileName;
 }
