@@ -1,5 +1,6 @@
 package com.implemica.application.controller.service.amazonS3;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
@@ -36,7 +37,11 @@ class AmazonClientTest {
 
     static {
 
-        s3client = AmazonS3ClientBuilder.defaultClient();
+        s3client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion("us-east-1")
+                .build();
+        
         amazonClient = new AmazonClient(s3client);
         bucketName = AmazonClient.getBucketName();
     }
