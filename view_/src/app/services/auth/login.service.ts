@@ -6,7 +6,6 @@ import {map} from 'rxjs/operators';
 import {LoginInfo} from "../../models/auth/LoginInfo";
 import {JwtResponse} from "../../models/auth/JwtResponse";
 import {ErrorService} from "../error/error.service";
-import * as moment from 'moment';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {environment} from "../../../environments/environment";
 
