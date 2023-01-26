@@ -32,7 +32,6 @@
     "jquery": "3.6.1",
     "mdb-angular-ui-kit": "^3.0.0",
     "mdb-ui-kit": "^5.0.0",
-    "ngx-bootstrap": "^10.2.0",
     "ngx-image-cropper": "^6.2.2",
     "rxjs": "~7.5.0",
     "svg": "^0.1.0",
