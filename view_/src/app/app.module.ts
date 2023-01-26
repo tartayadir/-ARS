@@ -85,7 +85,7 @@ const appRoutes: Routes = [
     ToTopButtonComponent
   ],
     imports: [
-        TooltipModule.forRoot(),
+        TooltipModule,
         BrowserModule,
         HttpClientModule,
         RouterModule.forRoot(appRoutes, {onSameUrlNavigation: `reload`}),
@@ -110,7 +110,7 @@ const appRoutes: Routes = [
         MdbTooltipModule,
         MdbValidationModule,
         ImageCropperModule,
-        AngularSvgIconModule.forRoot(),
+        AngularSvgIconModule,
         MatChipsModule,
         MatIconModule,
         MatFormFieldModule,
