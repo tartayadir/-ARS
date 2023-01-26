@@ -56,5 +56,10 @@
     "options": {
       "optimization": true
     }
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
   }
 }
