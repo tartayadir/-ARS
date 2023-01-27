@@ -27,7 +27,6 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .securityContexts(Lists.newArrayList(securityContext()))
