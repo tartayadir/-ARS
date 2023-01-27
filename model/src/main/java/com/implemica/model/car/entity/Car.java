@@ -37,7 +37,7 @@ public class Car implements Serializable {
     private String model;
 
     @Enumerated(EnumType.STRING)
-    @Column(name="body_types")
+    @Column(name="car_body_types")
     private CarBodyTypes carBodyTypes;
 
     @Column(name="year")

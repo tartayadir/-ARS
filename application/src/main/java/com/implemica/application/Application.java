@@ -18,10 +18,7 @@ public class Application {
 
     public static void main(String[] args) {
 
-        log.info("" + System.getProperty("spring.datasource.password"));
         SpringApplication.run(Application.class, args);
-
-
     }
 
 }
