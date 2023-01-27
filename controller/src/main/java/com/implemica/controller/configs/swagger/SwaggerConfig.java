@@ -1,6 +1,7 @@
 package com.implemica.controller.configs.swagger;
 
 import com.beust.jcommander.internal.Lists;
+import com.implemica.model.car.entity.Car;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -26,6 +27,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
+
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .securityContexts(Lists.newArrayList(securityContext()))
