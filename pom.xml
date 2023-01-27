@@ -20,6 +20,7 @@
     <properties>
         <java.version>11</java.version>
         <spring.profiles.active>prod</spring.profiles.active>
+        <start-class>com.implemica.application.Application</start-class>
     </properties>
 
     <dependencies>
