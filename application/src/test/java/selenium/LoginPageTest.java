@@ -530,6 +530,7 @@ public class LoginPageTest {
     private static void checkAndCloseIncorrectLoginDataModalWindow() {
 
         threadSleep1Seconds();
+        threadSleep1Seconds();
 
         wait.until(visibilityOfElementLocated(id("modal-error-body")));
 
