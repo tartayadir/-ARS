@@ -8,14 +8,12 @@ import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -83,27 +81,27 @@ public class ImageControllerTest {
 
     @Test
     void uploadFile() {
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkUploadFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".gif",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkUploadFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".png",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkUploadFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkUploadFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkUploadFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkUploadFile(file);
     }
 
     @Test
@@ -127,26 +125,26 @@ public class ImageControllerTest {
     @Test
     void deleteFile() {
 
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".gif",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".png",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
     }
 
     @SneakyThrows
