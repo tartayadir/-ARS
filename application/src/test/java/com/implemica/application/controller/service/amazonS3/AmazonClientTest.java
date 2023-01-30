@@ -8,7 +8,6 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -48,28 +47,28 @@ class AmazonClientTest {
 
     @Test
     void uploadFileTos3bucket() {
-//
-//        String fileName = "testFile";
-//        MultipartFile file = new MockMultipartFile(
-//                "imageFile", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        uploadAndCheckFile(file, fileName);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".gif",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        uploadAndCheckFile(file, fileName);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".png",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        uploadAndCheckFile(file, fileName);
+
+        String fileName = "testFile";
+        MultipartFile file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        uploadAndCheckFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        uploadAndCheckFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        uploadAndCheckFile(file, fileName);
     }
 
     @Test
@@ -94,27 +93,27 @@ class AmazonClientTest {
     @Test
     void deleteFileFromS3Bucket() {
 
-//        String fileName = "testFile";
-//        MultipartFile file = new MockMultipartFile(
-//                "imageFile", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file, fileName);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".gif",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file, fileName);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".png",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file, fileName);
+        String fileName = "testFile";
+        MultipartFile file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file, fileName);
     }
 
     private static void uploadAndCheckFile(MultipartFile multipartFile, String fileName) {

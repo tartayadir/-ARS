@@ -1,5 +1,6 @@
 package com.utils.selenium;
 
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -45,6 +46,16 @@ public class SeleniumTestsUtils {
     private static WebDriver driver;
     private static WebDriverWait wait;
 
+    private static final AmazonS3 s3client;
+
+    static {
+
+        s3client = AmazonS3ClientBuilder.standard()
+                .withCredentials(new DefaultAWSCredentialsProviderChain())
+                .withRegion("us-east-1")
+                .build();
+    }
+
     public static void setFieldsSeleniumTestsUtils(WebDriver driver, WebDriverWait wait, PageNavigation pageNavigation) {
 
         SeleniumTestsUtils.driver = driver;
@@ -71,14 +82,14 @@ public class SeleniumTestsUtils {
 
         WebElement image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
         elementIsViewed(image);
-//        checkImage(image, imageFile);
+        checkImage(image, imageFile);
 
         pageNavigation.clickOnElement(format("car-image-%s-%s-a", carBrandEnumValue, carModel));
 
         wait.until(visibilityOfElementLocated(id("car-engine-capacity")));
         image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
         elementIsViewed(image);
-//        checkImage(image, imageFile);
+        checkImage(image, imageFile);
 
         checkElementInnerText("Body type : " + car.getCarBodyTypes().getStringValue(), "car-body-type");
         checkElementInnerText("Transmission type : " + toTitleCase(car.getTransmissionBoxTypes().getStringValue()), "car-transmission-type");
@@ -100,11 +111,10 @@ public class SeleniumTestsUtils {
 //        String bucketPrefix = "https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/";
         String bucketPrefix = "https://s3.amazonaws.com/cars-storage-yaroslav-b.implemica.com/";
 
-        AmazonS3 s3 = AmazonS3ClientBuilder.defaultClient();
         String src = actualImageWebElement.getAttribute("src");
         String imageName = src.replaceAll(bucketPrefix, "");
 
-        S3Object s3Object = s3.getObject(new GetObjectRequest(bucketName, imageName));
+        S3Object s3Object = s3client.getObject(new GetObjectRequest(bucketName, imageName));
         InputStream in = s3Object.getObjectContent();
         File actualImage = File.createTempFile("s3Image" + imageName, "");
         Files.copy(in, actualImage.toPath(), StandardCopyOption.REPLACE_EXISTING);

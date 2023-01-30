@@ -17,17 +17,14 @@ import com.implemica.model.car.entity.TransmissionBoxTypes;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -1127,52 +1124,52 @@ class CarControllerTest {
 
     @Test
     void removeCar() {
-//
-//        String fileName = "FileName";
-//        MockMultipartFile file = new MockMultipartFile(
-//                "imageId", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkRemoveCar(1L, fileName, file);
-//        checkRemoveCar(-1L, fileName, file);
-//        checkRemoveCar(2L, fileName, file);
-//        checkRemoveCar(-2L, fileName, file);
-//        checkRemoveCar(0L, fileName, file);
-//        checkRemoveCar(MAX_VALUE, fileName, file);
-//        checkRemoveCar(MAX_VALUE - 1, fileName, file);
-//        checkRemoveCar(MIN_VALUE, fileName, file);
-//        checkRemoveCar(MIN_VALUE + 1, fileName, file);
-//        checkRemoveCar(22_525L, fileName, file);
-//        checkRemoveCar(192L, fileName, file);
-//        checkRemoveCar(99L, fileName, file);
-//        checkRemoveCar(4_533L, fileName, file);
-//        checkRemoveCar(11L, fileName, file);
-//        checkRemoveCar(5L, fileName, file);
-//        checkRemoveCar(7_877L, fileName, file);
-//        checkRemoveCar(id, fileName, file);
+
+        String fileName = "FileName";
+        MockMultipartFile file = new MockMultipartFile(
+                "imageId", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkRemoveCar(1L, fileName, file);
+        checkRemoveCar(-1L, fileName, file);
+        checkRemoveCar(2L, fileName, file);
+        checkRemoveCar(-2L, fileName, file);
+        checkRemoveCar(0L, fileName, file);
+        checkRemoveCar(MAX_VALUE, fileName, file);
+        checkRemoveCar(MAX_VALUE - 1, fileName, file);
+        checkRemoveCar(MIN_VALUE, fileName, file);
+        checkRemoveCar(MIN_VALUE + 1, fileName, file);
+        checkRemoveCar(22_525L, fileName, file);
+        checkRemoveCar(192L, fileName, file);
+        checkRemoveCar(99L, fileName, file);
+        checkRemoveCar(4_533L, fileName, file);
+        checkRemoveCar(11L, fileName, file);
+        checkRemoveCar(5L, fileName, file);
+        checkRemoveCar(7_877L, fileName, file);
+        checkRemoveCar(id, fileName, file);
     }
 
     @Test
     void removeCar_default_image() throws Exception {
-//
-//        String fileName = "default-car-image";
-//
-//        S3Object s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))
-//                        .param("imageId", fileName)
-//                        .header(AUTHORIZATION, token)).
-//                andExpect(status().isOk());
-//
-//        s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
-//                andExpect(status().isForbidden());
-//
-//        verify(carService, times(1)).deleteById(id);
+
+        String fileName = "default-car-image";
+
+        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))
+                        .param("imageId", fileName)
+                        .header(AUTHORIZATION, token)).
+                andExpect(status().isOk());
+
+        s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
+                andExpect(status().isForbidden());
+
+        verify(carService, times(1)).deleteById(id);
     }
 
     @Test
