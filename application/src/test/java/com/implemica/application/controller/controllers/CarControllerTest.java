@@ -1299,9 +1299,9 @@ class CarControllerTest {
 
        amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
         doNothing().when(carService).deleteById(deleteCarID);
-//
+
        S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
-//
+
        assertEquals(deleteCarImageId, s3Object.getKey());
 
         mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))
