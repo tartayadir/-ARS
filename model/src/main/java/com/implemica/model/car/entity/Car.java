@@ -1,5 +1,8 @@
 package com.implemica.model.car.entity;
 
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -31,21 +34,21 @@ public class Car implements Serializable {
 
     @Column(name="brand")
     @Enumerated(EnumType.STRING)
-    private CarBrands brand;
+    private CarBrand brand;
 
     @Column(name="model")
     private String model;
 
     @Enumerated(EnumType.STRING)
     @Column(name="car_body_types")
-    private CarBodyTypes carBodyTypes;
+    private CarBodyType carBodyTypes;
 
     @Column(name="year")
     private short year;
 
     @Enumerated(EnumType.STRING)
     @Column(name="transmission_box_types")
-    private TransmissionBoxTypes transmissionBoxTypes;
+    private TransmissionBoxType transmissionBoxTypes;
 
     @Column(name="engine_capacity")
     private double engineCapacity;

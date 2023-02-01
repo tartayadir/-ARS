@@ -369,6 +369,19 @@ public class LoginPageTest {
 
         String firstAdminPassword = getFirstAdminPassword();
 
+        checkIncorrectLoginData("admin ", firstAdminPassword);
+        checkIncorrectLoginData(" admin", firstAdminPassword);
+        checkIncorrectLoginData("admin               ", firstAdminPassword);
+        checkIncorrectLoginData("         admin", firstAdminPassword);
+        checkIncorrectLoginData("adm      in", firstAdminPassword);
+        checkIncorrectLoginData("a dmin", firstAdminPassword);
+        checkIncorrectLoginData("adm in", firstAdminPassword);
+        checkIncorrectLoginData("ad  min", firstAdminPassword);
+        checkIncorrectLoginData("a  dmin", firstAdminPassword);
+        checkIncorrectLoginData("adm in", firstAdminPassword);
+        checkIncorrectLoginData("adm   in", firstAdminPassword);
+        checkIncorrectLoginData("ad min", firstAdminPassword);
+
         checkIncorrectLoginData("damin", firstAdminPassword);
         checkIncorrectLoginData("madin", firstAdminPassword);
         checkIncorrectLoginData("iadmn", firstAdminPassword);
@@ -424,6 +437,24 @@ public class LoginPageTest {
         checkIncorrectLoginData(firstAdminUsername, "AdMIN");
         checkIncorrectLoginData(firstAdminUsername, "ADmIN");
         checkIncorrectLoginData(firstAdminUsername, "ADMiN");
+
+        checkIncorrectLoginData(firstAdminUsername, "a dmin");
+        checkIncorrectLoginData(firstAdminUsername, "ad min");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "admi n");
+        checkIncorrectLoginData(firstAdminUsername, "admin ");
+        checkIncorrectLoginData(firstAdminUsername, " admin");
+        checkIncorrectLoginData(firstAdminUsername, "  a  d  m in");
+        checkIncorrectLoginData(firstAdminUsername, "admi n");
+        checkIncorrectLoginData(firstAdminUsername, "a dm in");
+        checkIncorrectLoginData(firstAdminUsername, "a dmin  ");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "adm i  n");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "   adm in");
+        checkIncorrectLoginData(firstAdminUsername, "a  dm  in");
+        checkIncorrectLoginData(firstAdminUsername, "           admin");
+        checkIncorrectLoginData(firstAdminUsername, "admin                 ");
 
         checkIncorrectLoginData(firstAdminUsername, "password");
         checkIncorrectLoginData(firstAdminUsername, "123456789");

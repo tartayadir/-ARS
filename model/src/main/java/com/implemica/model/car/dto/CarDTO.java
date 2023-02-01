@@ -1,8 +1,8 @@
 package com.implemica.model.car.dto;
 
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import com.implemica.model.enum_validators.ValueOfEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -28,9 +28,9 @@ public class CarDTO implements Serializable {
     private Long id;
 
     @ApiModelProperty(name = "Car brand", position = 2, example = "MAZDA",
-            dataType = "com.implemica.model.car.entity.CarBrands",
+            dataType = "com.implemica.model.car.enums.CarBrand",
             notes = "Car brand refers to the basic concept. Otherwise, can be called as a brand or trademark.")
-    @ValueOfEnum(enumClass = CarBrands.class, message = "Car brand is invalid.")
+    @ValueOfEnum(enumClass = CarBrand.class, message = "Car brand is invalid.")
     @NotEmpty(message = "Brand is required and cannot be empty or null.")
     private String brand;
 
@@ -42,8 +42,8 @@ public class CarDTO implements Serializable {
     private String model;
 
     @ApiModelProperty(notes = "It is an element of the car design that determines the size, type and capacity of the car to carry goods and passengers.",
-            position = 4, example = "PICKUP", dataType = "com.implemica.model.car.entity.CarBodyTypes")
-    @ValueOfEnum(enumClass = CarBodyTypes.class, message = "Car bode type is invalid.")
+            position = 4, example = "PICKUP", dataType = "com.implemica.model.car.enums.CarBodyType")
+    @ValueOfEnum(enumClass = CarBodyType.class, message = "Car bode type is invalid.")
     @NotEmpty(message = "Car body type is required and cannot be empty or null.")
     private String carBodyTypes;
 
@@ -53,8 +53,8 @@ public class CarDTO implements Serializable {
     private Short year;
 
     @ApiModelProperty(notes = "is a collection of different units and mechanisms that transmit torque from the engine to the driving wheels and change it in size and direction.", position = 6, example = "ROBOTIC",
-            dataType = "com.implemica.model.car.entity.TransmissionBoxTypes")
-    @ValueOfEnum(enumClass = TransmissionBoxTypes.class, message = "Transmission box type is invalid.")
+            dataType = "com.implemica.model.car.enums.TransmissionBoxType")
+    @ValueOfEnum(enumClass = TransmissionBoxType.class, message = "Transmission box type is invalid.")
     @NotEmpty(message = "Transmission box type is required and cannot be empty or null.")
     private String transmissionBoxTypes;
 

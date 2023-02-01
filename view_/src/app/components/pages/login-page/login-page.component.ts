@@ -19,7 +19,7 @@ export class LoginPageComponent {
 
   mouseIsOver: boolean = true;
   trySubmitted: boolean = false;
-  regex: RegExp = new RegExp("^[a-zA-z0-9_]+$");
+  regex: RegExp = new RegExp("^[a-zA-z0-9_ ]+$");
 
   constructor(private loginService: LoginService,
               private router: Router,

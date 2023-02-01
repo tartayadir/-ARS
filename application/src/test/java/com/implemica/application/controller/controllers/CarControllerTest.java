@@ -9,11 +9,12 @@ import com.implemica.controller.exceptions.NoSuchCarException;
 import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import com.implemica.controller.service.car.service.CarService;
+import com.implemica.controller.utils.ConverterDTO;
 import com.implemica.model.car.dto.CarDTO;
 import com.implemica.model.car.entity.Car;
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,9 +31,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.servlet.Filter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
-import static com.utils.CarsUtils.generateRandomCar;
+import static com.utils.CarsUtils.*;
 import static com.utils.spring.AuthTestUtils.getAdminToken;
 import static com.utils.spring.StringUtils.generateRandomString;
 import static com.utils.spring.URIUtils.*;
@@ -68,13 +70,9 @@ class CarControllerTest {
     @MockBean
     private static CarService carService;
 
-    private static List<Car> cars;
-
     private static List<CarDTO> carDTOs;
 
     private static Car car;
-
-    private static Car carEntity;
 
     private static CarDTO carDTO;
 
@@ -99,7 +97,6 @@ class CarControllerTest {
 
         log.info("" + System.getProperty("spring.datasource.password"));
 
-
         bucketName = AmazonClient.getBucketName();
 
         mockMvc = MockMvcBuilders.
@@ -111,48 +108,6 @@ class CarControllerTest {
         short year1 = 2019;
         short year2 = 2009;
         short year3 = 2021;
-
-        cars = List.of(
-                Car.builder().
-                        id(1L).
-                        brand(CarBrands.PORSCHE).
-                        model("Model 11").
-                        carBodyTypes(CarBodyTypes.CONVERTIBLE).
-                        year(year1).
-                        transmissionBoxTypes(TransmissionBoxTypes.ROBOTIC).
-                        engineCapacity(3.4).
-                        shortDescription("Short description 1").
-                        fullDescription("Full description 1").
-                        additionalOptions(List.of("Option 1", "Option 2", "option 3")).
-                        imageFileName("Image file 1").
-                        build(),
-                Car.builder().
-                        id(2L).
-                        brand(CarBrands.NISSAN).
-                        model("Model 1").
-                        carBodyTypes(CarBodyTypes.PICKUP).
-                        year(year2).
-                        transmissionBoxTypes(TransmissionBoxTypes.MECHANICAL).
-                        engineCapacity(5.4).
-                        shortDescription("Short description 1").
-                        fullDescription("Full description 1").
-                        additionalOptions(List.of("Option 1", "Option 2", "option 3")).
-                        imageFileName("Image file 1").
-                        build(),
-                Car.builder().
-                        id(3L).
-                        brand(CarBrands.ROLLS_ROYCE).
-                        model("Model 1").
-                        carBodyTypes(CarBodyTypes.HATCHBACK).
-                        year(year3).
-                        transmissionBoxTypes(TransmissionBoxTypes.VARIATIONAL).
-                        engineCapacity(1.3).
-                        shortDescription("Short description 1").
-                        fullDescription("Full description 1").
-                        additionalOptions(List.of("Option 1", "Option 2", "option 3")).
-                        imageFileName("Image file 1").
-                        build()
-        );
 
         carDTOs = List.of(
                 CarDTO.builder().
@@ -199,11 +154,11 @@ class CarControllerTest {
         short year = 2012;
         car = Car.builder().
                 id(10L).
-                brand(CarBrands.ALFA).
+                brand(CarBrand.ALFA).
                 model("Model 1").
-                carBodyTypes(CarBodyTypes.SPORTS_CAR).
+                carBodyTypes(CarBodyType.SPORTS_CAR).
                 year(year).
-                transmissionBoxTypes(TransmissionBoxTypes.AUTOMATIC).
+                transmissionBoxTypes(TransmissionBoxType.AUTOMATIC).
                 engineCapacity(5.4).
                 shortDescription("Short description 1 Short description 1 Short description 1Short dddddd " +
                         "Short description 1 Short description 1 Short description 1Short description fds " +
@@ -258,35 +213,6 @@ class CarControllerTest {
                 imageFileId("Image file 1").
                 build();
 
-        carEntity = Car.builder().
-                id(10L).
-                brand(CarBrands.ALFA).
-                model("Model 1").
-                carBodyTypes(CarBodyTypes.SPORTS_CAR).
-                year(year).
-                transmissionBoxTypes(TransmissionBoxTypes.AUTOMATIC).
-                engineCapacity(5.4).
-                shortDescription("Short description 1 Short description 1 Short description 1Short dddddd " +
-                        "Short description 1 Short description 1 Short description 1Short description fds " +
-                        " 1Short description 1 Short description 1 Short description 1Short description 1 " +
-                        " 1Short description 1 Short description 1 Short description 1Short description 1 " +
-                        " 1Short description 1 Short description 1 Short description 1Short description 1 " +
-                        "Short description 1 Short description 1Short description 1 Short description 1 S "
-                ).
-                fullDescription( "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1" +
-                        "Full description 1 Full description 1 Full description 1Full description 1"
-                ).
-                additionalOptions(List.of("Option 1", "Option 2", "option 3")).
-                imageFileName("Image file 1").
-                build();
 
         carDTO = CarDTO.builder().
                 id(10L).
@@ -325,8 +251,30 @@ class CarControllerTest {
     @Test
     void addCar() {
 
-
-        checkAddCar(carDTO, carEntity);
+        checkAddCar(carDTO);
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
+        checkAddCar(generateRandomCarDto());
     }
 
     @Test
@@ -688,7 +636,30 @@ class CarControllerTest {
     @Test
     void updateCar() {
 
-        checkUpdateCar(carDTO, carEntity);
+        checkUpdateCar(carDTO);
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
+        checkUpdateCar(generateRandomCarDto());
     }
 
     @Test
@@ -1076,7 +1047,11 @@ class CarControllerTest {
     @Test
     public void getAllCars() {
 
-        checkGetAllCars(carDTOs, cars);
+        checkGetAllCars(carDTOs);
+        checkGetAllCars(generateRandomCarDTOList());
+        checkGetAllCars(generateRandomCarDTOList());
+        checkGetAllCars(generateRandomCarDTOList());
+        checkGetAllCars(generateRandomCarDTOList());
     }
 
     @Test
@@ -1153,23 +1128,23 @@ class CarControllerTest {
     @Test
     void removeCar_default_image() throws Exception {
 
-//        String fileName = "default-car-image";
-//
-//        S3Object s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))
-//                        .param("imageId", fileName)
-//                        .header(AUTHORIZATION, token)).
-//                andExpect(status().isOk());
-//
-//        s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
-//                andExpect(status().isForbidden());
-//
-//        verify(carService, times(1)).deleteById(id);
+        String fileName = "default-car-image";
+
+        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))
+                        .param("imageId", fileName)
+                        .header(AUTHORIZATION, token)).
+                andExpect(status().isOk());
+
+        s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
+                andExpect(status().isForbidden());
+
+        verify(carService, times(1)).deleteById(id);
     }
 
     @Test
@@ -1187,7 +1162,9 @@ class CarControllerTest {
     }
 
     @SneakyThrows
-    private static void checkGetAllCars(List<CarDTO> carDTOs, List<Car> serviceCarList) {
+    private static void checkGetAllCars(List<CarDTO> carDTOs) {
+
+        List<Car> serviceCarList = carDTOs.stream().map(ConverterDTO::dtoToCarEntity).collect(Collectors.toList());
 
         when(carService.findAll()).thenReturn(serviceCarList);
         String exceptedJSON = objectMapper.writeValueAsString(carDTOs);
@@ -1233,9 +1210,12 @@ class CarControllerTest {
     }
 
     @SneakyThrows
-    private static void checkAddCar(CarDTO carDTO, Car serviceCar) {
+    private static void checkAddCar(CarDTO carDTO) {
 
-        when(carService.save(any(Car.class))).thenReturn(serviceCar);
+        Car serviceCar = ConverterDTO.dtoToCarEntity(carDTO);
+        Car returnServiceCar = ConverterDTO.dtoToCarEntity(carDTO);
+
+        when(carService.save(any(Car.class))).thenReturn(returnServiceCar);
         String requestJSON = objectMapper.writeValueAsString(carDTO);
         String responseJSON = objectMapper.writeValueAsString(carDTO);
 
@@ -1264,7 +1244,10 @@ class CarControllerTest {
     }
 
     @SneakyThrows
-    private static void checkUpdateCar(CarDTO carDTO, Car serviceCar) {
+    private static void checkUpdateCar(CarDTO carDTO) {
+
+        Car serviceCar = ConverterDTO.dtoToCarEntity(carDTO);
+        Car returnServiceCar = ConverterDTO.dtoToCarEntity(carDTO);
 
         when(carService.update(any(Car.class))).thenReturn(serviceCar);
         String requestJSON = objectMapper.writeValueAsString(carDTO);
@@ -1297,26 +1280,26 @@ class CarControllerTest {
     @SneakyThrows
     private static void checkRemoveCar(Long deleteCarID, String deleteCarImageId, MockMultipartFile image) {
 
-//       amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
-//        doNothing().when(carService).deleteById(deleteCarID);
-////
-//       S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
+       amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
+        doNothing().when(carService).deleteById(deleteCarID);
 //
-//       assertEquals(deleteCarImageId, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))
-//                        .param("imageId", deleteCarImageId)
-//                        .header(AUTHORIZATION, token)).
-//                andExpect(status().isOk());
-//
-//       assertThatThrownBy(() -> s3client.getObject(CarControllerTest.bucketName, deleteCarImageId)).
-//               isInstanceOf(AmazonS3Exception.class);
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))).
-//                andExpect(status().isForbidden());
-//
-//        verify(carService, times(1)).deleteById(deleteCarID);
-//        clearInvocations(carService);
+       S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
+
+       assertEquals(deleteCarImageId, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))
+                        .param("imageId", deleteCarImageId)
+                        .header(AUTHORIZATION, token)).
+                andExpect(status().isOk());
+
+       assertThatThrownBy(() -> s3client.getObject(CarControllerTest.bucketName, deleteCarImageId)).
+               isInstanceOf(AmazonS3Exception.class);
+
+        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))).
+                andExpect(status().isForbidden());
+
+        verify(carService, times(1)).deleteById(deleteCarID);
+        clearInvocations(carService);
     }
 
     @SneakyThrows

@@ -1,9 +1,6 @@
-package com.implemica.model.car.entity;
+package com.implemica.model.car.enums;
 
-import java.util.List;
-import java.util.Random;
-
-public enum CarBrands {
+public enum CarBrand {
     AUDI("Audi"), ACURA("Acura"), ALFA("Alfa"), ROMEO("Romeo"),
     ASTON_MARTIN("Aston Martin"), BENTLEY("Bentley"), BYD("BYD"), BMW("BMW"),
     BRILLIANCE("Brilliance"), BUICK("Buick"), BUGATTI("Bugatti"),
@@ -29,19 +26,11 @@ public enum CarBrands {
     
     private final String stringValue;
 
-    CarBrands(String stringValue) {
+    CarBrand(String stringValue) {
         this.stringValue = stringValue;
     }
     
     public String getStringValue(){
         return stringValue;
-    }
-
-    private static final List<CarBrands> VALUES = List.of(values());
-    private static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
-
-    public static CarBrands getRandomCarBrand()  {
-        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

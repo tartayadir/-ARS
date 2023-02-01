@@ -1,9 +1,9 @@
 package selenium;
 
 import com.implemica.model.car.entity.Car;
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import com.utils.selenium.PageNavigation;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
@@ -118,11 +118,11 @@ public class EditCarPage {
         short year = 2013;
         exampleCar = Car.builder().
                 id(10L).
-                brand(CarBrands.GENESIS).
+                brand(CarBrand.GENESIS).
                 model("RX 8").
-                carBodyTypes(CarBodyTypes.PICKUP).
+                carBodyTypes(CarBodyType.PICKUP).
                 year(year).
-                transmissionBoxTypes(TransmissionBoxTypes.AUTOMATIC).
+                transmissionBoxTypes(TransmissionBoxType.AUTOMATIC).
                 engineCapacity(5.4).
                 shortDescription("The Mazda RX-8 is a sports car manufactured by Japanese automobile manufacturer Mazda" +
                         " between 2002 and 2012. It was first shown in 2001 at the North American International. The " +

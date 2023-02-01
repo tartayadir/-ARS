@@ -154,7 +154,7 @@ public class CarController {
     })
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<CarDTO> removeCar(@Parameter(description = "ID of car that needs to be deleted.")
+    public ResponseEntity<Void> removeCar(@Parameter(description = "ID of car that needs to be deleted.")
                                                 @PathVariable Long id,
                                             @Parameter(description = "name of mage file that has car needs to be deleted")
                                             @RequestParam String imageId) throws NoSuchCarException {

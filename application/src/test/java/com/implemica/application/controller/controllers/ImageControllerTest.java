@@ -125,46 +125,46 @@ public class ImageControllerTest {
     @Test
     void deleteFile() {
 
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".jpeg",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".gif",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
-//
-//        file = new MockMultipartFile(
-//                "imageFile", fileName + ".png",
-//                String.valueOf(IMAGE_JPEG),
-//                "123".getBytes());
-//
-//        checkDeleteFile(file);
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".jpeg",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".gif",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
+
+        file = new MockMultipartFile(
+                "imageFile", fileName + ".png",
+                String.valueOf(IMAGE_JPEG),
+                "123".getBytes());
+
+        checkDeleteFile(file);
     }
 
     @SneakyThrows
     private static void checkUploadFile(MockMultipartFile uploadFile) {
 
-//        mockMvc.perform(multipart("/image/{imageName}", ImageControllerTest.fileName).
-//                        file(uploadFile).header(AUTHORIZATION, token)).
-//                andExpect(status().isCreated()).
-//                andReturn();
-//
-//        mockMvc.perform(multipart("/image/{imageName}", ImageControllerTest.fileName).
-//                        file(uploadFile)).
-//                andExpect(status().isForbidden()).
-//                andReturn();
-//
-//        S3Object s3Object = s3client.getObject(bucketName, ImageControllerTest.fileName);
-//
-//        assertEquals(ImageControllerTest.fileName, s3Object.getKey());
-//
-//        s3client.deleteObject(bucketName, ImageControllerTest.fileName);
+        mockMvc.perform(multipart("/image/{imageName}", ImageControllerTest.fileName).
+                        file(uploadFile).header(AUTHORIZATION, token)).
+                andExpect(status().isCreated()).
+                andReturn();
+
+        mockMvc.perform(multipart("/image/{imageName}", ImageControllerTest.fileName).
+                        file(uploadFile)).
+                andExpect(status().isForbidden()).
+                andReturn();
+
+        S3Object s3Object = s3client.getObject(bucketName, ImageControllerTest.fileName);
+
+        assertEquals(ImageControllerTest.fileName, s3Object.getKey());
+
+        s3client.deleteObject(bucketName, ImageControllerTest.fileName);
     }
 
     @SneakyThrows

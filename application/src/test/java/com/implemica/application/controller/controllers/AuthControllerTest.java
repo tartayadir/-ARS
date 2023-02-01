@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -116,6 +115,19 @@ public class AuthControllerTest {
 
         String firstAdminPassword = getFirstAdminPassword();
 
+        checkIncorrectLoginData("admin ", firstAdminPassword);
+        checkIncorrectLoginData(" admin", firstAdminPassword);
+        checkIncorrectLoginData("admin               ", firstAdminPassword);
+        checkIncorrectLoginData("         admin", firstAdminPassword);
+        checkIncorrectLoginData("adm      in", firstAdminPassword);
+        checkIncorrectLoginData("a dmin", firstAdminPassword);
+        checkIncorrectLoginData("adm in", firstAdminPassword);
+        checkIncorrectLoginData("ad  min", firstAdminPassword);
+        checkIncorrectLoginData("a  dmin", firstAdminPassword);
+        checkIncorrectLoginData("adm in", firstAdminPassword);
+        checkIncorrectLoginData("adm   in", firstAdminPassword);
+        checkIncorrectLoginData("ad min", firstAdminPassword);
+
         checkIncorrectLoginData("damin", firstAdminPassword);
         checkIncorrectLoginData("madin", firstAdminPassword);
         checkIncorrectLoginData("iadmn", firstAdminPassword);
@@ -171,6 +183,24 @@ public class AuthControllerTest {
         checkIncorrectLoginData(firstAdminUsername, "AdMIN");
         checkIncorrectLoginData(firstAdminUsername, "ADmIN");
         checkIncorrectLoginData(firstAdminUsername, "ADMiN");
+
+        checkIncorrectLoginData(firstAdminUsername, "a dmin");
+        checkIncorrectLoginData(firstAdminUsername, "ad min");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "admi n");
+        checkIncorrectLoginData(firstAdminUsername, "admin ");
+        checkIncorrectLoginData(firstAdminUsername, " admin");
+        checkIncorrectLoginData(firstAdminUsername, "  a  d  m in");
+        checkIncorrectLoginData(firstAdminUsername, "admi n");
+        checkIncorrectLoginData(firstAdminUsername, "a dm in");
+        checkIncorrectLoginData(firstAdminUsername, "a dmin  ");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "adm i  n");
+        checkIncorrectLoginData(firstAdminUsername, "adm in");
+        checkIncorrectLoginData(firstAdminUsername, "   adm in");
+        checkIncorrectLoginData(firstAdminUsername, "a  dm  in");
+        checkIncorrectLoginData(firstAdminUsername, "           admin");
+        checkIncorrectLoginData(firstAdminUsername, "admin                 ");
 
         checkIncorrectLoginData(firstAdminUsername, "password");
         checkIncorrectLoginData(firstAdminUsername, "123456789");

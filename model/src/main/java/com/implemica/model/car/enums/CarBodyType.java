@@ -1,16 +1,14 @@
-package com.implemica.model.car.entity;
+package com.implemica.model.car.enums;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 @ApiModel
 @AllArgsConstructor
-public enum CarBodyTypes {
+public enum CarBodyType {
 
     SEDAN("Sedan"),
     COUPE("Coupe"),
@@ -26,13 +24,5 @@ public enum CarBodyTypes {
 
     public String getStringValue() {
         return JsonString;
-    }
-
-    private static final List<CarBodyTypes> VALUES = List.of(values());
-    private static final int SIZE = VALUES.size();
-    private static final Random RANDOM = new Random();
-
-    public static CarBodyTypes getRandomCarBodyType()  {
-        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }

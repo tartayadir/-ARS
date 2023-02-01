@@ -22,11 +22,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 import static com.utils.selenium.ElementsUtils.elementIsViewed;
 import static com.utils.selenium.ElementsUtils.findWebElementById;
+import static com.utils.selenium.PageNavigation.threadSleep1Seconds;
 import static com.utils.selenium.URLUtils.getAddCarPageURL;
 import static com.utils.selenium.URLUtils.getHomePageURL;
 import static com.utils.spring.StringUtils.toTitleCase;
@@ -82,14 +84,14 @@ public class SeleniumTestsUtils {
 
         WebElement image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
         elementIsViewed(image);
-//        checkImage(image, imageFile);
+        checkImage(image, imageFile);
 
         pageNavigation.clickOnElement(format("car-image-%s-%s-a", carBrandEnumValue, carModel));
 
         wait.until(visibilityOfElementLocated(id("car-engine-capacity")));
         image = findWebElementById(format("car-image-%s-%s", carBrandEnumValue, carModel));
         elementIsViewed(image);
-//        checkImage(image, imageFile);
+        checkImage(image, imageFile);
 
         checkElementInnerText("Body type : " + car.getCarBodyTypes().getStringValue(), "car-body-type");
         checkElementInnerText("Transmission type : " + toTitleCase(car.getTransmissionBoxTypes().getStringValue()), "car-transmission-type");
@@ -107,23 +109,11 @@ public class SeleniumTestsUtils {
     @SneakyThrows
     public static void checkImage(WebElement actualImageWebElement, File expectedImage) {
 
-        String bucketName = AmazonClient.getBucketName();
-//        String bucketPrefix = "https://carcatalogcarsphotop.s3.eu-central-1.amazonaws.com/";
-        String bucketPrefix = "https://s3.amazonaws.com/cars-storage-yaroslav-b.implemica.com/";
-
         String src = actualImageWebElement.getAttribute("src");
-        String imageName = src.replaceAll(bucketPrefix, "");
 
-        S3Object s3Object = s3client.getObject(new GetObjectRequest(bucketName, imageName));
-        InputStream in = s3Object.getObjectContent();
-        File actualImage = File.createTempFile("s3Image" + imageName, "");
-        Files.copy(in, actualImage.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-        ImageComparisonResult result = new ImageComparison(ImageIO.read(expectedImage),
-                ImageIO.read(actualImage)).compareImages();
+        ImageComparisonResult result =
+                new ImageComparison(ImageIO.read(expectedImage), ImageIO.read(new URL(src))).compareImages();
         assertEquals(ImageComparisonState.MATCH, result.getImageComparisonState());
-
-        assertTrue(actualImage.delete());
     }
 
     public static void addCar(Car car, File imageFile){

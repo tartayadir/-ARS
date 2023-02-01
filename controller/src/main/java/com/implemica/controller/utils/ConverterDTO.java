@@ -2,9 +2,9 @@ package com.implemica.controller.utils;
 
 import com.implemica.model.car.dto.CarDTO;
 import com.implemica.model.car.entity.Car;
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -41,11 +41,11 @@ public class ConverterDTO {
 
         Car car = new Car();
         car.setId(carDTO.getId());
-        car.setBrand(CarBrands.valueOf(carDTO.getBrand()));
+        car.setBrand(CarBrand.valueOf(carDTO.getBrand()));
         car.setModel(carDTO.getModel());
-        car.setCarBodyTypes(CarBodyTypes.valueOf(carDTO.getCarBodyTypes()));
+        car.setCarBodyTypes(CarBodyType.valueOf(carDTO.getCarBodyTypes()));
         car.setYear(carDTO.getYear());
-        car.setTransmissionBoxTypes(TransmissionBoxTypes.valueOf(carDTO.getTransmissionBoxTypes()));
+        car.setTransmissionBoxTypes(TransmissionBoxType.valueOf(carDTO.getTransmissionBoxTypes()));
         car.setEngineCapacity(carDTO.getEngineCapacity());
         String shortDescription = carDTO.getShortDescription();
         car.setShortDescription(shortDescription == null ? "" : shortDescription);

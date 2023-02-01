@@ -237,6 +237,7 @@
         <module>controller</module>
         <module>model</module>
         <module>application</module>
+        <module>Swagger_SDK_</module>
     </modules>
 
 </project>

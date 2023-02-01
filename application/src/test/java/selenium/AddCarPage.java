@@ -1,5 +1,6 @@
 package selenium;
 
+import com.utils.selenium.PageNavigation;
 import lombok.extern.slf4j.Slf4j;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -11,24 +12,21 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import com.utils.selenium.PageNavigation;
 import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.TestPropertySource;
-
-import static com.utils.selenium.ElementsUtils.*;
-import static com.utils.selenium.SeleniumTestsUtils.*;
 
 import java.io.File;
 import java.time.Year;
 
+import static com.utils.selenium.ElementsUtils.*;
+import static com.utils.selenium.PageNavigation.threadSleep1Seconds;
+import static com.utils.selenium.SeleniumTestsUtils.*;
+import static com.utils.selenium.URLUtils.getAddCarPageURL;
+import static com.utils.spring.StringUtils.generateRandomStringWithSpecialChars;
 import static java.lang.Integer.MAX_VALUE;
-import static java.lang.Integer.MIN_VALUE;
 import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.openqa.selenium.Keys.*;
-import static com.utils.selenium.URLUtils.getAddCarPageURL;
-import static com.utils.spring.StringUtils.generateRandomString;
-import static com.utils.spring.StringUtils.generateRandomStringWithSpecialChars;
 
 @Slf4j
 @TestPropertySource(locations = "classpath:application.properties")
@@ -533,6 +531,7 @@ public class AddCarPage {
         changeByInvalidImageFile(text);
         checkFieldValidation(exceptedErrorValidationMassage, imageInputErrorMassage);
 
+        threadSleep1Seconds();
         uploadImageFileForm(image);
         checkErrorValidationMassage("", imageInputErrorMassage);
     }

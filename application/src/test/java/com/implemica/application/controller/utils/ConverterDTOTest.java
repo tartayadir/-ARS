@@ -3,9 +3,9 @@ package com.implemica.application.controller.utils;
 import com.implemica.controller.utils.ConverterDTO;
 import com.implemica.model.car.dto.CarDTO;
 import com.implemica.model.car.entity.Car;
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,11 +37,11 @@ class ConverterDTOTest {
         short year = 2012;
         car = Car.builder().
                 id(10L).
-                brand(CarBrands.ALFA).
+                brand(CarBrand.ALFA).
                 model("Model 1").
-                carBodyTypes(CarBodyTypes.SPORTS_CAR).
+                carBodyTypes(CarBodyType.SPORTS_CAR).
                 year(year).
-                transmissionBoxTypes(TransmissionBoxTypes.AUTOMATIC).
+                transmissionBoxTypes(TransmissionBoxType.AUTOMATIC).
                 engineCapacity(5.4).
                 shortDescription("Short description 1").
                 fullDescription("Full description 1").
@@ -78,6 +78,7 @@ class ConverterDTOTest {
         Car carAfterConvert = ConverterDTO.dtoToCarEntity(carDTO);
         assertEqualsCarAndCarDTO(carAfterConvert, carDTO);
     }
+    //beansUtils
 
     @Test
     void convertMultiPartToFile() {
@@ -101,8 +102,8 @@ class ConverterDTOTest {
         Long carDtoId = carDTO.getId();
         assertEquals(carId, carDtoId);
 
-        CarBrands carBrand = car.getBrand();
-        CarBrands carDtoBrand = CarBrands.valueOf(carDTO.getBrand());
+        CarBrand carBrand = car.getBrand();
+        CarBrand carDtoBrand = CarBrand.valueOf(carDTO.getBrand());
         assertEquals(carBrand, carDtoBrand);
 
         String carBrandAsString = car.getBrand().toString();
@@ -117,8 +118,8 @@ class ConverterDTOTest {
         short carDtoYear = carDTO.getYear();
         assertEquals(carYear, carDtoYear);
 
-        TransmissionBoxTypes carTransmission = car.getTransmissionBoxTypes();
-        TransmissionBoxTypes carDtoTransmission = TransmissionBoxTypes.valueOf(carDTO.getTransmissionBoxTypes());
+        TransmissionBoxType carTransmission = car.getTransmissionBoxTypes();
+        TransmissionBoxType carDtoTransmission = TransmissionBoxType.valueOf(carDTO.getTransmissionBoxTypes());
         assertEquals(carTransmission, carDtoTransmission);
 
         String carTransmissionAsString = car.getTransmissionBoxTypes().getStringValue();
@@ -137,9 +138,9 @@ class ConverterDTOTest {
         String carDTOFullDescription = carDTO.getFullDescription();
         assertEquals(carFullDescription, carDTOFullDescription);
 
-        CarBodyTypes carCarBodyTypes = car.getCarBodyTypes();
-        CarBodyTypes carDtoBodyType = CarBodyTypes.valueOf(carDTO.getCarBodyTypes());
-        assertEquals(carCarBodyTypes, carDtoBodyType);
+        CarBodyType carCarBodyType = car.getCarBodyTypes();
+        CarBodyType carDtoBodyType = CarBodyType.valueOf(carDTO.getCarBodyTypes());
+        assertEquals(carCarBodyType, carDtoBodyType);
 
         String carCarBodyTypesAsString = car.getCarBodyTypes().toString();
         String carDtoBodyTypeAsString = carDTO.getCarBodyTypes();

@@ -3,9 +3,9 @@ package com.implemica.application.controller.service.car.service.impl;
 import com.implemica.controller.exceptions.NoSuchCarException;
 import com.implemica.controller.service.car.service.impl.CarServiceImpl;
 import com.implemica.model.car.entity.Car;
-import com.implemica.model.car.entity.CarBodyTypes;
-import com.implemica.model.car.entity.CarBrands;
-import com.implemica.model.car.entity.TransmissionBoxTypes;
+import com.implemica.model.car.enums.CarBodyType;
+import com.implemica.model.car.enums.CarBrand;
+import com.implemica.model.car.enums.TransmissionBoxType;
 import com.implemica.model.car.repository.CarRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,11 +53,11 @@ class CarServiceImplTest {
         short year = 2012;
         car = Car.builder().
                 id(10L).
-                brand(CarBrands.BENTLEY).
+                brand(CarBrand.BENTLEY).
                 model("AX 2").
-                carBodyTypes(CarBodyTypes.SPORTS_CAR).
+                carBodyTypes(CarBodyType.SPORTS_CAR).
                 year(year).
-                transmissionBoxTypes(TransmissionBoxTypes.AUTOMATIC).
+                transmissionBoxTypes(TransmissionBoxType.AUTOMATIC).
                 engineCapacity(3.2).
                 shortDescription("").
                 fullDescription("").

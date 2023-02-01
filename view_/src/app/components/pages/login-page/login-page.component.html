@@ -14,7 +14,7 @@
                   <label class="form-label">Username</label>
                   <input type="text" class="form-control form-control-lg" cdkTrapFocus cdkTrapFocusAutoCapture
                          style="background: #f5f1ed" name="username"
-                         id="usernameInputField" minlength="2" maxlength="31" pattern='^[a-zA-z0-9_]+' required
+                         id="usernameInputField" minlength="2" maxlength="31" pattern='^[a-zA-z0-9_ ]+' required
                          [(ngModel)]="loginInfo.username" #username="ngModel" >
 
                   <div  id="usernameErrorMassage">
