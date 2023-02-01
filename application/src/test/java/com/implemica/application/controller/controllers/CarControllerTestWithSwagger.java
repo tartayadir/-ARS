@@ -35,6 +35,7 @@ public class CarControllerTestWithSwagger {
         checkCar(generateRandomCar(), generateRandomCar());
         checkCar(generateRandomCar(), generateRandomCar());
         checkCar(generateRandomCar(), generateRandomCar());
+        checkCar(generateRandomCar(), generateRandomCar());
     }
 
     private static void checkCar(CarDTO addCarDto, CarDTO updateCarDto) {
