@@ -69,6 +69,8 @@ public class SeleniumTestsUtils {
     public static void checkDataCar(Car car, File imageFile){
 
         wait.until(visibilityOfElementLocated(id("cars")));
+        driver.navigate().refresh();
+        wait.until(visibilityOfElementLocated(id("cars")));
 
         String carBrandEnumValue = car.getBrand().toString();
         String carBrand = car.getBrand().getStringValue();
