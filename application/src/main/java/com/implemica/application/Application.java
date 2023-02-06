@@ -1,5 +1,6 @@
 package com.implemica.application;
 
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +14,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.implemica")
 @EntityScan(basePackages = "com.implemica")
 @EnableCaching
+@EnableEncryptableProperties
 @Slf4j
 public class Application {
 
