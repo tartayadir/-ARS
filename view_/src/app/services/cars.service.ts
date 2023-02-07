@@ -25,28 +25,25 @@ export class CarsService {
   ) {
   }
 
-  public getCars(): Observable<Car[]> {
+  public async getCars() {
 
     console.log("Http method - GET, all cars");
 
-    return this.http.get<CarDTO[]>(`${this.apiServerURL}/car-catalog`).pipe(
+    return await this.http.get<CarDTO[]>(`${this.apiServerURL}/car-catalog`).pipe(
       map((carDTOs: CarDTO[]) => carDTOs.
       sort((a, b) => a.id - b.id).
-      map(dto => this.converterDTO.CarDTOToCarEntity(dto))),
-      catchError(this.errorHandler.bind(this))
-    );
+      map(dto => this.converterDTO.CarDTOToCarEntity(dto)))).toPromise().
+      catch(this.errorHandler.bind(this));
   }
 
-  public deleteCar(carId: number, imageId: string) {
+  public async deleteCar(carId: number, imageId: string) {
 
     console.log("Http method - DELETE, car with id " + carId + " " + imageId);
 
-    return this.http.delete<void>(`${this.apiServerURL}/car-catalog/${carId}`,{
+    return await this.http.delete<void>(`${this.apiServerURL}/car-catalog/${carId}`,{
       params: {
         imageId: imageId,
-      }}).pipe(
-      catchError(this.errorHandler.bind(this))
-    );
+      }}).toPromise().catch(this.errorHandler.bind(this));
   }
 
   public getCar(carId: number): Observable<Car> {

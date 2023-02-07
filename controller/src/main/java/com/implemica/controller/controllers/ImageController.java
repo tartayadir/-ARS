@@ -53,7 +53,7 @@ public class ImageController {
             throws InvalidImageTypeException {
 
         log.info("Http method - Post, post image with name {}", imageId);
-        log.info("Http method - Post, post image with name {}", FilenameUtils.getExtension(image.getOriginalFilename()));
+
         this.amazonClient.uploadFileTos3bucket(imageId, image);
 
         URI uri = URI.create(ServletUriComponentsBuilder.

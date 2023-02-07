@@ -1,7 +1,6 @@
 package com.implemica.controller.configs.swagger;
 
 import com.beust.jcommander.internal.Lists;
-import com.implemica.model.car.entity.Car;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -54,14 +53,14 @@ public class SwaggerConfig {
     private ApiKey apiKey() {
         return new ApiKey(AUTHORIZATION_HEADER,AUTHORIZATION_HEADER, "header");
     }
+
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
     private List<SecurityReference> defaultAuth() {
+
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-        authorizationScopes[0] = authorizationScope;
-        return List.of(new SecurityReference(AUTHORIZATION_HEADER, authorizationScopes));
+        return List.of(new SecurityReference(AUTHORIZATION_HEADER, new AuthorizationScope[]{authorizationScope}));
     }
 }

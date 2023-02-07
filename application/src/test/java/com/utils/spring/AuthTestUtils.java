@@ -4,11 +4,16 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.implemica.controller.service.auth.service.impl.AuthServiceImpl;
+import com.implemica.controller.service.auth.service.AuthService;
+import lombok.RequiredArgsConstructor;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
+@RequiredArgsConstructor
 public class AuthTestUtils {
+
+    private final AuthService authService;
 
     private static final String ADMIN_USERNAME = "admin";
 
@@ -18,19 +23,13 @@ public class AuthTestUtils {
 
     private static final String USER_PASSWORD = "admin1";
 
-    private static final String secret;
+    public String getAdminToken() {
 
-    static {
-        secret = AuthServiceImpl.getSecret();
-    }
-
-    public static String getAdminToken(){
-
-        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(authService.getSecret().getBytes());
 
         return "Bearer " + JWT.create().
                 withSubject(ADMIN_USERNAME)
-                .withExpiresAt(new Date(System.currentTimeMillis() + 2*60*1_000))
+                .withExpiresAt(new Date(System.currentTimeMillis() + 2 * 60 * 1_000))
                 .withIssuer("/authorization/login")
                 .withClaim("roles", List.of("ADMIN_ROLE"))
                 .sign(algorithm);
@@ -52,15 +51,15 @@ public class AuthTestUtils {
         return USER_PASSWORD;
     }
 
-    public static boolean tokenIsValid(String token) {
+    public boolean tokenIsValid(String token) {
 
         boolean isValid = true;
         try {
 
-            Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+            Algorithm algorithm = Algorithm.HMAC256(authService.getSecret().getBytes());
             JWTVerifier verifier = JWT.require(algorithm).build();
             verifier.verify(token);
-        } catch (JWTVerificationException | NullPointerException e){
+        } catch (JWTVerificationException | NullPointerException e) {
             isValid = false;
         }
 

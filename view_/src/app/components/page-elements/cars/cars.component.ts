@@ -33,7 +33,8 @@ export class CarsComponent implements OnInit {
   }
 
   public getCars(): void {
-    this.carService.getCars().subscribe(
+    this.carService.getCars().then(
+      // @ts-ignore
       (response: Car[]) => {
         this.cars = response;
         this.cars.forEach(car => {
@@ -49,7 +50,7 @@ export class CarsComponent implements OnInit {
 
   public deleteCar(id?: number, imageFileName?: string): void {
 
-    this.carService.deleteCar(id!, imageFileName!).subscribe(
+    this.carService.deleteCar(id!, imageFileName!).then(
       () => {
         this.ngOnInit();
         this.goToHomePage()

@@ -18,8 +18,9 @@ export class DeleteCarButtonComponent {
 
   public deleteCar() {
 
-    this.carsService.deleteCar(this.carId!, this.imageFileName!);
-    window.location.reload();
-  }
+    this.carsService.deleteCar(this.carId!, this.imageFileName!).then( () => {
 
+      window.location.reload();
+    });
+  }
 }

@@ -6,6 +6,8 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.controllers.ImageController;
 import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
+import com.implemica.controller.service.auth.service.AuthService;
+import com.utils.spring.AuthTestUtils;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +21,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.servlet.Filter;
 
-import static com.utils.spring.AuthTestUtils.getAdminToken;
+//import static com.utils.spring.AuthTestUtils.getAdminToken;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
@@ -47,6 +49,8 @@ public class ImageControllerTest {
 
     private static String bucketName;
 
+    private static AuthTestUtils authTestUtils;
+
     @Autowired
     private ImageController imageController;
 
@@ -59,6 +63,11 @@ public class ImageControllerTest {
     private static MockMvc mockMvc;
 
     private static String token;
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        authTestUtils = new AuthTestUtils(authService);
+    }
 
     @BeforeEach
     void setUp() {
@@ -76,7 +85,7 @@ public class ImageControllerTest {
                 addFilters(springSecurityFilterChain).
                 build();
 
-        token = getAdminToken();
+        token = authTestUtils.getAdminToken();
     }
 
     @Test

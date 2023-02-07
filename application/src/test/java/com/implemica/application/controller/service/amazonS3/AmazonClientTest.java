@@ -1,16 +1,14 @@
 package com.implemica.application.controller.service.amazonS3;
 
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.amazonaws.services.s3.model.S3Object;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
@@ -23,25 +21,18 @@ import static org.springframework.http.MediaType.IMAGE_JPEG;
 import static org.springframework.http.MediaType.TEXT_HTML_VALUE;
 
 @Slf4j
-@SpringBootTest(classes = SpringBootTest.class)
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 @ActiveProfiles("prod")
 class AmazonClientTest {
 
-    private static final AmazonClient amazonClient;
+    private static AmazonClient amazonClient;
 
-    private static final AmazonS3 s3client;
+    private static AmazonS3 s3client;
 
-    private static final String bucketName;
+    private static String bucketName;
 
-    static {
-
-        s3client = AmazonS3ClientBuilder.standard()
-                .withCredentials(new DefaultAWSCredentialsProviderChain())
-                .withRegion("us-east-1")
-                .build();
-
-        amazonClient = new AmazonClient(s3client);
+    @BeforeAll
+    static void beforeAll() {
         bucketName = AmazonClient.getBucketName();
     }
 
@@ -158,5 +149,15 @@ class AmazonClientTest {
             log.error(e.getMessage(), (Object) e.getStackTrace());
             fail();
         }
+    }
+
+    @Autowired
+    public void setS3client(AmazonS3 amazonS3) {
+        AmazonClientTest.s3client = amazonS3;
+    }
+
+    @Autowired
+    public void setAmazonClient(AmazonClient amazonClient){
+        AmazonClientTest.amazonClient = amazonClient;
     }
 }

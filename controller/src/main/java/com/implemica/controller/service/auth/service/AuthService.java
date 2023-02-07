@@ -8,4 +8,6 @@ public interface AuthService {
     String attemptAuthentication(String username, String password) throws AuthenticationException;
 
     String successfulAuthentication(Authentication authentication);
+
+    String getSecret();
 }

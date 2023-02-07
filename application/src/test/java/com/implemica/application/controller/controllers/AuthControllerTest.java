@@ -1,5 +1,7 @@
 package com.implemica.application.controller.controllers;
 
+import com.implemica.controller.service.auth.service.AuthService;
+import com.utils.spring.AuthTestUtils;
 import lombok.SneakyThrows;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.junit.jupiter.api.BeforeAll;
@@ -26,9 +28,16 @@ public class AuthControllerTest {
 
     private static DataFactory dataFactory;
 
+    private static AuthTestUtils authTestUtils;
+
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
         AuthControllerTest.mockMvc = mockMvc;
+    }
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        authTestUtils = new AuthTestUtils(authService);
     }
 
     @BeforeAll
@@ -271,7 +280,7 @@ public class AuthControllerTest {
                 andReturn();
 
         String token = mvcResult.getResponse().getContentAsString().split("\"")[3];
-        assertTrue(tokenIsValid(token));
+        assertTrue(authTestUtils.tokenIsValid(token));
     }
 
     @SneakyThrows

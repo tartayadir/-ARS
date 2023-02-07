@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.String.format;
 import static org.springframework.transaction.annotation.Isolation.SERIALIZABLE;
@@ -33,12 +34,10 @@ public class CarServiceImpl implements CarService {
     @Cacheable(cacheNames = "car", key = "#id")
     public Car findById(Long id) throws NoSuchCarException {
 
-        if (id == null){
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-
-        return carRepository.findById(id).orElseThrow(
-                () -> new NoSuchCarException(format("Cannot find car with id %d", id)));
+        return carRepository.findById(
+                Optional.ofNullable(id).orElseThrow(() ->
+                        new IllegalArgumentException("Id cannot be null"))).orElseThrow(() ->
+                        new NoSuchCarException(format("Cannot find car with id %d", id)));
     }
 
     @Override
@@ -51,24 +50,23 @@ public class CarServiceImpl implements CarService {
     @Caching(evict = { @CacheEvict(cacheNames = "cars", allEntries=true), @CacheEvict(cacheNames = "car", key = "#id")})
     public void deleteById(Long id) throws NoSuchCarException{
 
-        if (id == null){
-            throw new IllegalArgumentException("Id cannot be null");
-        }
-
-        carRepository.delete(carRepository.findById(id).orElseThrow(
-                () -> new NoSuchCarException(format("Cannot find car with id %d", id))));
+        carRepository.delete(carRepository.findById(
+                Optional.ofNullable(id).orElseThrow(() ->
+                        new IllegalArgumentException("Id cannot be null"))).orElseThrow(() ->
+                        new NoSuchCarException(format("Cannot find car with id %d", id))));
     }
 
     @Override
     @Caching(evict = { @CacheEvict(cacheNames = "cars", allEntries=true), @CacheEvict(cacheNames = "car", key = "#car.id")})
     public Car update(Car car) throws NoSuchCarException{
 
-        if (car.getId() == null){
-            throw new IllegalArgumentException("Id cannot be null");
-        }
+        Long carId = car.getId();
 
-        Car carFromDB = carRepository.findById(car.getId()).orElseThrow(() ->
-                new NoSuchCarException(format("Cannot find and update car with id %d", car.getId())));
+        Car carFromDB = carRepository.findById(
+                Optional.ofNullable(carId).orElseThrow(() ->
+                        new IllegalArgumentException("Id cannot be null"))).orElseThrow(() ->
+                        new NoSuchCarException(format("Cannot find and update car with id %d", carId)));
+
         carFromDB.setBrand(car.getBrand());
         carFromDB.setModel(car.getModel());
         carFromDB.setYear(car.getYear());

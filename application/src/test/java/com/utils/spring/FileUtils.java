@@ -22,7 +22,7 @@ public class FileUtils {
             fos.close();
         } catch (IOException e) {
 
-            log.error(e.getMessage(), e.getStackTrace());
+            log.error(e.getMessage(), (Object) e.getStackTrace());
         }
 
         return file;

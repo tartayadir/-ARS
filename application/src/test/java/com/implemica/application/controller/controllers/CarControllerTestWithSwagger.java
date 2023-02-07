@@ -43,7 +43,9 @@ public class CarControllerTestWithSwagger {
         addCarDto = addCar(addCarDto);
         Long carId = addCarDto.getId();
 
-        editCar(carId, updateCarDto);
+        System.out.println(addCarDto);
+        updateCarDto.setId(carId);
+        editCar(updateCarDto);
 
         deleteCar(carId);
     }
@@ -66,9 +68,7 @@ public class CarControllerTestWithSwagger {
     }
 
     @SneakyThrows
-    private static void editCar(Long carId, CarDTO carDTO) {
-
-        carDTO.setId(carId);
+    private static void editCar(CarDTO carDTO) {
 
         CarDTO updateCarDto = authorizedCarApi.updateCarUsingPUT(carDTO);
         assertEquals(carDTO, updateCarDto);
@@ -76,21 +76,23 @@ public class CarControllerTestWithSwagger {
         assertThatThrownBy(() -> notAuthorizedCarApi.updateCarUsingPUTWithHttpInfo(carDTO)).
                 isInstanceOf(ApiException.class);
 
-        checkGetCar(carId, carDTO);
+        Thread.sleep(2_000);
+        checkGetCar(updateCarDto.getId(), updateCarDto);
 
     }
 
     @SneakyThrows
-    private static void deleteCar(Long carID){
+    private static void deleteCar(Long carID) {
 
-        authorizedCarApi.removeCarUsingDELETE(carID, DEFAULT_IMAGE_NAME);
+        CarDTO deleteCar = authorizedCarApi.removeCarUsingDELETE(carID, DEFAULT_IMAGE_NAME);
 
+        Thread.sleep(2_000);
         assertThatThrownBy(() -> authorizedCarApi.getCarUsingGET(carID)).
                 isInstanceOf(ApiException.class);
     }
 
     @SneakyThrows
-    private static void checkGetCar(Long carId, CarDTO carDTO){
+    private static void checkGetCar(Long carId, CarDTO carDTO) {
 
         CarDTO getCar = authorizedCarApi.getCarUsingGET(carId);
         assertEquals(carDTO, getCar);

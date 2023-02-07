@@ -160,13 +160,11 @@ public class CarController {
                                             @RequestParam String imageId) throws NoSuchCarException {
 
         log.info("Http method - Delete, delete car with id {}", id);
-
         carService.deleteById(id);
 
-        if(!imageId.equals("default-car-image")){
-            log.info("Http method - Delete, delete image with name {}", imageId);
-            this.amazonClient.deleteFileFromS3Bucket(imageId);
-        }
+        log.info("Http method - Delete, delete image with name {}", imageId);
+        this.amazonClient.deleteFileFromS3Bucket(imageId);
+
 
         return ResponseEntity.ok().build();
     }

@@ -154,6 +154,7 @@ public class SeleniumTestsUtils {
     public static void deleteCar(Car deleteCar){
 
         driver.get(getHomePageURL());
+        driver.navigate().refresh();
 
         String model = deleteCar.getModel();
         String brand = deleteCar.getBrand().toString();
@@ -162,6 +163,9 @@ public class SeleniumTestsUtils {
         pageNavigation.clickOnElement(format("delete-car-%s-%s-button", brand, model));
 
         wait.until(visibilityOfElementLocated(id("confirm-delete-button"))).click();
+
+        threadSleep1Seconds();
+        driver.navigate().refresh();
 
         ElementsUtils.elementIsNotViewed(format("car-image-%s-%s", brand, model));
     }

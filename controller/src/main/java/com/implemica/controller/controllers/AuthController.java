@@ -12,11 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -32,13 +28,13 @@ public class AuthController {
     @Operation(summary = "Get token by login and password.",
             description = "Get a token to work with the API by login and password of the registered user")
     @ApiResponses({@ApiResponse(responseCode = "200", description = "Successful authorization.",
-            content = { @Content(mediaType = APPLICATION_JSON_VALUE)}),
+            content = {@Content(mediaType = APPLICATION_JSON_VALUE)}),
             @ApiResponse(responseCode = "401", description = "Failed authorization.",
-                    content = { @Content(mediaType = APPLICATION_JSON_VALUE)})})
+                    content = {@Content(mediaType = APPLICATION_JSON_VALUE)})})
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(value = "/login", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<AuthResponse> login(@RequestParam @Parameter(description = "User username") String username,
-                                              @RequestParam @Parameter(description = "User password") String password){
+                                              @RequestParam @Parameter(description = "User password") String password) {
 
         log.info("Http method - Post, try to login user with name {}", username);
 

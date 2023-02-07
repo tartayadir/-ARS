@@ -8,6 +8,7 @@ import com.implemica.controller.controllers.CarController;
 import com.implemica.controller.exceptions.NoSuchCarException;
 import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
+import com.implemica.controller.service.auth.service.AuthService;
 import com.implemica.controller.service.car.service.CarService;
 import com.implemica.controller.utils.ConverterDTO;
 import com.implemica.model.car.dto.CarDTO;
@@ -15,6 +16,7 @@ import com.implemica.model.car.entity.Car;
 import com.implemica.model.car.enums.CarBodyType;
 import com.implemica.model.car.enums.CarBrand;
 import com.implemica.model.car.enums.TransmissionBoxType;
+import com.utils.spring.AuthTestUtils;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,7 +37,6 @@ import java.util.stream.Collectors;
 
 import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
 import static com.utils.CarsUtils.*;
-import static com.utils.spring.AuthTestUtils.getAdminToken;
 import static com.utils.spring.StringUtils.generateRandomString;
 import static com.utils.spring.URIUtils.*;
 import static java.lang.Long.MAX_VALUE;
@@ -90,6 +91,8 @@ class CarControllerTest {
 
     @Autowired
     private Filter springSecurityFilterChain;
+
+    private static AuthTestUtils authTestUtils;
 
     @SneakyThrows
     @BeforeEach
@@ -167,7 +170,7 @@ class CarControllerTest {
                         " 1Short description 1 Short description 1 Short description 1Short description 1 " +
                         "Short description 1 Short description 1Short description 1 Short description 1 S "
                 ).
-                fullDescription( "Full description 1 Full description 1 Full description 1Full description 1" +
+                fullDescription("Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
@@ -198,7 +201,7 @@ class CarControllerTest {
                         " 1Short description 1 Short description 1 Short description 1Short description 1 " +
                         "Short description 1 Short description 1Short description 1 Short description 1 S "
                 ).
-                fullDescription( "Full description 1 Full description 1 Full description 1Full description 1" +
+                fullDescription("Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
@@ -208,7 +211,7 @@ class CarControllerTest {
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1"
-                 ).
+                ).
                 additionalOptions(List.of("Option 1", "Option 2", "option 3")).
                 imageFileId("Image file 1").
                 build();
@@ -229,7 +232,7 @@ class CarControllerTest {
                         " 1Short description 1 Short description 1 Short description 1Short description 1 " +
                         "Short description 1 Short description 1Short description 1 Short description 1 S "
                 ).
-                fullDescription( "Full description 1 Full description 1 Full description 1Full description 1" +
+                fullDescription("Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
                         "Full description 1 Full description 1 Full description 1Full description 1" +
@@ -244,7 +247,7 @@ class CarControllerTest {
                 imageFileId("Image file 1").
                 build();
 
-        token = getAdminToken();
+        token = authTestUtils.getAdminToken();
         id = 10L;
     }
 
@@ -502,7 +505,7 @@ class CarControllerTest {
     @Test
     void addCar_invalid_engine_capacity() throws Exception {
 
-        String  exceptedMassage = "Engine capacity must be positive number or 0.";
+        String exceptedMassage = "Engine capacity must be positive number or 0.";
         String fieldName = "engineCapacity";
 
         carDTO.setEngineCapacity(-0.1);
@@ -913,7 +916,7 @@ class CarControllerTest {
     @Test
     void updateCar_invalid_engine_capacity() throws Exception {
 
-        String  exceptedMassage = "Engine capacity must be positive number or 0.";
+        String exceptedMassage = "Engine capacity must be positive number or 0.";
         String fieldName = "engineCapacity";
 
         carDTO.setEngineCapacity(-0.1);
@@ -1127,24 +1130,24 @@ class CarControllerTest {
 
     @Test
     void removeCar_default_image() throws Exception {
-//
-//        String fileName = "default-car-image";
-//
-//        S3Object s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))
-//                        .param("imageId", fileName)
-//                        .header(AUTHORIZATION, token)).
-//                andExpect(status().isOk());
-//
-//        s3Object = s3client.getObject(bucketName, fileName);
-//        assertEquals(fileName, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
-//                andExpect(status().isForbidden());
-//
-//        verify(carService, times(1)).deleteById(id);
+
+        String fileName = "default-car-image";
+
+        S3Object s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))
+                        .param("imageId", fileName)
+                        .header(AUTHORIZATION, token)).
+                andExpect(status().isOk());
+
+        s3Object = s3client.getObject(bucketName, fileName);
+        assertEquals(fileName, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(id)))).
+                andExpect(status().isForbidden());
+
+        verify(carService, times(1)).deleteById(id);
     }
 
     @Test
@@ -1279,32 +1282,32 @@ class CarControllerTest {
 
     @SneakyThrows
     private static void checkRemoveCar(Long deleteCarID, String deleteCarImageId, MockMultipartFile image) {
+
+        amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
+        doNothing().when(carService).deleteById(deleteCarID);
 //
-//       amazonClient.uploadFileTos3bucket(deleteCarImageId, image);
-//        doNothing().when(carService).deleteById(deleteCarID);
-////
-//       S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
-//
-//       assertEquals(deleteCarImageId, s3Object.getKey());
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))
-//                        .param("imageId", deleteCarImageId)
-//                        .header(AUTHORIZATION, token)).
-//                andExpect(status().isOk());
-//
-//       assertThatThrownBy(() -> s3client.getObject(CarControllerTest.bucketName, deleteCarImageId)).
-//               isInstanceOf(AmazonS3Exception.class);
-//
-//        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))).
-//                andExpect(status().isForbidden());
-//
-//        verify(carService, times(1)).deleteById(deleteCarID);
-//        clearInvocations(carService);
+        S3Object s3Object = s3client.getObject(CarControllerTest.bucketName, deleteCarImageId);
+
+        assertEquals(deleteCarImageId, s3Object.getKey());
+
+        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))
+                        .param("imageId", deleteCarImageId)
+                        .header(AUTHORIZATION, token)).
+                andExpect(status().isOk());
+
+        assertThatThrownBy(() -> s3client.getObject(CarControllerTest.bucketName, deleteCarImageId)).
+                isInstanceOf(AmazonS3Exception.class);
+
+        mockMvc.perform(delete(format(getDeleteCarUri(deleteCarID)))).
+                andExpect(status().isForbidden());
+
+        verify(carService, times(1)).deleteById(deleteCarID);
+        clearInvocations(carService);
     }
 
     @SneakyThrows
     private static void checkErrorRemoveCar(Long id, String imageId, Exception serviceException, String exceptedErrorMassage,
-                                            HttpStatus exceptedHttpStatus){
+                                            HttpStatus exceptedHttpStatus) {
 
         doThrow(serviceException).
                 when(carService).
@@ -1384,7 +1387,7 @@ class CarControllerTest {
 
         verify(carService, times(0)).save(any(Car.class));
     }
-    
+
     private static void checkUpdateInvalidFieldCar(CarDTO carDTO, String jsonInvalidFieldName,
                                                    String exceptedErrorMassage) throws Exception {
 
@@ -1420,5 +1423,10 @@ class CarControllerTest {
     @Autowired
     public void setAmazonClient(AmazonClient amazonClient) {
         CarControllerTest.amazonClient = amazonClient;
+    }
+
+    @Autowired
+    public void setAuthService(AuthService authService) {
+        authTestUtils = new AuthTestUtils(authService);
     }
 }

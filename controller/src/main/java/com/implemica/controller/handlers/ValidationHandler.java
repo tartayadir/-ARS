@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.http.HttpStatus.*;
+
 @RestControllerAdvice
 @Slf4j
 public class ValidationHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     protected ResponseEntity<Map<String, String>> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
 
         log.error(ex.getMessage(), (Object) ex.getStackTrace());
@@ -37,81 +39,72 @@ public class ValidationHandler {
             String message = error.getDefaultMessage();
             errors.put(fieldName, message);
         });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, BAD_REQUEST);
     }
 
     @ExceptionHandler(NoSuchCarException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(NOT_FOUND)
     public ResponseEntity<ErrorMassageResponse> handleNoSuchCarException(NoSuchCarException ex) {
 
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        ErrorMassageResponse errorMassageResponse = new ErrorMassageResponse(ex.getMessage());
-        return new ResponseEntity<>(errorMassageResponse, HttpStatus.NOT_FOUND);
+        return buildErrorResponseAndLogExceptionMassage(ex, NOT_FOUND);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     public ResponseEntity<ErrorMassageResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
 
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        ErrorMassageResponse errorMassageResponse = new ErrorMassageResponse(ex.getMessage());
-        return new ResponseEntity<>(errorMassageResponse, HttpStatus.BAD_REQUEST);
+        return buildErrorResponseAndLogExceptionMassage(ex, BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidImageTypeException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(BAD_REQUEST)
     public ResponseEntity<ErrorMassageResponse> handleInvalidImageTypeException(InvalidImageTypeException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(UNAUTHORIZED)
+    public ResponseEntity<ErrorMassageResponse> handleAuthenticationException(AuthenticationException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AlgorithmMismatchException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity<ErrorMassageResponse> handleAlgorithmMismatchException(AlgorithmMismatchException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SignatureVerificationException.class)
+    @ResponseStatus(BAD_REQUEST)
+    public ResponseEntity<ErrorMassageResponse> handleSignatureVerificationException(SignatureVerificationException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TokenExpiredException.class)
+    @ResponseStatus(FORBIDDEN)
+    public ResponseEntity<ErrorMassageResponse> handleTokenExpiredException(TokenExpiredException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, FORBIDDEN);
+
+    }
+
+    @ExceptionHandler(InvalidClaimException.class)
+    @ResponseStatus(FORBIDDEN)
+    public ResponseEntity<ErrorMassageResponse> handleInvalidClaimException(InvalidClaimException ex) {
+
+        return buildErrorResponseAndLogExceptionMassage(ex, FORBIDDEN);
+    }
+
+    private static ResponseEntity<ErrorMassageResponse> buildErrorResponseAndLogExceptionMassage(Exception ex,
+                                                                                                 HttpStatus httpStatus) {
 
         log.error(ex.getMessage(), (Object) ex.getStackTrace());
 
         ErrorMassageResponse errorMassageResponse = new ErrorMassageResponse(ex.getMessage());
-        return new ResponseEntity<>(errorMassageResponse, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ResponseEntity<Void> handleAuthenticationException(AuthenticationException ex) {
-
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    @ExceptionHandler(AlgorithmMismatchException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Void> handleAlgorithmMismatchException(AlgorithmMismatchException ex) {
-
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
-    @ExceptionHandler(SignatureVerificationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Void> handleSignatureVerificationException(SignatureVerificationException ex) {
-
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
-    @ExceptionHandler(TokenExpiredException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<Void> handleTokenExpiredException(TokenExpiredException ex) {
-
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    }
-
-    @ExceptionHandler(InvalidClaimException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<Void> handleInvalidClaimException(InvalidClaimException ex) {
-
-        log.error(ex.getMessage(), (Object) ex.getStackTrace());
-
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return new ResponseEntity<>(errorMassageResponse, httpStatus);
     }
 }

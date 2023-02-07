@@ -37,13 +37,12 @@ export class ConfirmDeleteCarButtonComponent implements OnInit {
 
     if (this.parent == undefined){
 
-      this.carService.deleteCar(this.carId!, this.imageFileName!).subscribe(
+      this.carService.deleteCar(this.carId!, this.imageFileName!).then(
         () => {
           this.goToHomePage()
         });
     }else {
       this.parent?.deleteCar(this.carId, this.imageFileName);
-
     }
   }
 
