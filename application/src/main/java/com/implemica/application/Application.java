@@ -11,6 +11,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+/**
+ * It is a basic class that contains a method that starts the whole application and points
+ * to the location of beans, entities and repositories specifying the base packet. Also,
+ * with the help of annotations, changing the settings of the whole application.
+ */
 @SpringBootApplication
 @ComponentScan(basePackages = "com.implemica")
 @EnableJpaRepositories(basePackages = "com.implemica")
@@ -22,6 +27,13 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableSpringConfigured
 public class Application {
 
+    /**
+     * Standard main method that tun whole spring application by static
+     * helper that can be used to run a {@link SpringApplication} from the
+     * specified source using default settings.
+     *
+     * @param args standard main input values
+     */
     public static void main(String[] args) {
 
         SpringApplication.run(Application.class, args);

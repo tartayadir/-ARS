@@ -10,7 +10,6 @@ import com.implemica.controller.handlers.ValidationHandler;
 import com.implemica.controller.service.amazonS3.AmazonClient;
 import com.implemica.controller.service.auth.service.AuthService;
 import com.implemica.controller.service.car.service.CarService;
-import com.implemica.controller.utils.ConverterDTO;
 import com.implemica.model.car.dto.CarDTO;
 import com.implemica.model.car.entity.Car;
 import com.implemica.model.car.enums.CarBodyType;
@@ -35,7 +34,7 @@ import javax.servlet.Filter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.implemica.controller.utils.ConverterDTO.carEntityToDTO;
+import static com.implemica.model.car.dto.CarDTO.toDTO;
 import static com.utils.CarsUtils.*;
 import static com.utils.spring.StringUtils.generateRandomString;
 import static com.utils.spring.URIUtils.*;
@@ -1167,7 +1166,7 @@ class CarControllerTest {
     @SneakyThrows
     private static void checkGetAllCars(List<CarDTO> carDTOs) {
 
-        List<Car> serviceCarList = carDTOs.stream().map(ConverterDTO::dtoToCarEntity).collect(Collectors.toList());
+        List<Car> serviceCarList = carDTOs.stream().map(CarDTO::toEntity).collect(Collectors.toList());
 
         when(carService.findAll()).thenReturn(serviceCarList);
         String exceptedJSON = objectMapper.writeValueAsString(carDTOs);
@@ -1186,7 +1185,7 @@ class CarControllerTest {
 
         exceptedCar.setId(id);
         when(carService.findById(id)).thenReturn(exceptedCar);
-        String exceptedJSON = objectMapper.writeValueAsString(carEntityToDTO(exceptedCar));
+        String exceptedJSON = objectMapper.writeValueAsString(toDTO(exceptedCar));
 
         mockMvc.perform(get(getGetCarUri(id))).
                 andExpect(status().isOk()).
@@ -1215,8 +1214,7 @@ class CarControllerTest {
     @SneakyThrows
     private static void checkAddCar(CarDTO carDTO) {
 
-        Car serviceCar = ConverterDTO.dtoToCarEntity(carDTO);
-        Car returnServiceCar = ConverterDTO.dtoToCarEntity(carDTO);
+        Car returnServiceCar = carDTO.toEntity();
 
         when(carService.save(any(Car.class))).thenReturn(returnServiceCar);
         String requestJSON = objectMapper.writeValueAsString(carDTO);
@@ -1249,8 +1247,8 @@ class CarControllerTest {
     @SneakyThrows
     private static void checkUpdateCar(CarDTO carDTO) {
 
-        Car serviceCar = ConverterDTO.dtoToCarEntity(carDTO);
-        Car returnServiceCar = ConverterDTO.dtoToCarEntity(carDTO);
+        Car serviceCar = carDTO.toEntity();
+        Car returnServiceCar = carDTO.toEntity();
 
         when(carService.update(any(Car.class))).thenReturn(serviceCar);
         String requestJSON = objectMapper.writeValueAsString(carDTO);

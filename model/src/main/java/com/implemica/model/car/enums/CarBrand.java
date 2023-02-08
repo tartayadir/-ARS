@@ -1,5 +1,13 @@
 package com.implemica.model.car.enums;
 
+import com.implemica.model.car.entity.Car;
+import lombok.AllArgsConstructor;
+
+/**
+ * The thing is the type of car brand contains a field which is a standard entry
+ * of the name of the brand. This is used in {@link Car} for typing.
+ */
+@AllArgsConstructor
 public enum CarBrand {
     AUDI("Audi"), ACURA("Acura"), ALFA("Alfa"), ROMEO("Romeo"),
     ASTON_MARTIN("Aston Martin"), BENTLEY("Bentley"), BYD("BYD"), BMW("BMW"),
@@ -23,14 +31,18 @@ public enum CarBrand {
     SSANGYONG("Ssanyong"), TESLA("Tesla"), VOLVO("Volvo"), DATSUN("Datsun"),
     VOLKSWAGEN("Volkswagen"), TAGAZ("Tagaz"), HAVAL_ROVER("Haval Rover"),
     GENESIS("Genesis");
-    
-    private final String stringValue;
 
-    CarBrand(String stringValue) {
-        this.stringValue = stringValue;
-    }
-    
-    public String getStringValue(){
-        return stringValue;
+    /**
+     * Standard entry for brand name.
+     */
+    private final String standardName;
+
+    /**
+     * Getter for standard entry.
+     *
+     * @return standard entry of car brand
+     */
+    public String getStringValue() {
+        return standardName;
     }
 }

@@ -1,5 +1,6 @@
 package com.implemica.model.car.dto;
 
+import com.implemica.model.car.entity.Car;
 import com.implemica.model.car.enums.CarBodyType;
 import com.implemica.model.car.enums.CarBrand;
 import com.implemica.model.car.enums.TransmissionBoxType;
@@ -16,6 +17,9 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * DTO for {@link Car} entity
+ */
 @Data
 @Builder(toBuilder = true)
 @AllArgsConstructor
@@ -99,7 +103,56 @@ public class CarDTO implements Serializable {
     @Size(min = 10, max = 150, message = "Image file name must be greater than 10 and less then 150.")
     private String imageFileId;
 
+    /**
+     * Getter for engine capacity
+     *
+     * @param engineCapacity engine car capacity
+     */
     public void setEngineCapacity(double engineCapacity) {
         this.engineCapacity = engineCapacity;
+    }
+
+    public static CarDTO toDTO(Car car) {
+
+        CarDTO carDTO = CarDTO.builder().build();
+
+        carDTO.setId(car.getId());
+        carDTO.setBrand(car.getBrand().toString());
+        carDTO.setModel(car.getModel());
+        carDTO.setCarBodyTypes(car.getCarBodyTypes().toString());
+        carDTO.setYear(car.getYear());
+        carDTO.setTransmissionBoxTypes(car.getTransmissionBoxTypes().getStringValue());
+        carDTO.setEngineCapacity(car.getEngineCapacity());
+        carDTO.setShortDescription(car.getShortDescription());
+        carDTO.setFullDescription(car.getFullDescription());
+        carDTO.setAdditionalOptions(car.getAdditionalOptions());
+        carDTO.setImageFileId(car.getImageFileName());
+
+        return carDTO;
+    }
+
+    /**
+     * Convert car DTO to entity {@link Car}
+     *
+     * @return car entity
+     */
+    public Car toEntity() {
+
+        Car car = new Car();
+        car.setId(this.getId());
+        car.setBrand(CarBrand.valueOf(this.getBrand()));
+        car.setModel(this.getModel());
+        car.setCarBodyTypes(CarBodyType.valueOf(this.getCarBodyTypes()));
+        car.setYear(this.getYear());
+        car.setTransmissionBoxTypes(TransmissionBoxType.valueOf(this.getTransmissionBoxTypes()));
+        car.setEngineCapacity(this.getEngineCapacity());
+        String shortDescription = this.getShortDescription();
+        car.setShortDescription(shortDescription == null ? "" : shortDescription);
+        String fullDescription = this.getFullDescription();
+        car.setFullDescription(fullDescription == null ? "" : fullDescription);
+        car.setAdditionalOptions(this.getAdditionalOptions());
+        car.setImageFileName(this.getImageFileId());
+
+        return car;
     }
 }

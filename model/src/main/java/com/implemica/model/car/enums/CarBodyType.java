@@ -1,12 +1,12 @@
 package com.implemica.model.car.enums;
 
-import io.swagger.annotations.ApiModel;
+import com.implemica.model.car.entity.Car;
 import lombok.AllArgsConstructor;
 
-import java.util.List;
-import java.util.Random;
-
-@ApiModel
+/**
+ * The thing is the type of car body contains a field which is a standard entry
+ * of the name of the body. This is used in {@link Car} for typing.
+ */
 @AllArgsConstructor
 public enum CarBodyType {
 
@@ -20,9 +20,17 @@ public enum CarBodyType {
     PICKUP("Pickup"),
     SUV("SUV");
 
-    private final String JsonString;
+    /**
+     * Standard entry for body type name.
+     */
+    private final String standardName;
 
+    /**
+     * Getter for standard entry.
+     *
+     * @return standard entry of car body type
+     */
     public String getStringValue() {
-        return JsonString;
+        return standardName;
     }
 }

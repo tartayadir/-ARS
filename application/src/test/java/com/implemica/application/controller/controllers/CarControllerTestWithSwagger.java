@@ -43,7 +43,6 @@ public class CarControllerTestWithSwagger {
         addCarDto = addCar(addCarDto);
         Long carId = addCarDto.getId();
 
-        System.out.println(addCarDto);
         updateCarDto.setId(carId);
         editCar(updateCarDto);
 

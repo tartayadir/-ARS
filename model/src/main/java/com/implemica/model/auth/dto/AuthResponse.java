@@ -1,10 +1,13 @@
-package com.implemica.model.auth;
+package com.implemica.model.auth.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Response DTO for successful authorization login request that contains JWT token
+ */
 @AllArgsConstructor
 @Getter
 @Setter

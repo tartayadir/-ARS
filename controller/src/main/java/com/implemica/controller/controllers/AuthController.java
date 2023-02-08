@@ -1,7 +1,7 @@
 package com.implemica.controller.controllers;
 
 import com.implemica.controller.service.auth.service.AuthService;
-import com.implemica.model.auth.AuthResponse;
+import com.implemica.model.auth.dto.AuthResponse;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

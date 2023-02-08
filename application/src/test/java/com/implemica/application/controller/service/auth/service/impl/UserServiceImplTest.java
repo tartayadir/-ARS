@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.core.env.Environment;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -69,7 +67,7 @@ class UserServiceImplTest {
 
     private static void checkLoadUserByUsername(String username, User user) {
 
-        when(userRepository.findAdminByUsername(username)).thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername(username)).thenReturn(Optional.of(user));
 
         UserDetails userBD = userService.loadUserByUsername(username);
 
@@ -80,18 +78,18 @@ class UserServiceImplTest {
 
         assertEquals(testUserDetails, userBD);
 
-        verify(userRepository, times(1)).findAdminByUsername(username);
+        verify(userRepository, times(1)).findUserByUsername(username);
         reset(userRepository);
     }
 
     private static void checkLoadUserByUsernameNotFoundUser(String username) {
 
-        when(userRepository.findAdminByUsername(username)).thenReturn(Optional.empty());
+        when(userRepository.findUserByUsername(username)).thenReturn(Optional.empty());
         assertThatThrownBy(() -> userService.loadUserByUsername(username)).
                 isInstanceOf(UsernameNotFoundException.class).
                 hasMessageContaining("User not found in data base");
 
-        verify(userRepository, times(1)).findAdminByUsername(username);
+        verify(userRepository, times(1)).findUserByUsername(username);
         reset(userRepository);
     }
 }

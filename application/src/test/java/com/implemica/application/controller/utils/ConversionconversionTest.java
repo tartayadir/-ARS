@@ -1,6 +1,6 @@
 package com.implemica.application.controller.utils;
 
-import com.implemica.controller.utils.ConverterDTO;
+import com.implemica.controller.utils.FileConvertor;
 import com.implemica.model.car.dto.CarDTO;
 import com.implemica.model.car.entity.Car;
 import com.implemica.model.car.enums.CarBodyType;
@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Slf4j
 @ActiveProfiles("prod")
-class ConverterDTOTest {
+class ConversionconversionTest {
 
     private static Car car;
 
@@ -64,18 +64,18 @@ class ConverterDTOTest {
                 imageFileId("Image file 2").
                 build();
     }
-
+    
     @Test
     void carEntityToDTO() {
 
-        CarDTO carDTOAfterConvert = ConverterDTO.carEntityToDTO(car);
+        CarDTO carDTOAfterConvert = CarDTO.toDTO(car);
         assertEqualsCarAndCarDTO(car, carDTOAfterConvert);
     }
 
     @Test
     void dtoToCarEntity() {
 
-        Car carAfterConvert = ConverterDTO.dtoToCarEntity(carDTO);
+        Car carAfterConvert = carDTO.toEntity();
         assertEqualsCarAndCarDTO(carAfterConvert, carDTO);
     }
     //beansUtils
@@ -159,7 +159,7 @@ class ConverterDTOTest {
 
         try {
 
-            File multipartFileFile = ConverterDTO.convertMultiPartToFile(multipartFile);
+            File multipartFileFile = FileConvertor.convertMultiPartToFile(multipartFile);
 
             byte[] actualBytes = FileUtils.readFileToByteArray(file);
             byte[] exceptedBytes = FileUtils.readFileToByteArray(multipartFileFile);

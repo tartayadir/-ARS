@@ -17,13 +17,27 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 import java.util.List;
 
+/**
+ * Provides configuration for Swagger and set necessary values by methods, that
+ * set up logic for working with JWT token to performing authorized requests. Also,
+ * provides information: description, contacts and other; about application to Swagger.
+ *
+ */
 @Configuration
 @EnableWebMvc
 @Import(BeanValidatorPluginsConfiguration.class)
 public class SwaggerConfig {
 
+    /**
+     * Http header name where authorization JWT token will be set
+     */
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
+    /**
+     * Provides {@link Docket} with Swagger information and settings.
+     *
+     * @return object with settings and meta information
+     */
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -38,6 +52,11 @@ public class SwaggerConfig {
                 .build();
     }
 
+    /**
+     * Provides the api's meta information about application, API version and contacts
+     *
+     * @return {@link ApiInfo} object with meta information
+     */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("API Car catalog V1.0")
@@ -50,14 +69,30 @@ public class SwaggerConfig {
                 .build();
     }
 
+    /**
+     * Provides class with settings that applicable to all or some of the api operations.
+     *
+     * @return {@link ApiKey} object with api keys settings
+     */
     private ApiKey apiKey() {
         return new ApiKey(AUTHORIZATION_HEADER,AUTHORIZATION_HEADER, "header");
     }
 
+    /**
+     * Provides configuration which api operations (via regex patterns) and
+     * HTTP methods to apply security contexts to apis.
+     *
+     * @return security contexts
+     */
     private SecurityContext securityContext() {
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
+    /**
+     * Provides list of {@link SecurityReference}
+     *
+     * @return {@link SecurityReference} list
+     */
     private List<SecurityReference> defaultAuth() {
 
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
