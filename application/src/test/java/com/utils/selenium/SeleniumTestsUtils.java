@@ -69,6 +69,8 @@ public class SeleniumTestsUtils {
     public static void checkDataCar(Car car, File imageFile){
 
         wait.until(visibilityOfElementLocated(id("cars")));
+
+        threadSleep1Seconds();
         driver.navigate().refresh();
         wait.until(visibilityOfElementLocated(id("cars")));
 

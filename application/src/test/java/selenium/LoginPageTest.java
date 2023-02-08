@@ -490,7 +490,9 @@ public class LoginPageTest {
         threadSleep1Seconds();
 
         driver.get(getHomePageURL());
+        wait.until(visibilityOf(findWebElementById("logo-header")));
 
+        driver.navigate().refresh();
         wait.until(visibilityOf(findWebElementById("logo-header")));
 
         elementIsViewed(logoutButton);
