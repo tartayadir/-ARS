@@ -68,11 +68,12 @@ public class SeleniumTestsUtils {
     @SneakyThrows
     public static void checkDataCar(Car car, File imageFile){
 
-        driver.get(getHomePageURL());
         wait.until(visibilityOfElementLocated(id("cars")));
 
+        driver.get(getHomePageURL());
         threadSleep1Seconds();
         driver.navigate().refresh();
+
         wait.until(visibilityOfElementLocated(id("cars")));
 
         String carBrandEnumValue = car.getBrand().toString();
