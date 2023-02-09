@@ -68,6 +68,7 @@ public class SeleniumTestsUtils {
     @SneakyThrows
     public static void checkDataCar(Car car, File imageFile){
 
+        driver.get(getHomePageURL());
         wait.until(visibilityOfElementLocated(id("cars")));
 
         threadSleep1Seconds();
