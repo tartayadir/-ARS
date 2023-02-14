@@ -21,7 +21,7 @@ import static java.lang.String.format;
 
 /**
  * Provides methods for work with images and AWS S3 bucket. In particular, validate images,
- * upload and delete cars images in bucket. Bucket setting can be set up by
+ * upload and delete cars images in bucket. Also, sets up bucket setting by values from
  * application.properties file.
  */
 @Service
@@ -40,22 +40,26 @@ public class AmazonClient {
     private static String bucketName;
 
     /**
-     * Cache control header name
+     * Cache control header value prefix
      */
-    private static final String CACHE_CONTROL_HEADER_PREFIX = "max-age";
+    private static final String CACHE_CONTROL_HEADER_VALUE_PREFIX = "max-age";
 
     /**
      * Cache control value for uploading files
      */
-    @Value("${cars.s3.images_cahcecontrol}")
-    private int cacheControlDuration;
+    private static int cacheControlDuration;
 
+    /**
+     * The name of the picture that is installed to all cars for which there was
+     * no upload own picture. Used for check and prevent deleting of default picture.
+     */
     public static final String DEFAULT_IMAGE_ID = "default-car-image";
 
     /**
-     * Check and upload file to S3 bucket.
+     * Uploads file to S3 bucket. Previously, set cache control header
+     * and check file expansion.
      *
-     * @param imageID image ID
+     * @param imageID image ID that will have on S3 bucket
      * @param imageFile image file
      * @throws InvalidImageTypeException if image have invalid expansion
      */
@@ -66,7 +70,7 @@ public class AmazonClient {
         checkImageType(imageFile);
 
         ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setCacheControl(format("%s=%d", CACHE_CONTROL_HEADER_PREFIX, cacheControlDuration));
+        objectMetadata.setCacheControl(format("%s=%d", CACHE_CONTROL_HEADER_VALUE_PREFIX, cacheControlDuration));
 
         File file = convertMultiPartToFile(imageFile);
 
@@ -77,7 +81,8 @@ public class AmazonClient {
     }
 
     /**
-     * Deletes image file on bucket by image ID
+     * Deletes image file on bucket by image ID, after checking it in order to
+     * image is not default car image.
      *
      * @param imageID image ID that use for found and delete image
      */
@@ -91,7 +96,7 @@ public class AmazonClient {
     }
 
     /**
-     * Verifies the file is an image
+     * Verifies the file is an image by checking their expansion.
      *
      * @param image file for check
      * @throws InvalidImageTypeException if image have invalid expansion
@@ -108,13 +113,23 @@ public class AmazonClient {
     }
 
     /**
-     * Set bucket name for uploading images from application properties file
+     * Sets bucket name for uploading images from application properties file
      *
      * @param bucketName provided bucket name
      */
     @Value("${cars.s3.bucket_name}")
     public void setBucketName(String bucketName) {
         AmazonClient.bucketName = bucketName;
+    }
+
+    /**
+     * Sets cache control value for uploading files
+     *
+     * @param cacheControlDuration provided cache duration as String
+     */
+    @Value("${cars.s3.images_cahcecontrol}")
+    public void setCacheControlDuration(String cacheControlDuration) {
+        AmazonClient.cacheControlDuration = Integer.parseInt(cacheControlDuration);
     }
 
     /**

@@ -1,0 +1,593 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is API for work with the car catalog server. For this sample, you can use the JWT to test the authorization filters and perform authorized requests to server like add ordelete car. You should put your JWT token with prefix \"Bearer \" in authorise filed to authorize. Also, there are examples of request and response that you can use for test API.\n",
+    "version": "1.0.0",
+    "title": "API Car catalog V1.0",
+    "contact": {
+      "name": "Implemica",
+      "url": "https://implemica.com",
+      "email": "welcome@implemica.com"
+    }
+  },
+  "host": "cars-yaroslav-b-spring.implemica.com",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Authorization API",
+      "description": "Api section for Authorization service"
+    },
+    {
+      "name": "Car API",
+      "description": "Api section for Car service"
+    },
+    {
+      "name": "Image API",
+      "description": "Api section for Image service"
+    }
+  ],
+  "paths": {
+    "/authorization/login": {
+      "post": {
+        "tags": [
+          "Authorization API"
+        ],
+        "summary": "Get token by login and password.",
+        "description": "Get a token to work with the API by login and password of the registered user",
+        "operationId": "loginUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "authRequest",
+            "description": "Login data.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AuthRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful authorization.",
+            "schema": {
+              "$ref": "#/definitions/AuthResponse"
+            }
+          },
+          "401": {
+            "description": "Failed authorization."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/car-catalog": {
+      "get": {
+        "tags": [
+          "Car API"
+        ],
+        "summary": "All cars.",
+        "description": "Returns all owned сфкы.",
+        "operationId": "getAllCarsUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CarDTO"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Car API"
+        ],
+        "summary": "Add car.",
+        "description": "Makes the car and returns the car if all fields of the machine are valid. If not valid then return 400.",
+        "operationId": "addCarUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "carDTO",
+            "description": "car that will be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          },
+          "400": {
+            "description": "Invalid car data."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Car API"
+        ],
+        "summary": "Update car.",
+        "description": "Finds the car by the id and updates it. If the fields are not valid then return 400 or if the cars were not found, return 404",
+        "operationId": "updateCarUsingPUT",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "carDTO",
+            "description": "car that will be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          },
+          "400": {
+            "description": "Invalid car."
+          },
+          "404": {
+            "description": "Car not found and cannot be updated."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/car-catalog/{id}": {
+      "get": {
+        "tags": [
+          "Car API"
+        ],
+        "summary": "Found car.",
+        "description": "Returns the car by id if the car was found. If no such machine is found, it returns 404 or if no valid id returns 400.",
+        "operationId": "getCarUsingGET",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id of car to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          },
+          "400": {
+            "description": "Invalid car id."
+          },
+          "404": {
+            "description": "Car not found."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Car API"
+        ],
+        "summary": "Delete car and their image.",
+        "description": "Removes machine and image by id. For valid response try integer IDs with positive integer value. Negative or non-integer values will generate API errors",
+        "operationId": "removeCarUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of car that needs to be deleted.",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "imageId",
+            "in": "query",
+            "description": "name of mage file that has car needs to be deleted",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful.",
+            "schema": {
+              "$ref": "#/definitions/CarDTO"
+            }
+          },
+          "400": {
+            "description": "Invalid car ID or image file name."
+          },
+          "404": {
+            "description": "Car not found and cannot be deleted."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      }
+    },
+    "/image/{imageId}": {
+      "post": {
+        "tags": [
+          "Image API"
+        ],
+        "summary": "Upload image.",
+        "description": "Loads the image to AWS S3 and set image id to this file, if not a graft extension, returns 400 http status.",
+        "operationId": "uploadFileUsingPOST",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "imageFile",
+            "in": "formData",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "image file name that has car and get from AWS S3 by its image file id",
+            "in": "path",
+            "description": "imageId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Image is uploaded successful."
+          },
+          "400": {
+            "description": "Incorrect image file expansion."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Image API"
+        ],
+        "summary": "Delete image.",
+        "description": "Deletes car image by their name if image is not found returns 404 http status.",
+        "operationId": "deleteFileUsingDELETE",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Image file id",
+            "in": "path",
+            "description": "imageId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Image is deleted successful."
+          },
+          "404": {
+            "description": "Cannot find image with this name."
+          }
+        },
+        "security": [
+          {
+            "Authorization": [
+              "global"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Authorization": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "AuthRequest": {
+      "type": "object",
+      "properties": {
+        "password": {
+          "type": "string",
+          "example": "password",
+          "description": "The username that is used for authorization."
+        },
+        "username": {
+          "type": "string",
+          "example": "username",
+          "description": "The username that is used for authorization.",
+          "minLength": 2,
+          "maxLength": 31,
+          "pattern": "^[a-zA-z0-9_ ]+"
+        }
+      },
+      "title": "AuthRequest"
+    },
+    "AuthResponse": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+          "description": "JWT that is used for performing authorized requests."
+        }
+      },
+      "title": "AuthResponse"
+    },
+    "CarDTO": {
+      "type": "object",
+      "properties": {
+        "additionalOptions": {
+          "type": "array",
+          "example": [
+            "Infotainment",
+            "Advanced driver aids",
+            "Extended Warranties",
+            "Keyless entry and ignition"
+          ],
+          "description": "Additional options allow you to equip the selected package already needed by the owner list of features.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "brand": {
+          "type": "string",
+          "example": "MAZDA",
+          "description": "Car brand refers to the basic concept. Otherwise, can be called as a brand or trademark.",
+          "enum": [
+            "ACURA",
+            "ALFA",
+            "ASTON_MARTIN",
+            "AUDI",
+            "BENTLEY",
+            "BMW",
+            "BRILLIANCE",
+            "BUGATTI",
+            "BUICK",
+            "BYD",
+            "CADILLAC",
+            "CHANGAN",
+            "CHERY",
+            "CHEVROLET",
+            "CHRYSLER",
+            "CITROEN",
+            "DACIA",
+            "DAEWOO",
+            "DAIHATSU",
+            "DATSUN",
+            "DODGE",
+            "FAW",
+            "FERRARI",
+            "FIAT",
+            "FORD",
+            "GEELY",
+            "GENESIS",
+            "GMC",
+            "GREAT_WALL",
+            "HAVAL_ROVER",
+            "HONDA",
+            "HUMMER",
+            "HYUNDAI",
+            "INFINITI",
+            "JAGUAR",
+            "JEEP",
+            "KIA",
+            "LAMBORGHINI",
+            "LANCIA",
+            "LAND_ROVER",
+            "LEXUS",
+            "LIFAN",
+            "LINCOLN",
+            "LOTUS",
+            "MARUSSIA",
+            "MASERATI",
+            "MAYBACH",
+            "MAZDA",
+            "MCLAREN",
+            "MERCEDES",
+            "MINI",
+            "MITSUBISHI",
+            "NISSAN",
+            "OPEL",
+            "PEUGEOT",
+            "PONTIAC",
+            "PORSCHE",
+            "RENAULT",
+            "ROLLS_ROYCE",
+            "ROMEO",
+            "SAAB",
+            "SEAT",
+            "SKODA",
+            "SMART",
+            "SSANGYONG",
+            "SUBARU",
+            "SUZUKI",
+            "TAGAZ",
+            "TESLA",
+            "TOYOTA",
+            "VOLKSWAGEN",
+            "VOLVO"
+          ]
+        },
+        "carBodyTypes": {
+          "type": "string",
+          "example": "PICKUP",
+          "description": "It is an element of the car design that determines the size, type and capacity of the car to carry goods and passengers.",
+          "enum": [
+            "CONVERTIBLE",
+            "COUPE",
+            "HATCHBACK",
+            "MINIVAN",
+            "PICKUP",
+            "SEDAN",
+            "SPORTS_CAR",
+            "STATION_WAGON",
+            "SUV"
+          ]
+        },
+        "engineCapacity": {
+          "type": "number",
+          "format": "double",
+          "example": 3.5,
+          "description": "The engine volume is defined as the total volume of all cylinders, or the volume of one cylinder multiplied by their number.",
+          "minimum": 0.0,
+          "maximum": 15.0,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        },
+        "fullDescription": {
+          "type": "string",
+          "example": "A mid-sized coupe, it launched in 2003, just as mid-sized coupes were kinda dying out. The asteroid was certainly on its way, at least. Rewind to the Nineties and this was a bustling corner of the market. But sitting and naming some of the numerous mainstream examples – Calibra, Cougar, Prelude, Coupe (not every carmaker was imaginative) – only makes you realise how long ago this chapter closed. The rise of the SUV didn’t only claim the four-door repmobile’s popularity.\n\nBut the RX-8 was never really billed as a rival to mainstream coupes, even if its ample practicality and modest power output placed it right on their turf. It instead launched in tandem with the Nissan 350Z to join the Honda S2000 in the 'attainable Japanese sports car' sub-niche. These were cars riding the wave of The Fast and the Furious’ success, bringing a bit of JDM sparkle to early Noughties Britain.",
+          "description": "It is the full description of car that contains some details about car.",
+          "minLength": 0,
+          "maxLength": 5000,
+          "pattern": "^[a-zA-Z \n\r]+[a-zA-Z-\"/0-9 \n.,:!?%()`’‘'—–-]*$"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "example": 10,
+          "description": "Car ID that is used for find car in data base.",
+          "minimum": 0,
+          "exclusiveMinimum": false
+        },
+        "imageFileId": {
+          "type": "string",
+          "example": "default-car-image",
+          "description": "Car image file name that you can find at AWS S# by it.",
+          "minLength": 10,
+          "maxLength": 150
+        },
+        "model": {
+          "type": "string",
+          "example": "RX 8",
+          "description": "The model describes the type of vehicle (what type of body) produced under a certain brand.",
+          "minLength": 2,
+          "maxLength": 40,
+          "pattern": "^[a-zA-Z ]+[a-zA-Z0-9 ]*$"
+        },
+        "shortDescription": {
+          "type": "string",
+          "example": "Rarely has a car broken with convention in such a wanton manner. The RX-8 appears to be everything cars today aren’t, and indeed it seemed to be swimming upstream for a fair few years of its existence.",
+          "description": "It is the short description of car that describe car in general.",
+          "minLength": 0,
+          "maxLength": 1000,
+          "pattern": "^[a-zA-Z \n\r]+[a-zA-Z-\"/0-9 \n.,:!?%()`’‘'—–-]*$"
+        },
+        "transmissionBoxTypes": {
+          "type": "string",
+          "example": "ROBOTIC",
+          "description": "is a collection of different units and mechanisms that transmit torque from the engine to the driving wheels and change it in size and direction.",
+          "enum": [
+            "AUTOMATIC",
+            "MECHANICAL",
+            "ROBOTIC",
+            "VARIATIONAL"
+          ]
+        },
+        "year": {
+          "type": "integer",
+          "format": "int32",
+          "example": 2004,
+          "description": "The year of issue is indicated by one digit, which corresponds to the last digit of the calendar year (similar to VIN).",
+          "minimum": 0,
+          "maximum": 9223372036854775807,
+          "exclusiveMinimum": false,
+          "exclusiveMaximum": false
+        }
+      },
+      "title": "CarDTO"
+    }
+  }
+}

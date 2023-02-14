@@ -1,7 +1,9 @@
 package com.implemica.controller.exceptions;
 
+import com.implemica.model.car.entity.Car;
+
 /**
- * Exception to be thrown when cannot find {@link com.implemica.model.car.entity.Car} in database
+ * Exception to be thrown when cannot find {@link Car} entity in database.
  */
 public class NoSuchCarException extends Exception{
 

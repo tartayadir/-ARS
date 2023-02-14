@@ -2,6 +2,7 @@ package com.implemica.controller.service.auth.service.impl;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.implemica.controller.configs.security.SecurityConfig;
 import com.implemica.controller.service.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,15 +19,15 @@ import java.util.stream.Collectors;
 
 /**
  * Implements {@link AuthService} interface for user authorization and token creation.
- * To sign tokens, use the given secret from the file. Also use the provided {@link AuthenticationManager}
- * from the {@link com.implemica.controller.configs.security.SecurityConfig} config class.
+ * To sign tokens, use the given secret. Also use the provided {@link AuthenticationManager}
+ * from the {@link SecurityConfig} config class for check user data and the physical in database.
  */
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
     /**
-     * Uses for do authenticate for login user data
+     * Used for do authenticate for login user data
      */
     private final AuthenticationManager authenticationManager;
 
@@ -44,7 +45,8 @@ public class AuthServiceImpl implements AuthService {
 
     /**
      * Implements {@link AuthService#attemptAuthentication(String, String)} with using {@link AuthenticationManager}
-     * from the {@link com.implemica.controller.configs.security.SecurityConfig} config class.
+     * from the {@link com.implemica.controller.configs.security.SecurityConfig} config class for check user
+     * data and the physical in database.
      *
      * @param username user username
      * @param password user password

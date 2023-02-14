@@ -40,7 +40,7 @@ public class SecurityConfig {
     private static final String ADMIN_ROLE_NAME = "ADMIN_ROLE";
 
     /**
-     * Login endpoint UIR
+     * Login endpoint URI
      */
     private static final String LOGIN_URI = "/authorization/login";
 
@@ -116,12 +116,13 @@ public class SecurityConfig {
         http.cors().configurationSource(request -> configuration);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.authorizeRequests().antMatchers(SWAGGER_UI_URI).permitAll();
-        http.authorizeRequests().antMatchers(GET, CAR_URI, CAR_BASE_URI).permitAll();
-        http.authorizeRequests().antMatchers(POST, LOGIN_URI).permitAll();
-        http.authorizeRequests().antMatchers(POST, CAR_BASE_URI, IMAGE_URI).hasAnyAuthority(ADMIN_ROLE_NAME);
-        http.authorizeRequests().antMatchers(PUT, CAR_BASE_URI).hasAnyAuthority(ADMIN_ROLE_NAME);
-        http.authorizeRequests().antMatchers(DELETE, CAR_URI, IMAGE_URI).hasAnyAuthority(ADMIN_ROLE_NAME);
+        http.authorizeRequests().antMatchers(SWAGGER_UI_URI).permitAll().and().
+             authorizeRequests().antMatchers(GET, CAR_URI, CAR_BASE_URI).permitAll().and().
+             authorizeRequests().antMatchers(POST, LOGIN_URI).permitAll();
+
+        http.authorizeRequests().antMatchers(POST, CAR_BASE_URI, IMAGE_URI).hasAnyAuthority(ADMIN_ROLE_NAME).and().
+             authorizeRequests().antMatchers(PUT, CAR_BASE_URI).hasAnyAuthority(ADMIN_ROLE_NAME).and().
+             authorizeRequests().antMatchers(DELETE, CAR_URI, IMAGE_URI).hasAnyAuthority(ADMIN_ROLE_NAME);
 
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilterBefore(new CustomAuthorizationFilter(secret), UsernamePasswordAuthenticationFilter.class);

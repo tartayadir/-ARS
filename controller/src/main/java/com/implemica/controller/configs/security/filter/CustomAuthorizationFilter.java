@@ -9,6 +9,7 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,7 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
  * form submission. Also provides several necessary beans for work with security.
  */
 @RequiredArgsConstructor
+@Slf4j
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
 
     /**
@@ -96,7 +98,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Perform the verification against the given Token, using any previous configured options.
+     * Performs the verification against the given Token, using any previous configured options.
      *
      * @param authorizationHeader its token with {@link #TOKEN_PREFIX} form authorization header.
      * @return a verified and decoded JWT.

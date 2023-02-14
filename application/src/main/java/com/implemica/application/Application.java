@@ -28,7 +28,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 public class Application {
 
     /**
-     * Standard main method that tun whole spring application by static
+     * Standard main method that run whole spring application by static
      * helper that can be used to run a {@link SpringApplication} from the
      * specified source using default settings.
      *

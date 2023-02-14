@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  * Class for validation of enum elements presented as string.
  * Provides a method to initialize the list of valid values and validate the validated value.
  */
-public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, CharSequence> {
+public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, String> {
 
     /**
      * List of valid string values to be used for validation.
@@ -40,11 +40,11 @@ public class ValueOfEnumValidator implements ConstraintValidator<ValueOfEnum, Ch
      * @return result of the verification
      */
     @Override
-    public boolean isValid(CharSequence value, ConstraintValidatorContext context) {
+    public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) {
             return true;
         }
 
-        return acceptedValues.contains(value.toString());
+        return acceptedValues.contains(value);
     }
 }

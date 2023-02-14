@@ -1,7 +1,8 @@
 package com.utils.swagger;
 
-import io.swagger.client.ApiClient;
-import io.swagger.client.api.AuthorizationApiApi;
+import com.implemica.swagger.client.codegen.rest.api.AuthorizationApiApi;
+import com.implemica.swagger.client.codegen.rest.invoker.ApiClient;
+import com.implemica.swagger.client.codegen.rest.model.AuthRequest;
 import lombok.SneakyThrows;
 
 import static com.utils.spring.AuthTestUtils.getFirstAdminPassword;
@@ -16,7 +17,11 @@ public class AuthUtils {
     @SneakyThrows
     public static ApiClient getAuthorizedApiClient() {
 
-        String token = authorizationApiApi.loginUsingPOST(getFirstAdminUsername(), getFirstAdminPassword()).
+        AuthRequest authRequest = new AuthRequest();
+        authRequest.setUsername(getFirstAdminUsername());
+        authRequest.setPassword(getFirstAdminPassword());
+
+        String token = authorizationApiApi.loginUsingPOST(authRequest).
                 getAccessToken();
         ApiClient apiClient = new ApiClient();
         apiClient.setApiKey(TOKEN_PREFIX + token);

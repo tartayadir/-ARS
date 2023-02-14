@@ -1,6 +1,6 @@
 package com.utils.swagger;
 
-import io.swagger.client.model.CarDTO;
+import com.implemica.swagger.client.codegen.rest.model.CarDTO;
 import org.fluttercode.datafactory.impl.DataFactory;
 
 import java.util.List;
@@ -13,18 +13,19 @@ public class CarDtoUtils {
 
     public static CarDTO generateRandomCar() {
 
-        return CarDTO.builder().
-                id((long) dataFactory.getNumberBetween(1, 100)).
-                brand(getRandomEnumValue(CarDTO.BrandEnum.class)).
-                model(dataFactory.getFirstName()).
-                carBodyTypes(getRandomEnumValue(CarDTO.CarBodyTypesEnum.class)).
-                year(dataFactory.getNumberBetween(1_921, 2_020)).
-                transmissionBoxTypes(getRandomEnumValue(CarDTO.TransmissionBoxTypesEnum.class)).
-                engineCapacity((double)dataFactory.getNumberBetween(1, 11)).
-                shortDescription(dataFactory.getRandomText(10, 200)).
-                fullDescription(dataFactory.getRandomText(10, 1_000)).
-                additionalOptions(List.of(dataFactory.getRandomWord(2, 10), dataFactory.getRandomWord(2, 10), dataFactory.getRandomWord(2, 10))).
-                imageFileId("default-car-image").
-                build();
+        CarDTO carDTO = new CarDTO();
+        carDTO.setId((long) dataFactory.getNumberBetween(1, 100));
+        carDTO.setBrand(getRandomEnumValue(CarDTO.BrandEnum.class));
+        carDTO.setModel(dataFactory.getFirstName());
+        carDTO.setCarBodyTypes(getRandomEnumValue(CarDTO.CarBodyTypesEnum.class));
+        carDTO.setYear(dataFactory.getNumberBetween(1_921, 2_020));
+        carDTO.setTransmissionBoxTypes(getRandomEnumValue(CarDTO.TransmissionBoxTypesEnum.class));
+        carDTO.setEngineCapacity((double)dataFactory.getNumberBetween(1, 11));
+        carDTO.setShortDescription(dataFactory.getRandomText(10, 200));
+        carDTO.setFullDescription(dataFactory.getRandomText(10, 1_000));
+        carDTO.setAdditionalOptions((List.of(dataFactory.getRandomWord(2, 10), dataFactory.getRandomWord(2, 10), dataFactory.getRandomWord(2, 10))));
+        carDTO.setImageFileId("default-car-image");
+
+        return carDTO;
     }
 }

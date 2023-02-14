@@ -23,11 +23,9 @@
             <artifactId>controller</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-
         <dependency>
-            <groupId>com.implemica</groupId>
-            <artifactId>Swagger_SDK_</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
 
     </dependencies>
@@ -37,6 +35,33 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-codegen-maven-plugin</artifactId>
+                <version>2.4.29</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <configuration>
+                            <inputSpec>application/src/main/resources/car-catalog-swagger.json</inputSpec>
+                            <language>java</language>
+                            <library>resttemplate</library>
+                            <modelPackage>com.implemica.swagger.client.codegen.rest.model</modelPackage>
+                            <apiPackage>com.implemica.swagger.client.codegen.rest.api</apiPackage>
+                            <invokerPackage>com.implemica.swagger.client.codegen.rest.invoker</invokerPackage>
+                            <generateApiTests>false</generateApiTests>
+                            <configOptions>
+                                <sourceFolder>swagger/src/main/java</sourceFolder>
+                                <dateLibrary>java11</dateLibrary>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

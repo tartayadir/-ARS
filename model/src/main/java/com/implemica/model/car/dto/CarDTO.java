@@ -112,6 +112,11 @@ public class CarDTO implements Serializable {
         this.engineCapacity = engineCapacity;
     }
 
+    /**
+     * Convert car entity {@link Car} to DTO
+     *
+     * @return car entity
+     */
     public static CarDTO toDTO(Car car) {
 
         CarDTO carDTO = CarDTO.builder().build();

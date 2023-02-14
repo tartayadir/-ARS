@@ -4,8 +4,11 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.InvalidClaimException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.implemica.controller.controllers.CarController;
 import com.implemica.controller.exceptions.InvalidImageTypeException;
 import com.implemica.controller.exceptions.NoSuchCarException;
+import com.implemica.controller.service.amazonS3.AmazonClient;
+import com.implemica.controller.service.car.service.CarService;
 import com.implemica.model.error_massage.ErrorMassageResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,22 +20,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.http.HttpStatus.*;
 
 /**
- * Handles application and froms {@link ResponseEntity} with defined {@link HttpStatus} and
- * exception massage.
+ * Handles application exceptions; catch their and froms {@link ResponseEntity}
+ * with defined {@link HttpStatus} and exception massage.
  */
 @RestControllerAdvice
 @Slf4j
 public class ValidationHandler {
 
     /**
-     * Handle validation exception to be thrown when validation on an argument annotated with @Valid fails.
-     * Is thrown by {@link com.implemica.controller.controllers.CarController}.
+     * Handle validation exception to be thrown when validation on an argument, annotated with {@link Valid},
+     * fails. Is thrown by {@link CarController}.
      *
      * @param ex thrown exception
      * @return response with list of validation exception massages and HTTP status
@@ -56,7 +60,7 @@ public class ValidationHandler {
 
     /**
      * Handle exception to be thrown when cannot find car in database.
-     * Is thrown by {@link com.implemica.controller.service.car.service.CarService}.
+     * Is thrown by {@link CarService}.
      *
      * @param ex thrown exception
      * @return response with exception massage and HTTP status
@@ -69,8 +73,9 @@ public class ValidationHandler {
     }
 
     /**
-     * Handle exception to be thrown when something are invalid.
-     * Is thrown by {@link com.implemica.controller.service.car.service.CarService} when car id is null.
+     * Handle exception to be thrown when something are invalid or
+     * a method has been passed an illegal or inappropriate argument.
+     * Is thrown by {@link CarService} when car id is null.
      *
      * @param ex thrown exception
      * @return response with exception massage and HTTP status
@@ -83,8 +88,8 @@ public class ValidationHandler {
     }
 
     /**
-     * Handle exception to be thrown when validate car image.
-     * Is thrown by {@link com.implemica.controller.service.amazonS3.AmazonClient}.
+     * Handle exception to be thrown when validate car image, and it has invalid expansion.
+     * Is thrown by {@link AmazonClient}.
      *
      * @param ex thrown exception
      * @return response with exception massage and HTTP status
@@ -110,7 +115,7 @@ public class ValidationHandler {
     }
 
     /**
-     * Handle exception to be thrown when provided algorithm for creating JWT token in hashing.
+     * Handle exception to be thrown when provided algorithm for creating or verifying JWT token in hashing.
      *
      * @param ex thrown exception
      * @return response with exception massage and HTTP status

@@ -32,6 +32,17 @@ public @interface ValueOfEnum {
      * @return exception massage
      */
     String message() default "must be any of enum {enumClass}";
+
+    /**
+     * Returns the targeted groups
+     * @return targeted groups
+     */
     Class<?>[] groups() default {};
+
+    /**
+     * Returns payload type that can be attached to a given constraint declaration.
+     *
+     * @return payload type
+     */
     Class<? extends Payload>[] payload() default {};
 }

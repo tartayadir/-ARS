@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -97,5 +98,15 @@ public class SwaggerConfig {
 
         AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         return List.of(new SecurityReference(AUTHORIZATION_HEADER, new AuthorizationScope[]{authorizationScope}));
+    }
+
+    /**
+     * Provides {@link RestTemplate} bean for work with swagger SDK
+     *
+     * @return {@link RestTemplate} object
+     */
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

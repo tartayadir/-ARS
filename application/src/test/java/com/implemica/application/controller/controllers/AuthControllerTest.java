@@ -1,6 +1,8 @@
 package com.implemica.application.controller.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.implemica.controller.service.auth.service.AuthService;
+import com.implemica.model.auth.dto.AuthRequest;
 import com.utils.spring.AuthTestUtils;
 import lombok.SneakyThrows;
 import org.fluttercode.datafactory.impl.DataFactory;
@@ -16,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import static com.utils.spring.AuthTestUtils.*;
 import static com.utils.spring.StringUtils.generateRandomString;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,6 +32,8 @@ public class AuthControllerTest {
     private static DataFactory dataFactory;
 
     private static AuthTestUtils authTestUtils;
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
@@ -273,9 +278,15 @@ public class AuthControllerTest {
    @SneakyThrows
     private static void checkSuccessfulAuthorization(String username, String password){
 
+       AuthRequest authRequest = new AuthRequest(username, password);
+       String requestJSON = objectMapper.writeValueAsString(authRequest);
+
         MvcResult mvcResult = mockMvc.perform(post("/authorization/login").
-                        param("username", username).
-                        param("password", password)).
+                        contentType(APPLICATION_JSON).
+                        content(requestJSON).
+                        characterEncoding("utf-8").
+                        accept(APPLICATION_JSON)
+                ).
                 andExpect(status().isOk()).
                 andReturn();
 
@@ -286,9 +297,15 @@ public class AuthControllerTest {
     @SneakyThrows
     private static void checkIncorrectLoginData(String username, String password) {
 
+        AuthRequest authRequest = new AuthRequest(username, password);
+        String requestJSON = objectMapper.writeValueAsString(authRequest);
+
         mockMvc.perform(post("/authorization/login").
-                        param("username", username).
-                        param("password", password)).
+                        contentType(APPLICATION_JSON).
+                        content(requestJSON).
+                        characterEncoding("utf-8").
+                        accept(APPLICATION_JSON)
+                ).
                 andExpect(status().isUnauthorized()).
                 andReturn();
     }
@@ -296,9 +313,15 @@ public class AuthControllerTest {
     @SneakyThrows
     private static void tryAuthorizeInvalidLoginData(String username, String password) {
 
+        AuthRequest authRequest = new AuthRequest(username, password);
+        String requestJSON = objectMapper.writeValueAsString(authRequest);
+
         mockMvc.perform(post("/authorization/login").
-                        param("username", username).
-                        param("password", password)).
+                        contentType(APPLICATION_JSON).
+                        content(requestJSON).
+                        characterEncoding("utf-8").
+                        accept(APPLICATION_JSON)
+                ).
                 andExpect(status().isBadRequest()).
                 andReturn();
     }

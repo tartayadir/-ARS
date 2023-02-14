@@ -1,11 +1,11 @@
 package com.implemica.application.controller.controllers;
 
-import io.swagger.client.ApiException;
-import io.swagger.client.api.CarApiApi;
-import io.swagger.client.model.CarDTO;
+import com.implemica.swagger.client.codegen.rest.api.CarApiApi;
+import com.implemica.swagger.client.codegen.rest.model.CarDTO;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.client.RestClientException;
 
 import static com.utils.swagger.AuthUtils.getAuthorizedApiClient;
 import static com.utils.swagger.CarDtoUtils.generateRandomCar;
@@ -59,7 +59,7 @@ public class CarControllerTestWithSwagger {
         assertEquals(carDTO, addCar);
 
         assertThatThrownBy(() -> notAuthorizedCarApi.addCarUsingPOSTWithHttpInfo(carDTO)).
-                isInstanceOf(ApiException.class);
+                isInstanceOf(RestClientException.class);
 
         checkGetCar(carId, carDTO);
 
@@ -73,7 +73,7 @@ public class CarControllerTestWithSwagger {
         assertEquals(carDTO, updateCarDto);
 
         assertThatThrownBy(() -> notAuthorizedCarApi.updateCarUsingPUTWithHttpInfo(carDTO)).
-                isInstanceOf(ApiException.class);
+                isInstanceOf(RestClientException.class);
 
         Thread.sleep(2_000);
         checkGetCar(updateCarDto.getId(), updateCarDto);
@@ -87,7 +87,7 @@ public class CarControllerTestWithSwagger {
 
         Thread.sleep(2_000);
         assertThatThrownBy(() -> authorizedCarApi.getCarUsingGET(carID)).
-                isInstanceOf(ApiException.class);
+                isInstanceOf(RestClientException.class);
     }
 
     @SneakyThrows

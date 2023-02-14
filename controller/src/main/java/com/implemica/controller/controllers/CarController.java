@@ -152,7 +152,6 @@ public class CarController {
         log.info("Http method - Delete, delete image with name {}", imageId);
         this.amazonClient.deleteFileFromS3Bucket(imageId);
 
-
         return ResponseEntity.ok().build();
     }
 }
