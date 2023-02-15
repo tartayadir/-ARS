@@ -9,21 +9,20 @@ import {TransmissionBoxTypes} from "../../../models/car/TransmissionBoxTypes";
 import {Car} from "../../../models/car/car";
 import {ModalWindowService} from "../../../services/modal-window.service";
 import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
-import {ImagesService} from "../../../services/utils/images.service";
+import {ImagesServiceConverter} from "../../../services/utils/images-service-converter.service";
 import {CarBrands} from "../../../models/car/CarBrands";
 import {Title} from "@angular/platform-browser";
 import {MatChipInputEvent} from "@angular/material/chips";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {Option} from "../../../models/option/Option";
 import {LoginService} from "../../../services/auth/login.service";
-import {delay} from "rxjs";
+import {Observable, Observer} from "rxjs";
 
 @Component({
   selector: 'app-add-car-page',
   templateUrl: './add-car-page.component.html'
 })
 export class AddCarPageComponent implements OnInit{
-
 
   addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
@@ -48,7 +47,7 @@ export class AddCarPageComponent implements OnInit{
 
   constructor(private carsService: CarsService, private router: Router, private imageService: ImageService,
               private formBuilder: FormBuilder, private modalWindowService: ModalWindowService,
-              private images: ImagesService, private titleService: Title,private loginService: LoginService) {
+              private images: ImagesServiceConverter, private titleService: Title, private loginService: LoginService) {
 
     this.form = this.formBuilder.group({
       brand: ["AUDI", [Validators.required]],
@@ -167,7 +166,9 @@ export class AddCarPageComponent implements OnInit{
   cropImg(event: ImageCroppedEvent) {
 
     this.imageUrl = event.base64;
-    this.imageFile = this.images.blobToFile(base64ToFile(event.base64 as string), "");
+    this.images.dataURItoBlob(event.base64 as string).subscribe( blob => {
+      this.imageFile = this.images.blobToFile(blob, "");
+    })
   }
 
   imgLoad() {

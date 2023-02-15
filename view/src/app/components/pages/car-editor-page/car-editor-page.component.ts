@@ -6,7 +6,7 @@ import {ImageService} from "../../../services/image.service";
 import {CarsService} from "../../../services/cars.service";
 import {Car} from "../../../models/car/car";
 import {ModalWindowService} from "../../../services/modal-window.service";
-import {ImagesService} from "../../../services/utils/images.service";
+import {ImagesServiceConverter} from "../../../services/utils/images-service-converter.service";
 import {base64ToFile, ImageCroppedEvent} from "ngx-image-cropper";
 import {Title} from "@angular/platform-browser";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
@@ -66,7 +66,7 @@ export class CarEditorPageComponent implements OnInit {
 
   constructor(private carService: CarsService, private activateRoute: ActivatedRoute, private router: Router,
               private imageService: ImageService, private modalWindowService: ModalWindowService,
-              private images: ImagesService, private titleService: Title) {
+              private images: ImagesServiceConverter, private titleService: Title) {
   }
 
   ngOnInit(): void {
@@ -199,7 +199,9 @@ export class CarEditorPageComponent implements OnInit {
   cropImg(event: ImageCroppedEvent) {
 
     this.imageUrl = event.base64;
-    this.imageFile = this.images.blobToFile(base64ToFile(event.base64 as string), "");
+    this.images.dataURItoBlob(event.base64 as string).subscribe( blob => {
+      this.imageFile = this.images.blobToFile(blob, "");
+    })
   }
 
   imgLoad() {

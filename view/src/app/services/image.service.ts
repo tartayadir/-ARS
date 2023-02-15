@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ErrorService} from "./error/error.service";
 import {environment} from "../../environments/environment";
 import {throwError} from "rxjs";
+import {ImagesServiceConverter} from "./utils/images-service-converter.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,13 @@ export class ImageService {
 
   private apiServerURL = environment.apiServerURL;
 
-  constructor(private http: HttpClient,
+  constructor(private http: HttpClient, private imagesServiceConverter: ImagesServiceConverter,
               private errorService: ErrorService) {
   }
 
   public async uploadImage(image: File, imageId: string) {
+
+    this.imagesServiceConverter.compress(image).subscribe( file => image = file);
 
     console.log("Http method - Post, image with name " + imageId);
 
